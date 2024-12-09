@@ -1,11 +1,13 @@
 const express = require ("express"); // Import Express framework
+const mongoose = require('mongoose');
+var cors = require('cors') // Import CORS middleware to enable cross-origin requests
 const app = express(); // Create an instance of Express
 const db = require('./db');
-const mongoose = require('mongoose');
 require('dotenv').config();
-var cors = require('cors') // Import CORS middleware to enable cross-origin requests
 const path = require('path');
 
+
+const commodityRoutes = require('./routes/commodity');
 // Middleware to handle CORS
 app.use(cors()) // Allow all origins by default
 
@@ -21,11 +23,11 @@ const PORT = process.env.PORT || 3000;
 
 
 app.use(express.json());
-
+app.use('/uploads', express.static('uploads')); 
 
 
 // Use routes
-
+app.use('/api/commodities', commodityRoutes);
 
 // Start the server on port 3000
 app.listen(PORT, () => {
