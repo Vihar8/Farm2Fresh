@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Commodity = require('../models/commodity');
-const upload = require('../middlewares/multerConfig'); // Path to multer configuration
+const upload = require('../middlewares/multerConfig.js'); // Path to multer configuration
 
 // Add a new commodity
-router.post('/', upload.array('images', 5), async (req, res) => {
+router.post('/', upload.array('images', 2), async (req, res) => {
     try {
         const { commodity, varietyType, quantity, totalIn, price, state, district } = req.body;
         const imagePaths = req.files.map(file => file.path);
