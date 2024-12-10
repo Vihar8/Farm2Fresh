@@ -96,7 +96,7 @@ const Footer = () => {
               id="email"
               name="email"
               placeholder="Email address"
-              className={`w-full px-4 py-2 border ${formik.errors.email && formik.touched.email
+              className={`w-full px-4 py-2 text-gray-800 placeholder-gray-500 border ${formik.errors.email && formik.touched.email
                   ? "border-red-500"
                   : "border-gray-300"
                 } rounded`}
@@ -112,7 +112,7 @@ const Footer = () => {
               id="mobile"
               name="mobile"
               placeholder="Mobile number"
-              className={`w-full px-4 py-2 border ${formik.errors.mobile && formik.touched.mobile
+              className={`w-full px-4 py-2  text-gray-800 placeholder-gray-500 border ${formik.errors.mobile && formik.touched.mobile
                   ? "border-red-500"
                   : "border-gray-300"
                 } rounded`}
