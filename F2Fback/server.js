@@ -8,13 +8,14 @@ const path = require('path');
 
 
 const commodityRoutes = require('./routes/commodity');
+const enquiryform = require('./routes/enquiryform')
 // Middleware to handle CORS
 app.use(cors()) // Allow all origins by default
 
 // Additional CORS configuration
 app.use(
 	cors({
-		origin:"http://localhost:4002", // Allow requests from this origin (adjust the URL as per your frontend)
+		origin:"http://localhost:5173", // Allow requests from this origin (adjust the URL as per your frontend)
 		credentials:true, // Allow credentials (cookies, authorization headers) to be included in requests
 	})
 )
@@ -28,6 +29,7 @@ app.use('/uploads', express.static('uploads'));
 
 // Use routes
 app.use('/api/commodities', commodityRoutes);
+app.use('/api/enquiryform', enquiryform);
 
 // Start the server on port 3000
 app.listen(PORT, () => {
