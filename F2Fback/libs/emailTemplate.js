@@ -1,4 +1,4 @@
-const otpTemplate = (otp) => {
+const otpTemplate = (name, otp) => {
     return `<!DOCTYPE html>
     <html>
     
@@ -76,7 +76,7 @@ const otpTemplate = (otp) => {
     src="https://i.ibb.co/N3FWmNS/f2f.jpg" alt="Farm2Fresh Logo"></a>
     <div class="message">OTP Verification Email</div>
     <div class="body">
-    <p>Dear User,</p>
+    <p>Dear ${name},</p>
     <p>Thank you for registering with Farm2Fresh. To complete your registration, please use the following OTP
     (One-Time Password) to verify your account:</p>
     <h2 class="highlight">${otp}</h2>
