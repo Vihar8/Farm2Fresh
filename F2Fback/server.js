@@ -7,8 +7,8 @@ require('dotenv').config();
 const path = require('path');
 
 
-const commodityRoutes = require('./routes/commodity');
-const enquiryform = require('./routes/enquiryform')
+const commodityRoutes = require('./routes/commodityRoutes.js');
+const enquiryform = require('./routes/enquiryRoutes.js')
 // Middleware to handle CORS
 app.use(cors()) // Allow all origins by default
 
