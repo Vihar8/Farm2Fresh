@@ -4,7 +4,7 @@ const transporter = require('./emailConfig');
 const sendVerificationCode = async (email, verificationCode) => {
     try {
         const response = await transporter.sendMail({
-            from: '"Farm2Fresh" <harshitkapadia563@gmail.com>', // sender address
+            from: '"Farm2Fresh" <' + process.env.EMAIL_USER + '>', // sender address
             to: email, // list of receivers
             subject: "Verify your email", // Subject line
             text: 'To verify your email, your code is', // plain text body

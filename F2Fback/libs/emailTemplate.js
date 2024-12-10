@@ -57,9 +57,15 @@ const otpTemplate = (otp) => {
     margin-top: 20px;
     }
     
-    .highlight {
+   .highlight {
     font-weight: bold;
-    }
+    background-color: #2CB21A;
+    color: white;
+    padding: 10px;
+    display: inline-block;
+    width: fit-content; 
+}
+
     </style>
     
     </head>
@@ -67,7 +73,7 @@ const otpTemplate = (otp) => {
     <body>
     <div class="container">
     <a href="https:Farm2Fresh//.vercel.app"><img class="logo"
-    src="https://logo.png" alt="Farm2Fresh Logo"></a>
+    src="https://i.ibb.co/N3FWmNS/f2f.jpg" alt="Farm2Fresh Logo"></a>
     <div class="message">OTP Verification Email</div>
     <div class="body">
     <p>Dear User,</p>

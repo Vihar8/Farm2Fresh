@@ -17,14 +17,13 @@ const signup = async (req, res) => {
         if (existsUser) {
             return res.status(400).json({ success: false, message: "User already exists" });
         }
-
         // Hash the password
         const hashedPassword = bcryptjs.hashSync(password, 10);
-
+        
         // Generate a verification code
         const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
         const verificationTokenExpiresAt = Date.now() + 15 * 60 * 1000; // 15 minutes expiry time
-
+        
         // Create a new user
         const user = new userModel({
             email,
@@ -34,7 +33,8 @@ const signup = async (req, res) => {
             verificationTokenExpiresAt,
             isVerified: false,
         });
-
+        
+        console.log(user)
         await user.save();
 
         // Send the verification email
