@@ -8,7 +8,8 @@ const path = require('path');
 
 
 const commodityRoutes = require('./routes/commodity');
-const enquiryform = require('./routes/enquiryform')
+const enquiryform = require('./routes/enquiryform');
+const authRoutes= require("./routes/authRoutes");
 // Middleware to handle CORS
 app.use(cors()) // Allow all origins by default
 
@@ -20,6 +21,7 @@ app.use(
 	})
 )
 
+
 const PORT = process.env.PORT || 3000;
 
 
@@ -28,6 +30,7 @@ app.use('/uploads', express.static('uploads'));
 
 
 // Use routes
+app.use('/auth' , authRoutes);
 app.use('/api/commodities', commodityRoutes);
 app.use('/api/enquiryform', enquiryform);
 

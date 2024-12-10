@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
-     const mongoURL = 'mongodb://localhost:27017/fresh2farm';
+    const mongoURL = 'mongodb://localhost:27017/fresh2farm'; 
     // const mongoURL = process.env.MONGODB_URL;
 
 //setup mongodb connection
