@@ -1,6 +1,7 @@
 import { useFormik } from 'formik';
 import * as Yup from "yup";
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
 
@@ -42,27 +43,47 @@ const Footer = () => {
 
   return (   
   <footer className="bg-gray-800 text-white py-8">
-  <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
-    {/* Left Column */}
-    <div>
-      <h2 className="text-lg font-bold">Useful Links</h2>
-      <ul className="mt-4 space-y-2">
-        <li>Agri Updates</li>
-        <li>Privacy Policy</li>
-        <li>Terms and Conditions</li>
-        <li>Contact Us</li>
-      </ul>
-    </div>
+ 
 
-    {/* Middle Column */}
-    <div>
-      <h2 className="text-lg font-bold">What We Do</h2>
-      <p className="mt-4 text-sm">
-        Our agri tech platform helps empower farmers, commodity buyers, and
-        sellers. Our verified and authentic marketplace is transforming the
-        way agri commodities transactions are carried out in India.
-      </p>
-    </div>
+<div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+  {/* Left Column */}
+  <div>
+    <h2 className="text-lg font-bold">Useful Links</h2>
+    <ul className="mt-4 space-y-2">
+      <li>
+        <Link to="/agri-updates" className="hover:underline">
+          Agri Updates
+        </Link>
+      </li>
+      <li>
+        <Link to="/privacy-policy" className="hover:underline">
+          Privacy Policy
+        </Link>
+      </li>
+      <li>
+        <Link to="/terms-conditions" className="hover:underline">
+          Terms and Conditions
+        </Link>
+      </li>
+      <li>
+        <Link to="/contact-us" className="hover:underline">
+          Contact Us
+        </Link>
+      </li>
+    </ul>
+  </div>
+
+  {/* Middle Column */}
+  <div>
+    <h2 className="text-lg font-bold">What We Do</h2>
+    <p className="mt-4 text-sm">
+      Our agri-tech platform helps empower farmers, commodity buyers, and
+      sellers. Our verified and authentic marketplace is transforming the
+      way agri commodities transactions are carried out in India.
+    </p>
+  </div>
+
+
 
     {/* Right Column */}
     <div>
