@@ -1,7 +1,8 @@
 const express = require('express');
-const signup = require('../controller/auth.js'); 
-const authRoutes = express.Router();
+const router = express.Router();
+const { signup, verifyEmail } = require('../controllers/auth');  // Ensure you're importing the correct functions
 
-authRoutes.post('/signup', signup);
+router.post('/signup', signup);  // Correct usage of handler functions
+router.post('/verify-email', verifyEmail);  // Correct usage of handler functions
 
-module.exports = authRoutes;
+module.exports = router;

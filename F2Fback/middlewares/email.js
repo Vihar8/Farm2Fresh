@@ -1,15 +1,19 @@
-const sendVerification = async (email,) => {
+const otpTemplate = require('../libs/emailTemplate');
+const transporter = require('./emailConfig');
+
+const sendVerificationCode = async (email, verificationCode) => {
     try {
-        const info = await transporter.sendMail({
+        const response = await transporter.sendMail({
             from: '"Farm2Fresh" <harshitkapadia563@gmail.com>', // sender address
-            to: "farm02fresh@gmail.com, kapadiaharshit563@gmail.com", // list of receivers
-            subject: "Hello ✔", // Subject line
-            text: "Hello world?", // plain text body
-            html: "<b>Hello world?</b>", // html body
+            to: email, // list of receivers
+            subject: "Verify your email", // Subject line
+            text: 'To verify your email, your code is', // plain text body
+            html: otpTemplate(verificationCode), // html body
         });
-        console.log(info)
+        console.log("Email sent successfully");
     } catch (err) {
-        console.log(err)
-        return res.status(500).json({success:false,message:"internal server error"})
+        console.log("Email error:", err);
     }
-}
+};
+
+module.exports = sendVerificationCode;
