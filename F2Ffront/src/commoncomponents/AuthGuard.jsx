@@ -15,7 +15,7 @@ const AuthGuard = ({ children, allowedRoles }) => {
       navigate('/login', { state: { from: location.pathname }, replace: true });
     } else if (allowedRoles && !allowedRoles.includes(state.user?.role)) {
       // Redirect if the role doesn't match the allowed roles
-      navigate('/', { replace: true });
+      navigate('/home', { replace: true });
     }
   }, [state, navigate, location]);
 
