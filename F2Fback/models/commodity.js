@@ -37,7 +37,13 @@ const commoditySchema = new mongoose.Schema({
         type: String, 
         required: true 
     },
-    images: [{ type: String }] // Array of image URLs or paths
-});
+    images: [{ type: String }],
+    createdBy: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'user', // Reference to the user model
+        required: true 
+    }
+}, { timestamps: true } // Array of image URLs or paths
+);
 
 module.exports = mongoose.model('Commodity', commoditySchema);

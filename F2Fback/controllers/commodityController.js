@@ -15,6 +15,7 @@ exports.addCommodity = async (req, res) => {
             state,
             district,
             images: imagePaths,
+            createdBy: req.user.id
         });
 
         await newCommodity.save();
@@ -27,7 +28,7 @@ exports.addCommodity = async (req, res) => {
 // Controller to get all commodities
 exports.getCommodities = async (req, res) => {
     try {
-        const commodities = await Commodity.find();
+        const commodities = await Commodity.find().populate('createdBy', 'name email'); 
         res.json(commodities);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch commodities', details: error.message });
