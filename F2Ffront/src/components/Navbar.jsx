@@ -9,7 +9,7 @@ const Navbar = () => {
     <Toolbar className="flex justify-between items-center">
       {/* Logo */}
       <div className="flex items-center space-x-2">
-       <img className='w-14' src='./f2f.jpg' alt='logo'/>
+       <img className='w-32' src='./f2f.jpg' alt='logo'/>
         <h1 className="text-lg font-bold text-greenCustom">
           Farm<span className='text-black'>2</span><span className="text-greenCustom">Fresh</span>
         </h1>

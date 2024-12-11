@@ -1,4 +1,4 @@
-const otpTemplate = (otp) => {
+const otpTemplate = (name, otp) => {
     return `<!DOCTYPE html>
     <html>
     
@@ -57,9 +57,15 @@ const otpTemplate = (otp) => {
     margin-top: 20px;
     }
     
-    .highlight {
+   .highlight {
     font-weight: bold;
-    }
+    background-color: #2CB21A;
+    color: white;
+    padding: 10px;
+    display: inline-block;
+    width: fit-content; 
+}
+
     </style>
     
     </head>
@@ -67,10 +73,10 @@ const otpTemplate = (otp) => {
     <body>
     <div class="container">
     <a href="https:Farm2Fresh//.vercel.app"><img class="logo"
-    src="https://logo.png" alt="Farm2Fresh Logo"></a>
+    src="https://i.ibb.co/N3FWmNS/f2f.jpg" alt="Farm2Fresh Logo"></a>
     <div class="message">OTP Verification Email</div>
     <div class="body">
-    <p>Dear User,</p>
+    <p>Dear ${name},</p>
     <p>Thank you for registering with Farm2Fresh. To complete your registration, please use the following OTP
     (One-Time Password) to verify your account:</p>
     <h2 class="highlight">${otp}</h2>
