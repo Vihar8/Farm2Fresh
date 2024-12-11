@@ -88,12 +88,12 @@ export default function SignUp() {
         </Typography>
         <form onSubmit={handleSubmit} noValidate style={{ marginTop: 30 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} >
               <TextField
                 variant="outlined"
                 required
                 fullWidth
-                label="First Name"
+                label="Full Name"
                 autoFocus
                 value={name}
                 onChange={(e) => setFirstName(e.target.value)}

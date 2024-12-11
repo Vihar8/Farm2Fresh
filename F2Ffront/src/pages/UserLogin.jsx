@@ -18,15 +18,17 @@ import JWTContext from "../context/JWTContext";
 import api from '../api/axios'
 import { LOGIN } from "../context/actions"; // Ensure actions.js is properly structured
 
-const MadeWithLove = () => (
-  <Typography variant="body2" color="textSecondary" align="center">
-    {"Built with love by the "}
-    <Link color="inherit" href="https://material-ui.com/">
-      Material-UI
-    </Link>
-    {" team."}
-  </Typography>
-);
+function MadeWithLove() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Connect With Us at  "}
+      <Link color="inherit" href="https://material-ui.com/">
+        Farm2Fresh
+      </Link>
+      {" and grow your Business."}
+    </Typography>
+  );
+}
 
 const SignInSide = () => {
   const [email, setEmail] = useState("");
@@ -93,10 +95,6 @@ const SignInSide = () => {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
               type="submit"
