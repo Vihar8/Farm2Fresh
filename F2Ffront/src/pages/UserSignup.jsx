@@ -11,9 +11,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { Grid, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import Container from "@mui/material/Container";
-import { useNavigate } from "react-router-dom"; // Import useNavigate hook
-import axios from "axios"; // Import Axios
-import api from '../api/axios'
+import { useNavigate } from "react-router-dom";
+import api from "../api/axios";
 
 function MadeWithLove() {
   return (
@@ -28,10 +27,11 @@ function MadeWithLove() {
 }
 
 export default function SignUp() {
-  const [role, setRole] = React.useState(1); // Default role is 1 (client)
+  const [role, setRole] = useState(1); // Default role is 1 (client)
   const [name, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [otp, setOtp] = useState(""); // For OTP input
 
   const navigate = useNavigate(); // Initialize useNavigate hook
 
@@ -39,7 +39,6 @@ export default function SignUp() {
     setRole(event.target.value);
   };
 
-  // Handle form submission and API call
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -51,17 +50,29 @@ export default function SignUp() {
     };
 
     try {
-      // Replace the URL with your backend API endpoint
       const response = await api.post("/auth/signup", userData);
-
-      // Handle the response, e.g., show a success message or redirect
       console.log("Sign-up successful:", response.data);
-
-      // Redirect to the 'opt' page after successful signup
-      navigate("/otp");
-    } catch (error) {
-      // Handle error
+         } catch (error) {
       console.error("There was an error during the sign-up:", error);
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    try {
+      const response = await api.post("/auth/verify-email", { code: otp });
+      console.log("OTP verified successfully:", response.data);
+      alert("Email verified successfully!"); // Show success message
+      
+      setFirstName("");
+      setEmail("");
+      setPassword("");
+      setOtp("");
+      setRole(1); // Reset to default role (Client)
+      navigate("/home"); // Redirect after successful signup
+
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+      alert("Failed to verify OTP. Please try again.");
     }
   };
 
@@ -121,13 +132,7 @@ export default function SignUp() {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
             </Grid>
-          </Grid>
           <Button type="submit" fullWidth variant="contained" color="primary" sx={{ marginTop: 3, marginBottom: 3 }}>
             Sign Up
           </Button>
@@ -139,6 +144,28 @@ export default function SignUp() {
             </Grid>
           </Grid>
         </form>
+
+        {/* OTP Input and Verify Button */}
+        <Typography component="h2" variant="h6" style={{ marginTop: 20 }}>
+          Verify Email
+        </Typography>
+        <TextField
+          variant="outlined"
+          fullWidth
+          label="Enter OTP"
+          value={otp}
+          onChange={(e) => setOtp(e.target.value)}
+          style={{ marginTop: 10 }}
+        />
+        <Button
+          onClick={handleVerifyOtp}
+          fullWidth
+          variant="contained"
+          color="secondary"
+          sx={{ marginTop: 2 }}
+        >
+          Get Verified
+        </Button>
       </div>
       <Box mt={5}>
         <MadeWithLove />

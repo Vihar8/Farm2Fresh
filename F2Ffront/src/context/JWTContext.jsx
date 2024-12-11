@@ -22,31 +22,61 @@ const authReducer = (state, action) => {
   }
 };
 
+// export const JWTProvider = ({ children }) => {
+//   const [state, dispatch] = useReducer(authReducer, initialState);
+
+//   useEffect(() => {
+//     const init = async () => {
+//       const token = localStorage.getItem('serviceToken');
+//       if (token) {
+//         const decoded = jwt_decode(token); // Using the 'decode' function from jwt-decode
+//         if (decoded.exp * 1000 > Date.now()) {
+//           const response = await api.post('/auth/profile', { 
+//             headers: {
+//         Authorization: `Bearer ${token}`  // Include the token in the Authorization header
+//     }
+//           });
+//           dispatch({ type: LOGIN, payload: { user: response.data } });
+//         }
+//       } else {
+//         localStorage.removeItem('serviceToken'); // Token expired, remove it
+//         dispatch({ type: LOGOUT });
+//       }
+//     };
+
+//     init();
+//   }, []);
 export const JWTProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
+  const [isInitialized, setIsInitialized] = useState(false);
 
-  useEffect(() => {
-    const init = async () => {
+useEffect(() => {
+  const init = async () => {
+    try {
       const token = localStorage.getItem('serviceToken');
       if (token) {
-        const decoded = jwt_decode(token); // Using the 'decode' function from jwt-decode
+        const decoded = jwt_decode(token);
         if (decoded.exp * 1000 > Date.now()) {
-          const response = await api.post('/auth/profile', { 
+          const response = await api.post('/auth/profile', {
             headers: {
-        Authorization: `Bearer ${token}`  // Include the token in the Authorization header
-    }
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json" // Include the token in the Authorization header
+            },
           });
           dispatch({ type: LOGIN, payload: { user: response.data } });
+        } else {
+          localStorage.removeItem('serviceToken'); // Token expired, remove it
         }
-      } else {
-        localStorage.removeItem('serviceToken'); // Token expired, remove it
-        dispatch({ type: LOGOUT });
       }
-    };
+    } catch (error) {
+      console.error("Error during initialization:", error);
+    } finally {
+      setIsInitialized(true); // Ensure we mark initialization as complete
+    }
+  };
 
-    init();
-  }, []);
-
+  if (!isInitialized) init();
+}, [isInitialized]);
   
   const logout = () => {
     // Clear the token from localStorage
@@ -57,7 +87,7 @@ export const JWTProvider = ({ children }) => {
   };
   
   return (
-    <JWTContext.Provider value={{ state, dispatch, logout }}>
+    <JWTContext.Provider value={{ state: { ...state, isInitializing: !isInitialized }, dispatch, logout }}>
       {children}
     </JWTContext.Provider>
   );

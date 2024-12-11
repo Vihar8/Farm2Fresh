@@ -14,7 +14,6 @@ const UserSignup = Loadable(lazy(() => import("../pages/UserSignup")));
 const CommodityListing = Loadable(lazy(() => import("../pages/CommodityListing")));
 // const CommodityAdd = Loadable(lazy(() => import("../pages/CommodityAdd")));
 // const CommodityEdit = Loadable(lazy(() => import("../pages/CommodityEdit")));
-const OtpPage = Loadable(lazy(() => import("../pages/otp"))); // OTP page
 
 const ClientRoutes = {
   path: "/",
@@ -40,10 +39,6 @@ const ClientRoutes = {
     {
       path: "/usersignup",
       element: <UserSignup />,
-    },
-    {
-      path: "/otp",  // OTP route
-      element: <OtpPage />,  // OTP page component
     },
     {
       path: "/commoditylisting",  // This is the protected commodity listing route
