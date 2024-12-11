@@ -1,11 +1,12 @@
-import React from 'react';
-import Layout from './layouts/Layout';  // Ensure Layout is properly imported
-import UserLogin from './pages/UserLogin';  // Ensure UserLogin is properly imported
-import Box from '@mui/material/Box';
-import Loadable from './commoncomponents/Loadable/Loadable'; // Ensure Loadable is properly defined
-import './index.css';  // Import Tailwind CSS here
+import React from 'react'
+import { Route, Routes } from 'react-router-dom'
+import Start from './pages/Start'
+import UserLogin from './pages/UserLogin'
+import UserSignup from './pages/UserSignup'
+import Home from './pages/Home'
+import CommodityListing from './pages/CommodityListing'
 
-function App() {
+const App = () => {
   return (
     <Layout>
       <UserLogin />
