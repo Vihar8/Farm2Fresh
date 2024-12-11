@@ -5,9 +5,9 @@ import Footer from '../components/Footer'
 const CommodityListing = () => {
   return (
     <div>
-    <Navbar/>
-      commoditylisting
-      <Footer/>
+
+      commoditylistingdsffa
+    
     </div>
   )
 }
