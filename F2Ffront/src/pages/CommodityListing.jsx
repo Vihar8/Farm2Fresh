@@ -6,7 +6,7 @@ const CommodityListing = () => {
   return (
     <div>
 
-      commoditylistingdsffa
+      Welcome to CommodityListing Page 
     
     </div>
   )

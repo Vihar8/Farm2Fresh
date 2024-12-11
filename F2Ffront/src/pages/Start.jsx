@@ -13,7 +13,7 @@ const Start = () => {
           <p className='text-center text-lg sm:text-xl mt-4'>Access fresh produce straight from the farm to your doorstep.</p>
           
           <Link 
-            to='/login' 
+            to='/home' 
             className='flex items-center justify-center w-full bg-green-600 text-white py-3 rounded-lg mt-8 text-lg sm:text-xl hover:bg-green-700 transition-colors duration-300'
           >
             Continue

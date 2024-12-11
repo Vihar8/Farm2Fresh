@@ -15,20 +15,17 @@ const userSchema = new mongoose.Schema({
         required: true,
         type: String
     },
-    // address: {
-    //     type: String
-    // },
-    // mobile: {
-    //     type: String,
-    //     required: true
-    // },
-    isVerified:{
+    isVerified: {
         type: Boolean,
         default: false
     },
     verificationCode: String,
-},{timestamps:true})
-
+    role: {
+        type: Number,
+        enum: [1, 2], // 1 for client, 2 for admin
+        default: 1 // Default to client
+    }
+}, { timestamps: true });
 
 const userModel = mongoose.model('user', userSchema);
 module.exports = userModel;

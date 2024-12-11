@@ -26,7 +26,7 @@ const Navbar = () => {
 
       {/* Language and Login */}
       <div className="flex space-x-4 items-center">
-        <Link to='login' className="bg-greenCustom hover:bg-green-700 text-white font-medium py-2 px-4 rounded uppercase">
+        <Link to='/' className="bg-greenCustom hover:bg-green-700 text-white font-medium py-2 px-4 rounded uppercase">
           Login
         </Link>
         <Link to='commoditylisting' className="bg-greenCustom hover:bg-green-700 text-white font-medium py-2 px-4 rounded uppercase">

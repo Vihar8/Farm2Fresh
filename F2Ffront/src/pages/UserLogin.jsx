@@ -1,4 +1,4 @@
-// import React from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,6 +11,12 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useContext } from "react";
+import JWTContext from "../context/JWTContext";
+import api from '../api/axios'
+import { LOGIN } from "../context/actions"; // Ensure actions.js is properly structured
 
 const MadeWithLove = () => (
   <Typography variant="body2" color="textSecondary" align="center">
@@ -23,6 +29,32 @@ const MadeWithLove = () => (
 );
 
 const SignInSide = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { dispatch } = useContext(JWTContext); // Use JWT context to dispatch login action
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await api.post("/auth/login", { email, password }); // Adjust API URL as needed
+      const { token, user } = response.data; // Assuming the API returns a JWT token and user info
+
+      // Store token in localStorage
+      localStorage.setItem("serviceToken", token);
+
+      // Dispatch login action to update context
+      dispatch({ type: LOGIN, payload: { user } });
+
+      // Redirect to home page after successful login
+      navigate("/home");
+    } catch (error) {
+      setError("Invalid email or password");
+    }
+  };
+
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
@@ -35,7 +67,7 @@ const SignInSide = () => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form style={{ width: "100%", marginTop: 1 }} noValidate>
+          <form style={{ width: "100%", marginTop: 1 }} noValidate onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -46,6 +78,8 @@ const SignInSide = () => {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -57,6 +91,8 @@ const SignInSide = () => {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -67,11 +103,12 @@ const SignInSide = () => {
               fullWidth
               variant="contained"
               color="primary"
-              style={{ margin: "3,0,2"}}
+              sx={{ margin: "3,0,2" }}
             >
               Sign In
             </Button>
-            <Grid container style={{marginTop: 4}}>
+            {error && <Typography color="error">{error}</Typography>} {/* Display error message */}
+            <Grid container style={{ marginTop: 4 }}>
               <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?

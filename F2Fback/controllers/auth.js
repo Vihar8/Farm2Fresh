@@ -7,12 +7,21 @@ const JWT_SECRET = process.env.JWT_SECRET;
 // Signup Controller
 const signup = async (req, res) => {
     try {
-        const { email, password, name } = req.body;
+        const { email, password, name, role } = req.body;
 
         // Check if all fields are provided
-        if (!email || !password || !name) {
+        if (!email || !password || !name || !role) {
             return res.status(400).json({ success: false, message: "All fields are required" });
         }
+
+          // Check if the role is valid (either 1 for client or 2 for admin)
+          const validRoles = [1, 2]; // 1 = client, 2 = admin
+          if (role && !validRoles.includes(role)) {
+              return res.status(400).json({ success: false, message: "Invalid role provided" });
+          }
+
+             // Default role to 1 (client) if not provided
+        const userRole = role || 1;
 
         // Check if the user already exists
         const existsUser = await userModel.findOne({ email });
@@ -34,6 +43,7 @@ const signup = async (req, res) => {
             verificationCode,
             verificationTokenExpiresAt,
             isVerified: false,
+            role: userRole
         });
         
         console.log(user)
@@ -126,7 +136,8 @@ const login = async (req, res) => {
             user: {
                 id: user._id,
                 name: user.name,
-                email: user.email
+                email: user.email,
+                role: user.role
             }
         });
     } catch (err) {
@@ -134,9 +145,34 @@ const login = async (req, res) => {
         return res.status(500).json({ success: false, message: "Internal server error" });
     }
 };
+const getProfile = async (req, res) => {
+    try {
+        // Access the user from the authenticated request (from the middleware)
+        const user = req.user;
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "User profile fetched successfully",
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+};
 
 module.exports = {
     signup,
     verifyEmail,
-    login
+    login,
+    getProfile
 };
