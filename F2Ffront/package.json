@@ -13,14 +13,8 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.1.10",
-<<<<<<< HEAD
     "@mui/material": "^6.1.10",
     "axios": "^1.7.9",
-=======
-    "@mui/joy": "^5.0.0-beta.48",
-    "@mui/material": "^6.2.0",
-    "@mui/styles": "^6.2.0",
->>>>>>> 5acabfc679b3a2d84f6f7e5d6ea666135d86e209
     "browser-router": "^0.2.0",
     "formik": "^2.4.6",
     "jwt-decode": "^4.0.0",
