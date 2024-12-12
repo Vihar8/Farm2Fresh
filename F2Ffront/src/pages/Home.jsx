@@ -13,9 +13,6 @@ const Home = () => {
         Go to Commodity Listing
       </Link>
 
-
-
-      <Logout/>
     </div>
   );
 };

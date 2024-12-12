@@ -1,175 +1,228 @@
-import Avatar from "@mui/material/Avatar";
-import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import { Grid, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
-import Container from "@mui/material/Container";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import api from "../api/axios";
-
-function MadeWithLove() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Connect With Us at  "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Farm2Fresh
-      </Link>
-      {" and grow your Business."}
-    </Typography>
-  );
-}
+import SnackbarContext from "../context/snackbarcontext";
 
 export default function SignUp() {
-  const [role, setRole] = useState(1); // Default role is 1 (client)
-  const [name, setFirstName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [otp, setOtp] = useState(""); // For OTP input
+  const navigate = useNavigate();
+  const { showSnackbar } = useContext(SnackbarContext);
 
-  const navigate = useNavigate(); // Initialize useNavigate hook
-
-  const handleRoleChange = (event) => {
-    setRole(event.target.value);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const userData = {
-      name,
-      email,
-      password,
-      role,
-    };
-
-    try {
-      const response = await api.post("/auth/signup", userData);
-      console.log("Sign-up successful:", response.data);
-         } catch (error) {
-      console.error("There was an error during the sign-up:", error);
-    }
-  };
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      role: 1, // Default role is Client
+      otp: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .min(3, "Name must be at least 3 characters")
+        .required("Name is required"),
+      email: Yup.string().email("Invalid email address").required("Email is required"),
+      password: Yup.string()
+        .min(6, "Password must be at least 6 characters")
+        .matches(/[A-Z]/, "Password must contain an uppercase letter")
+        .matches(/[a-z]/, "Password must contain a lowercase letter")
+        .matches(/[0-9]/, "Password must contain a number")
+        .matches(/[!@#$%^&*]/, "Password must contain a special character")
+        .required("Password is required"),
+      role: Yup.number().required("Role is required"),
+      otp: Yup.string().length(6, "OTP must be 6 digits"),
+    }),
+    onSubmit: async (values) => {
+      const { otp, ...userData } = values; // Exclude OTP from sign-up payload
+      try {
+        const response = await api.post("/auth/signup", userData);
+        console.log("Sign-up successful:", response.data);
+        showSnackbar("Sign-up successful & verification code sent!", "success");
+        
+      } catch (error) {
+        console.error("Sign-up error:", error);
+        showSnackbar("Sign-up failed. Please try again.", "error");
+      }
+    },
+  });
 
   const handleVerifyOtp = async () => {
+    const { otp } = formik.values;
+    if (!otp) {
+      showSnackbar("Please enter the OTP", "error");
+      return;
+    }
     try {
       const response = await api.post("/auth/verify-email", { code: otp });
       console.log("OTP verified successfully:", response.data);
-      alert("Email verified successfully!"); // Show success message
-      
-      setFirstName("");
-      setEmail("");
-      setPassword("");
-      setOtp("");
-      setRole(1); // Reset to default role (Client)
-      navigate("/home"); // Redirect after successful signup
-
+      showSnackbar("Email verified successfully!", "success");
+      navigate("/home");
     } catch (error) {
-      console.error("Error verifying OTP:", error);
-      alert("Failed to verify OTP. Please try again.");
+      console.error("OTP verification error:", error);
+      showSnackbar("Failed to verify OTP. Please try again.", "error");
     }
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div style={{ display: "flex", alignItems: "center", flexDirection: "column", marginTop: "80px" }}>
-        <Avatar sx={{ margin: 1, backgroundColor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <form onSubmit={handleSubmit} noValidate style={{ marginTop: 30 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} >
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                label="Full Name"
-                autoFocus
-                value={name}
-                onChange={(e) => setFirstName(e.target.value)}
+    <div className="flex h-screen bg-white">
+      {/* Left Side */}
+      <div
+        className="hidden md:flex w-1/2 bg-cover bg-center"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1603360556632-2c5234378b7e?q=80&w=1035&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+        }}
+      ></div>
+
+      {/* Right Side */}
+      <div className="flex flex-col justify-center w-full md:w-1/2 p-10 md:p-20 bg-gray-50">
+        <div className="max-w-lg mx-auto">
+          <div className="flex flex-col items-center mb-10">
+            <div className="w-16 h-16 flex items-center justify-center bg-greenCustom rounded-full shadow-md">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="2"
+                stroke="currentColor"
+                className="w-8 h-8 text-white"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 11c.552 0 1 .448 1 1s-.448 1-1-1-.448-1-1-1zm-1-2V7m0 10v-2m-4.95-4.95l-1.414-1.414m10.828 10.828l1.414 1.414M17 12h2m-10 0H5m8.485-8.485l1.414-1.414m-10.828 10.828l1.414 1.414"
+                />
+              </svg>
+            </div>
+            <h1 className="mt-5 text-3xl font-bold text-black">Sign Up</h1>
+          </div>
+          <form onSubmit={formik.handleSubmit} className="space-y-8">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-black">
+                Full Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                {...formik.getFieldProps("name")}
+                className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${
+                  formik.touched.name && formik.errors.name
+                    ? "border-red-500 focus:ring-red-500"
+                    : "border-gray-300 focus:ring-greenCustom"
+                }`}
               />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                label="Email Address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+              {formik.touched.name && formik.errors.name && (
+                <p className="mt-1 text-sm text-red-500">{formik.errors.name}</p>
+              )}
+            </div>
+
+            {/* Email Field */}
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-black">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                {...formik.getFieldProps("email")}
+                className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${
+                  formik.touched.email && formik.errors.email
+                    ? "border-red-500 focus:ring-red-500"
+                    : "border-gray-300 focus:ring-greenCustom"
+                }`}
               />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                label="Password"
+              {formik.touched.email && formik.errors.email && (
+                <p className="mt-1 text-sm text-red-500">{formik.errors.email}</p>
+              )}
+            </div>
+
+            {/* Password Field */}
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-black">
+                Password
+              </label>
+              <input
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                id="password"
+                {...formik.getFieldProps("password")}
+                className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${
+                  formik.touched.password && formik.errors.password
+                    ? "border-red-500 focus:ring-red-500"
+                    : "border-gray-300 focus:ring-greenCustom"
+                }`}
               />
-            </Grid>
+              {formik.touched.password && formik.errors.password && (
+                <p className="mt-1 text-sm text-red-500">{formik.errors.password}</p>
+              )}
+            </div>
 
-            {/* Role Selection */}
-            <Grid item xs={12}>
-              <FormControl variant="outlined" fullWidth required>
-                <InputLabel>Role</InputLabel>
-                <Select value={role} onChange={handleRoleChange} label="Role">
-                  <MenuItem value={1}>Client</MenuItem>
-                  <MenuItem value={2}>Admin</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
+            {/* Role Field */}
+            <div>
+              <label htmlFor="role" className="block text-sm font-medium text-black">
+                Role
+              </label>
+              <select
+                id="role"
+                {...formik.getFieldProps("role")}
+                className="w-full px-4 py-3 mt-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none"
+              >
+                <option value={1}>Client</option>
+                <option value={2}>Admin</option>
+              </select>
+            </div>
 
-            </Grid>
-          <Button type="submit" fullWidth variant="contained" color="primary" sx={{ marginTop: 3, marginBottom: 3 }}>
-            Sign Up
-          </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link href="/login" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
+            <button
+              type="submit"
+              className="w-full px-4 py-3 text-white bg-greenCustom rounded-lg font-semibold shadow-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 focus:outline-none"
+            >
+              Sign Up
+            </button>
+          </form>
 
-        {/* OTP Input and Verify Button */}
-        <Typography component="h2" variant="h6" style={{ marginTop: 20 }}>
-          Verify Email
-        </Typography>
-        <TextField
-          variant="outlined"
-          fullWidth
-          label="Enter OTP"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-          style={{ marginTop: 10 }}
-        />
-        <Button
-          onClick={handleVerifyOtp}
-          fullWidth
-          variant="contained"
-          color="secondary"
-          sx={{ marginTop: 2 }}
-        >
-          Get Verified
-        </Button>
+          {/* OTP Verification */}
+          <div className="mt-8 space-y-4">
+            <h3 className="text-lg font-semibold text-black">Verify Email</h3>
+            <input
+              type="text"
+              placeholder="Enter OTP"
+              {...formik.getFieldProps("otp")}
+              className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${
+                formik.touched.otp && formik.errors.otp
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-300 focus:ring-greenCustom"
+              }`}
+            />
+            {formik.touched.otp && formik.errors.otp && (
+              <p className="mt-1 text-sm text-red-500">{formik.errors.otp}</p>
+            )}
+            <button
+              onClick={handleVerifyOtp}
+              className="w-full px-4 py-3 text-white bg-greenCustom rounded-lg font-semibold shadow-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 focus:outline-none"
+            >
+              Get Verified
+            </button>
+          </div>
+
+          {/* Sign In Link */}
+          <div className="mt-4 text-center text-sm text-black">
+            Already have an account?{" "}
+            <a href="/login" className="text-greenCustom font-medium hover:underline">
+              Sign in
+            </a>
+          </div>
+
+          <p className="mt-10 text-sm text-center text-black">
+            Join us at{" "}
+            <a
+              href="https://bodyshody.vercel.app/"
+              className="text-greenCustom font-medium hover:underline"
+            >
+              Farm2Fresh
+            </a>{" "}
+            to grow your business.
+          </p>
+        </div>
       </div>
-      <Box mt={5}>
-        <MadeWithLove />
-      </Box>
-    </Container>
+    </div>
   );
 }

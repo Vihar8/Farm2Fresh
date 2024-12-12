@@ -1,27 +1,56 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Start = () => {
   return (
-    <div>
-      <div className='bg-cover bg-center bg-[url(/farmerwithphone.jpg)] h-screen pt-8 flex justify-between flex-col w-full'>
-        <img className='w-28 h-28 ml-8' src="/f2f.jpg" alt="Farm2Fresh Logo" />
-        
-        <div className='bg-white bg-opacity-75 py-4 px-6 sm:px-12 mx-4 sm:mx-16 rounded-lg'>
-          <h2 className='text-[30px] sm:text-[36px] font-bold text-center'>Get Fresh, Get Healthy with Farm2Fresh</h2>
-          
-          <p className='text-center text-lg sm:text-xl mt-4'>Access fresh produce straight from the farm to your doorstep.</p>
-          
-          <Link 
-            to='/home' 
-            className='flex items-center justify-center w-full bg-green-600 text-white py-3 rounded-lg mt-8 text-lg sm:text-xl hover:bg-green-700 transition-colors duration-300'
+    <div className="relative h-screen flex flex-col">
+      {/* Background Image with Gradient Overlay */}
+      <div className="absolute inset-0 bg-cover bg-center bg-[url(/farmerwithphone.jpg)]">
+        <div className="absolute inset-0 bg-gradient-to-t from-green-800 via-green-700 to-green-500 opacity-60"></div>
+      </div>
+
+      {/* Main Content */}
+      <div className="relative z-10 flex flex-col justify-center items-center h-full px-6 text-center">
+        {/* Logo */}
+        <img
+          className="w-32 h-32 mb-6 animate-fadeIn rounded-full"
+          src="/f2f.jpg"
+          alt="Farm2Fresh Logo"
+        />
+
+        {/* Title and Subtitle */}
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-white leading-tight drop-shadow-lg animate-slideInUp">
+          Get Fresh, Get Healthy <br /> with Farm2Fresh
+        </h1>
+        <p className="text-white text-xl sm:text-xl mt-4 max-w-md mx-auto drop-shadow-md animate-slideInUp delay-200">
+          Experience the joy of farm-fresh produce delivered straight to your
+          doorstep.
+        </p>
+
+        {/* Call-to-Action Button */}
+        <Link
+          to="/home"
+          className="mt-8 px-10 py-4 text-lg sm:text-xl font-semibold text-white bg-green-600 rounded-full shadow-md hover:bg-green-700 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-400 transition-all duration-300 animate-slideInUp delay-400"
+          aria-label="Continue to home page"
+        >
+          Continue
+        </Link>
+      </div>
+
+      {/* Footer */}
+      <div className="relative z-10 py-4 text-white text-sm sm:text-base bg-black bg-opacity-50 backdrop-blur-md w-full text-center mt-auto">
+        <p>
+          Empowering Farmers, Enriching Lives -{" "}
+          <a
+            href="https://bodyshody.vercel.app/"
+            className="underline hover:text-green-400"
           >
-            Continue
-          </Link>
-        </div>
+            Visit Farm2Fresh
+          </a>
+        </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Start;

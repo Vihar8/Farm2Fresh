@@ -1,130 +1,161 @@
-import React, { useState } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { useContext } from "react";
 import JWTContext from "../context/JWTContext";
-import api from '../api/axios'
+import api from "../api/axios";
 import { LOGIN } from "../context/actions"; // Ensure actions.js is properly structured
-
-function MadeWithLove() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Connect With Us at  "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Farm2Fresh
-      </Link>
-      {" and grow your Business."}
-    </Typography>
-  );
-}
+import SnackbarContext from "../context/snackbarcontext";
 
 const SignInSide = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
   const { dispatch } = useContext(JWTContext); // Use JWT context to dispatch login action
+  const { showSnackbar } = useContext(SnackbarContext); // Access showSnackbar from context
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // Formik configuration
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email("Invalid email format")
+        .required("Email is required"),
+      password: Yup.string()
+        .min(6, "Password must be at least 6 characters")
+        .required("Password is required"),
+    }),
+    onSubmit: async (values, { setSubmitting, setFieldError }) => {
+      try {
+        const response = await api.post("/auth/login", values); // Adjust API URL as needed
+        const { token, user } = response.data; // Assuming the API returns a JWT token and user info
 
-    try {
-      const response = await api.post("/auth/login", { email, password }); // Adjust API URL as needed
-      const { token, user } = response.data; // Assuming the API returns a JWT token and user info
+        // Store token in localStorage
+        localStorage.setItem("serviceToken", token);
 
-      // Store token in localStorage
-      localStorage.setItem("serviceToken", token);
+        // Dispatch login action to update context
+        dispatch({ type: LOGIN, payload: { user } });
+        showSnackbar("SignIn successfully!", "success");
 
-      // Dispatch login action to update context
-      dispatch({ type: LOGIN, payload: { user } });
-
-      // Redirect to home page after successful login
-      navigate("/home");
-    } catch (error) {
-      setError("Invalid email or password");
-    }
-  };
+        // Redirect to home page after successful login
+        navigate("/home");
+      } catch (error) {
+        setFieldError("email", "Invalid email or password");
+        setFieldError("password", "Invalid email or password");
+        showSnackbar("Failed to SignIn. Please try again.", "error");
+      } finally {
+        setSubmitting(false);
+      }
+    },
+  });
 
   return (
-    <Grid container component="main" sx={{ height: "100vh" }}>
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} sx={{ backgroundImage: "url('')", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center" }} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <Box sx={{ margin: 8, display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <Avatar sx={{ margin: 1, backgroundColor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form style={{ width: "100%", marginTop: 1 }} noValidate onSubmit={handleSubmit}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button
+    <div className="flex h-screen bg-white">
+      {/* Left Side */}
+      <div
+        className="hidden md:flex w-1/2 bg-cover bg-center"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1603360556632-2c5234378b7e?q=80&w=1035&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+        }}
+      ></div>
+
+      {/* Right Side */}
+      <div className="flex flex-col justify-center w-full md:w-1/2 p-10 md:p-20 bg-gray-50">
+        <div className="max-w-lg mx-auto">
+          <div className="flex flex-col items-center mb-10">
+            <div className="w-16 h-16 flex items-center justify-center bg-greenCustom rounded-full shadow-md">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="2"
+                stroke="currentColor"
+                className="w-8 h-8 text-white"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 11c.552 0 1 .448 1 1s-.448 1-1-1-1-.448-1-1 .448-1 1-1zm-1-2V7m0 10v-2m-4.95-4.95l-1.414-1.414m10.828 10.828l1.414 1.414M17 12h2m-10 0H5m8.485-8.485l1.414-1.414m-10.828 10.828l1.414 1.414"
+                />
+              </svg>
+            </div>
+            <h1 className="mt-5 text-3xl font-bold text-black">Sign In</h1>
+          </div>
+          <form onSubmit={formik.handleSubmit} className="space-y-8">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-black">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${
+                  formik.touched.email && formik.errors.email
+                    ? "border-red-500"
+                    : "border-gray-300"
+                }`}
+              />
+              {formik.touched.email && formik.errors.email && (
+                <p className="text-sm text-red-500">{formik.errors.email}</p>
+              )}
+            </div>
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-black">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${
+                  formik.touched.password && formik.errors.password
+                    ? "border-red-500"
+                    : "border-gray-300"
+                }`}
+              />
+              {formik.touched.password && formik.errors.password && (
+                <p className="text-sm text-red-500">{formik.errors.password}</p>
+              )}
+            </div>
+            <button
               type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              sx={{ margin: "3,0,2" }}
+              disabled={formik.isSubmitting}
+              className="w-full px-4 py-3 text-white bg-greenCustom rounded-lg font-semibold shadow-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 focus:outline-none"
             >
-              Sign In
-            </Button>
-            {error && <Typography color="error">{error}</Typography>} {/* Display error message */}
-            <Grid container style={{ marginTop: 4 }}>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/usersignup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-            <Box mt={5}>
-              <MadeWithLove />
-            </Box>
+              {formik.isSubmitting ? "Signing In..." : "Sign In"}
+            </button>
           </form>
-        </Box>
-      </Grid>
-    </Grid>
+          <div className="flex justify-between items-center mt-8 text-sm">
+            <a href="#" className="text-greenCustom font-medium hover:underline">
+              Forgot password?
+            </a>
+            <a href="/usersignup" className="text-greenCustom font-medium hover:underline">
+              Don't have an account? Sign Up
+            </a>
+          </div>
+          <p className="mt-10 text-sm text-center text-black">
+            Connect With Us at{" "}
+            <a
+              href="https://bodyshody.vercel.app/"
+              className="text-greenCustom font-medium hover:underline"
+            >
+              Farm2Fresh
+            </a>{" "}
+            and grow your Business.
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 

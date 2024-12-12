@@ -9,7 +9,7 @@ export const SnackbarProvider = ({ children }) => {
 
   const showSnackbar = (message, color = 'default') => {
     setSnackbar({ open: true, message, color });
-    setTimeout(() => setSnackbar({ ...snackbar, open: false }), 3000);
+    setTimeout(() => setSnackbar({ ...snackbar, open: false }), 4000);
   };
 
   return (
@@ -17,7 +17,7 @@ export const SnackbarProvider = ({ children }) => {
       {children}
       <Snackbar
         open={snackbar.open}
-        autoHideDuration={3000}
+        autoHideDuration={4000}
         onClose={() => setSnackbar({ ...snackbar, open: false })}
       >
         <SnackbarContent
