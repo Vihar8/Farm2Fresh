@@ -29,6 +29,7 @@ export default function SignUp() {
       confirmPassword: "", // New field for confirm password
       role: 1, // Default role is Client
       otp: "",
+      user_type: "buyer",
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -47,6 +48,7 @@ export default function SignUp() {
         // .required("Confirm Password is required"),
       role: Yup.number().required("Role is required"),
       otp: Yup.string().length(6, "OTP must be 6 digits"),
+      user_type: Yup.string().required("Business type is required"), // Validation for businessType
     }),
     onSubmit: async (values) => {
       const { otp, ...userData } = values; // Exclude OTP from sign-up payload
@@ -206,6 +208,7 @@ export default function SignUp() {
               )}
             </div> */}
             {/* Role Field */}
+            <div className="flex space-x-4">
             <div>
               <label htmlFor="role" className="block text-sm font-medium text-black">
                 Role
@@ -218,6 +221,20 @@ export default function SignUp() {
                 <option value={1}>Client</option>
                 <option value={2}>Admin</option>
               </select>
+            </div>
+            <div className="flex-1">
+                <label htmlFor="user_type" className="block text-sm font-medium text-black">
+                  Business Type
+                </label>
+                <select
+                  id="user_type"
+                  {...formik.getFieldProps("user_type")}
+                  className="w-full px-4 py-3 mt-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none"
+                >
+                  <option value="buyer">Buyer</option>
+                  <option value="seller">Seller</option>
+                </select>
+              </div>
             </div>
 
             <button

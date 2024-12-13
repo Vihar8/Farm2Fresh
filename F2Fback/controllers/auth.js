@@ -5,22 +5,29 @@ const jwt = require('jsonwebtoken')
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // Signup Controller
+// Signup Controller
 const signup = async (req, res) => {
     try {
-        const { email, password, name, role } = req.body;
+        const { email, password, name, role, user_type } = req.body;
 
         // Check if all fields are provided
-        if (!email || !password || !name || !role) {
+        if (!email || !password || !name || !role || !user_type) {
             return res.status(400).json({ success: false, message: "All fields are required" });
         }
 
-          // Check if the role is valid (either 1 for client or 2 for admin)
-          const validRoles = [1, 2]; // 1 = client, 2 = admin
-          if (role && !validRoles.includes(role)) {
-              return res.status(400).json({ success: false, message: "Invalid role provided" });
-          }
+        // Check if the role is valid (either 1 for client or 2 for admin)
+        const validRoles = [1, 2]; // 1 = client, 2 = admin
+        if (role && !validRoles.includes(role)) {
+            return res.status(400).json({ success: false, message: "Invalid role provided" });
+        }
 
-             // Default role to 1 (client) if not provided
+        // Check if the user_type is valid (either "buyer" or "seller")
+        const validUserTypes = ['buyer', 'seller']; // buyer or seller
+        if (!validUserTypes.includes(user_type)) {
+            return res.status(400).json({ success: false, message: "Invalid user_type provided" });
+        }
+
+        // Default role to 1 (client) if not provided
         const userRole = role || 1;
 
         // Check if the user already exists
@@ -28,6 +35,7 @@ const signup = async (req, res) => {
         if (existsUser) {
             return res.status(400).json({ success: false, message: "User already exists" });
         }
+
         // Hash the password
         const hashedPassword = bcryptjs.hashSync(password, 10);
         
@@ -43,10 +51,11 @@ const signup = async (req, res) => {
             verificationCode,
             verificationTokenExpiresAt,
             isVerified: false,
-            role: userRole
+            role: userRole,
+            user_type // Add user_type to the user object
         });
         
-        console.log(user)
+        console.log(user);
         await user.save();
 
         // Send the verification email
@@ -58,6 +67,7 @@ const signup = async (req, res) => {
         return res.status(500).json({ success: false, message: "Internal server error" });
     }
 };
+
 
 // Verify Email Controller
 const verifyEmail = async (req, res) => {
@@ -125,7 +135,7 @@ const login = async (req, res) => {
         const token = jwt.sign(
             { id: user._id, email: user.email, name: user.name },
             JWT_SECRET,
-            { expiresIn: '1h' } // Token expires in 1 hour
+            { expiresIn: '2h' } // Token expires in 1 hour
         );
 
         // Respond with the token and user details
