@@ -1,19 +1,32 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import api from "../api/axios";
 import SnackbarContext from "../context/snackbarcontext";
+import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
+
 
 export default function SignUp() {
   const navigate = useNavigate();
   const { showSnackbar } = useContext(SnackbarContext);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // for Confirm Password visibility
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword((prev) => !prev);
+  };
 
   const formik = useFormik({
     initialValues: {
       name: "",
       email: "",
       password: "",
+      confirmPassword: "", // New field for confirm password
       role: 1, // Default role is Client
       otp: "",
     },
@@ -29,6 +42,9 @@ export default function SignUp() {
         .matches(/[0-9]/, "Password must contain a number")
         .matches(/[!@#$%^&*]/, "Password must contain a special character")
         .required("Password is required"),
+        confirmPassword: Yup.string()
+        .oneOf([Yup.ref("password"), null], "Passwords must match") // Ensures confirmPassword matches password
+        .required("Confirm Password is required"),
       role: Yup.number().required("Role is required"),
       otp: Yup.string().length(6, "OTP must be 6 digits"),
     }),
@@ -105,11 +121,10 @@ export default function SignUp() {
                 type="text"
                 id="name"
                 {...formik.getFieldProps("name")}
-                className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${
-                  formik.touched.name && formik.errors.name
+                className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${formik.touched.name && formik.errors.name
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-300 focus:ring-greenCustom"
-                }`}
+                  }`}
               />
               {formik.touched.name && formik.errors.name && (
                 <p className="mt-1 text-sm text-red-500">{formik.errors.name}</p>
@@ -125,11 +140,10 @@ export default function SignUp() {
                 type="email"
                 id="email"
                 {...formik.getFieldProps("email")}
-                className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${
-                  formik.touched.email && formik.errors.email
+                className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${formik.touched.email && formik.errors.email
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-300 focus:ring-greenCustom"
-                }`}
+                  }`}
               />
               {formik.touched.email && formik.errors.email && (
                 <p className="mt-1 text-sm text-red-500">{formik.errors.email}</p>
@@ -137,25 +151,60 @@ export default function SignUp() {
             </div>
 
             {/* Password Field */}
-            <div>
+            <div className="mb-4">
               <label htmlFor="password" className="block text-sm font-medium text-black">
                 Password
               </label>
-              <input
-                type="password"
-                id="password"
-                {...formik.getFieldProps("password")}
-                className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${
-                  formik.touched.password && formik.errors.password
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300 focus:ring-greenCustom"
-                }`}
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  {...formik.getFieldProps("password")}
+                  className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${formik.touched.password && formik.errors.password
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:ring-greenCustom"
+                    }`}
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+                >
+                  {showPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
+                </button>
+              </div>
               {formik.touched.password && formik.errors.password && (
                 <p className="mt-1 text-sm text-red-500">{formik.errors.password}</p>
               )}
             </div>
 
+            {/* Confirm Password Field
+            <div className="mb-4">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-black">
+                Confirm Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  {...formik.getFieldProps("confirmPassword")}
+                  className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${formik.touched.confirmPassword && formik.errors.confirmPassword
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:ring-greenCustom"
+                    }`}
+                />
+                <button
+                  type="button"
+                  onClick={toggleConfirmPasswordVisibility}
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+                >
+                  {showConfirmPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
+                </button>
+              </div>
+              {formik.touched.confirmPassword && formik.errors.confirmPassword && (
+                <p className="mt-1 text-sm text-red-500">{formik.errors.confirmPassword}</p>
+              )}
+            </div> */}
             {/* Role Field */}
             <div>
               <label htmlFor="role" className="block text-sm font-medium text-black">
@@ -226,3 +275,5 @@ export default function SignUp() {
     </div>
   );
 }
+
+

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -7,11 +7,18 @@ import JWTContext from "../context/JWTContext";
 import api from "../api/axios";
 import { LOGIN } from "../context/actions"; // Ensure actions.js is properly structured
 import SnackbarContext from "../context/snackbarcontext";
+import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 
 const SignInSide = () => {
   const navigate = useNavigate();
   const { dispatch } = useContext(JWTContext); // Use JWT context to dispatch login action
   const { showSnackbar } = useContext(SnackbarContext); // Access showSnackbar from context
+  const [showPassword, setShowPassword] = useState(false);
+
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   // Formik configuration
   const formik = useFormik({
@@ -106,23 +113,32 @@ const SignInSide = () => {
                 <p className="text-sm text-red-500">{formik.errors.email}</p>
               )}
             </div>
-            <div>
+            <div className="mb-4">
               <label htmlFor="password" className="block text-sm font-medium text-black">
                 Password
               </label>
+              <div className="relative">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${
+                className={`block w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${
                   formik.touched.password && formik.errors.password
                     ? "border-red-500"
                     : "border-gray-300"
                 }`}
               />
+              <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+                >
+                  {showPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
+                </button>
+                </div>
               {formik.touched.password && formik.errors.password && (
                 <p className="text-sm text-red-500">{formik.errors.password}</p>
               )}
@@ -160,3 +176,5 @@ const SignInSide = () => {
 };
 
 export default SignInSide;
+
+
