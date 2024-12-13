@@ -122,9 +122,6 @@ const Navbar = () => {
           <Link to="/mandi-prices" className="text-black hover:text-greenCustom font-medium">
             Mandi Prices
           </Link>
-          <Link to="/pricing" className="text-black hover:text-greenCustom font-medium">
-            Pricing
-          </Link>
         </div>
 
 
@@ -166,7 +163,7 @@ const Navbar = () => {
             </>
           )}
           <Link
-            to="commoditylisting"
+            to="/commoditylisting"
             className="bg-greenCustom hover:bg-green-700 text-white font-medium py-2 px-4 rounded uppercase"
           >
             Sell / Buy
@@ -206,9 +203,6 @@ const Navbar = () => {
             </ListItem>
             <ListItem button component={Link} to="/mandi-prices" onClick={handleDrawerToggle}>
               <ListItemText primary="Mandi Prices" />
-            </ListItem>
-            <ListItem button component={Link} to="/pricing" onClick={handleDrawerToggle}>
-              <ListItemText primary="Pricing" />
             </ListItem>
           </List>
 
