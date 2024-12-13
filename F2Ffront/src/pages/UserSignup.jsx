@@ -42,9 +42,9 @@ export default function SignUp() {
         .matches(/[0-9]/, "Password must contain a number")
         .matches(/[!@#$%^&*]/, "Password must contain a special character")
         .required("Password is required"),
-        confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password"), null], "Passwords must match") // Ensures confirmPassword matches password
-        .required("Confirm Password is required"),
+        // confirmPassword: Yup.string()
+        // .oneOf([Yup.ref("password"), null], "Passwords must match") // Ensures confirmPassword matches password
+        // .required("Confirm Password is required"),
       role: Yup.number().required("Role is required"),
       otp: Yup.string().length(6, "OTP must be 6 digits"),
     }),
