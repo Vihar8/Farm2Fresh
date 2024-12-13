@@ -104,12 +104,12 @@ const Navbar = () => {
     <AppBar position="static" color="inherit" className="shadow-md">
       <Toolbar className="flex justify-between items-center">
         {/* Logo */}
-        <div className="flex items-center space-x-2">
-          <img className="w-32" src="./f2f.jpg" alt="logo" />
+        <Link to="/home"> <div className="flex items-center space-x-2">
+         <img className="w-32" src="./f2f.jpg" alt="logo" />
           <h1 className="text-lg font-bold text-greenCustom">
             Farm<span className="text-black">2</span><span className="text-greenCustom">Fresh</span>
           </h1>
-        </div>
+        </div></Link>
 
         {/* Desktop Links */}
         <div className="hidden md:flex space-x-4">
