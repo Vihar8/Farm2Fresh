@@ -136,7 +136,7 @@ const Navbar = () => {
         <div className="flex space-x-4 items-center">
           {!isLoggedIn ? (
             <Link
-              to="/"
+              to="/login"
               className="bg-greenCustom hover:bg-green-700 text-white font-medium py-2 px-4 rounded uppercase"
             >
               Login
@@ -209,7 +209,7 @@ const Navbar = () => {
           {/* Login/Profile in mobile view */}
           {!isLoggedIn ? (
             <Link
-              to="/"
+              to="/login"
               className="bg-greenCustom hover:bg-green-700 text-white font-medium py-2 px-4 rounded uppercase text-center"
               onClick={handleDrawerToggle}
             >
