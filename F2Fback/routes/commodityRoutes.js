@@ -4,7 +4,7 @@ const upload = require('../middlewares/multerConfig'); // Path to multer configu
 const commodityController = require('../controllers/commodityController');
 const {authenticateUser} = require('../middlewares/authMiddleware')
 // Route to add a new commodity
-router.post('/', authenticateUser, upload.array('images', 2), commodityController.addCommodity);
+router.post('/commodities', authenticateUser, upload.array('images', 2), commodityController.addCommodity);
 
 // Route to get all commodities
 router.get('/', authenticateUser, commodityController.getCommodities);

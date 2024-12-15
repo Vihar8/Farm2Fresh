@@ -31,7 +31,7 @@ app.use('/uploads', express.static('uploads'));
 
 // Use routes
 app.use('/auth' , authRoutes);
-app.use('/api/commodities', commodityRoutes);
+app.use('/api', commodityRoutes);
 app.use('/api/enquiryform', enquiryform);
 
 // Start the server on port 3000
