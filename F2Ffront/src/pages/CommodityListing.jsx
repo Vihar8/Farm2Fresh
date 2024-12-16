@@ -107,16 +107,26 @@ const CommodityForm = () => {
   // Static Data
   const stateOptions = [
     'Maharashtra', 'Karnataka', 'Tamil Nadu', 
-    'Uttar Pradesh', 'Gujarat'
+    'Uttar Pradesh', 'Gujarat', 'Rajasthan', 
+    'Punjab', 'Kerala', 'West Bengal', 
+    'Madhya Pradesh', 'Bihar', 'Odisha'
   ];
-
+  
   const districtMap = {
-    'Maharashtra': ['Mumbai', 'Pune', 'Nagpur'],
-    'Karnataka': ['Bangalore', 'Mysore', 'Hubli'],
-    'Tamil Nadu': ['Chennai', 'Coimbatore', 'Madurai'],
-    'Uttar Pradesh': ['Lucknow', 'Kanpur', 'Varanasi'],
-    'Gujarat': ['Ahmedabad', 'Surat', 'Vadodara']
+    'Maharashtra': ['Mumbai', 'Pune', 'Nagpur', 'Nashik', 'Aurangabad'],
+    'Karnataka': ['Bangalore', 'Mysore', 'Hubli', 'Mangalore', 'Belgaum'],
+    'Tamil Nadu': ['Chennai', 'Coimbatore', 'Madurai', 'Tiruchirapalli', 'Salem'],
+    'Uttar Pradesh': ['Lucknow', 'Kanpur', 'Varanasi', 'Agra', 'Meerut'],
+    'Gujarat': ['Ahmedabad', 'Surat', 'Vadodara', 'Rajkot', 'Bhavnagar'],
+    'Rajasthan': ['Jaipur', 'Jodhpur', 'Udaipur', 'Ajmer', 'Bikaner'],
+    'Punjab': ['Amritsar', 'Ludhiana', 'Jalandhar', 'Patiala', 'Bathinda'],
+    'Kerala': ['Thiruvananthapuram', 'Kochi', 'Kozhikode', 'Thrissur', 'Alappuzha'],
+    'West Bengal': ['Kolkata', 'Darjeeling', 'Asansol', 'Siliguri', 'Howrah'],
+    'Madhya Pradesh': ['Bhopal', 'Indore', 'Gwalior', 'Jabalpur', 'Ujjain'],
+    'Bihar': ['Patna', 'Gaya', 'Bhagalpur', 'Muzaffarpur', 'Darbhanga'],
+    'Odisha': ['Bhubaneswar', 'Cuttack', 'Rourkela', 'Puri', 'Berhampur']
   };
+  
 
   const totalInUnits = [
     { value: 'kg', label: 'Kilograms (kg)' },
