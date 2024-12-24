@@ -1,17 +1,16 @@
 const sendVerificationCode = require("../middlewares/email");
 const userModel = require("../models/user");
 const bcryptjs = require('bcryptjs');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // Signup Controller
-// Signup Controller
 const signup = async (req, res) => {
     try {
-        const { email, password, name, role, user_type } = req.body;
+        const { email, password, name, role, user_type, mobile } = req.body; // Added mobile
 
         // Check if all fields are provided
-        if (!email || !password || !name || !role || !user_type) {
+        if (!email || !password || !name || !role || !user_type || !mobile) { // Added check for mobile
             return res.status(400).json({ success: false, message: "All fields are required" });
         }
 
@@ -36,6 +35,12 @@ const signup = async (req, res) => {
             return res.status(400).json({ success: false, message: "User already exists" });
         }
 
+        // Check if the mobile number already exists (optional)
+        const existsMobile = await userModel.findOne({ mobile });
+        if (existsMobile) {
+            return res.status(400).json({ success: false, message: "Mobile number already registered" });
+        }
+
         // Hash the password
         const hashedPassword = bcryptjs.hashSync(password, 10);
         
@@ -52,7 +57,8 @@ const signup = async (req, res) => {
             verificationTokenExpiresAt,
             isVerified: false,
             role: userRole,
-            user_type // Add user_type to the user object
+            user_type, // Add user_type to the user object
+            mobile // Save mobile number
         });
         
         console.log(user);
@@ -68,8 +74,7 @@ const signup = async (req, res) => {
     }
 };
 
-
-// Verify Email Controller
+// Verify Email Controller (No change here)
 const verifyEmail = async (req, res) => {
     try {
         const { code } = req.body;
@@ -100,7 +105,7 @@ const verifyEmail = async (req, res) => {
     }
 };
 
-
+// Login Controller (No change needed for mobile field)
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -135,7 +140,7 @@ const login = async (req, res) => {
         const token = jwt.sign(
             { id: user._id, email: user.email, name: user.name },
             JWT_SECRET,
-            { expiresIn: '2h' } // Token expires in 1 hour
+            { expiresIn: '2h' } // Token expires in 2 hours
         );
 
         // Respond with the token and user details
@@ -147,7 +152,8 @@ const login = async (req, res) => {
                 id: user._id,
                 name: user.name,
                 email: user.email,
-                role: user.role
+                role: user.role,
+                mobile: user.mobile // Include mobile in the response
             }
         });
     } catch (err) {
@@ -155,6 +161,8 @@ const login = async (req, res) => {
         return res.status(500).json({ success: false, message: "Internal server error" });
     }
 };
+
+// Get Profile Controller (No change needed for mobile)
 const getProfile = async (req, res) => {
     try {
         // Access the user from the authenticated request (from the middleware)
@@ -171,7 +179,8 @@ const getProfile = async (req, res) => {
                 id: user._id,
                 name: user.name,
                 email: user.email,
-                role: user.role
+                role: user.role,
+                mobile: user.mobile // Include mobile in the response if needed
             }
         });
     } catch (error) {
