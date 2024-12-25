@@ -43,11 +43,11 @@ const signup = async (req, res) => {
 
         // Hash the password
         const hashedPassword = bcryptjs.hashSync(password, 10);
-        
+
         // Generate a verification code
         const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
         const verificationTokenExpiresAt = Date.now() + 15 * 60 * 1000; // 15 minutes expiry time
-        
+
         // Create a new user
         const user = new userModel({
             email,
@@ -60,7 +60,7 @@ const signup = async (req, res) => {
             user_type, // Add user_type to the user object
             mobile // Save mobile number
         });
-        
+
         console.log(user);
         await user.save();
 
@@ -78,7 +78,7 @@ const signup = async (req, res) => {
 const verifyEmail = async (req, res) => {
     try {
         const { code } = req.body;
-        
+
         // Log the received code for debugging
         console.log("Received verification code:", code);
 
