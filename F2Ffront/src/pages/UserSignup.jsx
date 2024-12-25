@@ -126,8 +126,8 @@ export default function SignUp() {
                 id="name"
                 {...formik.getFieldProps("name")}
                 className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${formik.touched.name && formik.errors.name
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300 focus:ring-greenCustom"
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-300 focus:ring-greenCustom"
                   }`}
               />
               {formik.touched.name && formik.errors.name && (
@@ -145,8 +145,8 @@ export default function SignUp() {
                 id="email"
                 {...formik.getFieldProps("email")}
                 className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${formik.touched.email && formik.errors.email
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300 focus:ring-greenCustom"
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-300 focus:ring-greenCustom"
                   }`}
               />
               {formik.touched.email && formik.errors.email && (
@@ -164,8 +164,8 @@ export default function SignUp() {
                 id="mobile"
                 {...formik.getFieldProps("mobile")}
                 className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${formik.touched.mobile && formik.errors.mobile
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300 focus:ring-greenCustom"
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-300 focus:ring-greenCustom"
                   }`}
               />
               {formik.touched.mobile && formik.errors.mobile && (
@@ -184,8 +184,8 @@ export default function SignUp() {
                   id="password"
                   {...formik.getFieldProps("password")}
                   className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${formik.touched.password && formik.errors.password
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-gray-300 focus:ring-greenCustom"
+                    ? "border-red-500 focus:ring-red-500"
+                    : "border-gray-300 focus:ring-greenCustom"
                     }`}
                 />
                 <button
@@ -212,8 +212,8 @@ export default function SignUp() {
                   id="confirmPassword"
                   {...formik.getFieldProps("confirmPassword")}
                   className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${formik.touched.confirmPassword && formik.errors.confirmPassword
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-gray-300 focus:ring-greenCustom"
+                    ? "border-red-500 focus:ring-red-500"
+                    : "border-gray-300 focus:ring-greenCustom"
                     }`}
                 />
                 <button
@@ -263,7 +263,7 @@ export default function SignUp() {
               type="submit"
               className="w-full px-4 py-3 text-white bg-greenCustom rounded-lg font-semibold shadow-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 focus:outline-none"
             >
-              Sign Up
+              To Sign Up Verify Your Email
             </button>
           </form>
 
@@ -274,11 +274,10 @@ export default function SignUp() {
               type="text"
               placeholder="Enter OTP"
               {...formik.getFieldProps("otp")}
-              className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${
-                formik.touched.otp && formik.errors.otp
+              className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${formik.touched.otp && formik.errors.otp
                   ? "border-red-500 focus:ring-red-500"
                   : "border-gray-300 focus:ring-greenCustom"
-              }`}
+                }`}
             />
             {formik.touched.otp && formik.errors.otp && (
               <p className="mt-1 text-sm text-red-500">{formik.errors.otp}</p>
@@ -287,7 +286,7 @@ export default function SignUp() {
               onClick={handleVerifyOtp}
               className="w-full px-4 py-3 text-white bg-greenCustom rounded-lg font-semibold shadow-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 focus:outline-none"
             >
-              Get Verified
+              Sign Up
             </button>
           </div>
 
