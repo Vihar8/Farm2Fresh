@@ -77,6 +77,8 @@ const BuyerCommodities = () => {
               <div className="ml-3 flex-grow">
                 <p className="text-sm font-medium text-gray-800">{item.buyer.name}</p>
                 <p className="text-xs text-gray-500">{item.buyer.role || 'Buyer'}</p>
+                {/* Mobile Number */}
+                <p className="text-xs text-gray-600">{item.buyer.mobile}</p> {/* Mobile Number */}
               </div>
               <div className="flex gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#28a745" width="32px" height="32px">

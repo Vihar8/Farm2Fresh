@@ -71,14 +71,10 @@ const SellerCommodities = () => {
             </div>
             {/* Seller Info and Contact */}
             <div className="flex items-center px-4 py-2 bg-gray-50">
-              {/* <img
-                src={item.seller.profileImage || '/default-avatar.png'}
-                alt={item.seller.name}
-                className="w-10 h-10 rounded-full border border-gray-300"
-              /> */}
               <div className="ml-3 flex-grow">
                 <p className="text-sm font-medium text-gray-800">{item.seller.name}</p>
                 <p className="text-xs text-gray-500">{item.seller.role || 'Farmer'}</p>
+                <p className="text-xs text-gray-500">Mobile: {item.seller.mobile || 'N/A'}</p> {/* Mobile number */}
               </div>
               <div className="flex gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#28a745" width="32px" height="32px">

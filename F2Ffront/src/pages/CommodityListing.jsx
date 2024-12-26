@@ -8,10 +8,10 @@ import { CheckCircle, Upload, AlertCircle, X } from 'lucide-react';
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      hasError: false, 
+    this.state = {
+      hasError: false,
       error: null,
-      errorInfo: null 
+      errorInfo: null
     };
   }
 
@@ -37,13 +37,13 @@ class ErrorBoundary extends React.Component {
               {this.state.error ? this.state.error.toString() : 'Something went wrong'}
             </p>
             <div className="flex space-x-4 justify-center">
-              <button 
+              <button
                 onClick={() => window.location.reload()}
                 className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
               >
                 Reload Page
               </button>
-              <button 
+              <button
                 onClick={() => this.setState({ hasError: false })}
                 className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition"
               >
@@ -59,6 +59,14 @@ class ErrorBoundary extends React.Component {
   }
 }
 
+const handleQuantityChange = (e, setFieldValue) => {
+  const value = e.target.value;
+
+  // Check if the value is a valid number and >= 0 (including decimals)
+  if (value === "" || !isNaN(value) && parseFloat(value) >= 0) {
+    setFieldValue(e.target.name, value); // Update the field value directly
+  }
+};
 // Commodity Form Component
 const CommodityForm = () => {
   // Validation Schema
@@ -106,12 +114,12 @@ const CommodityForm = () => {
 
   // Static Data
   const stateOptions = [
-    'Maharashtra', 'Karnataka', 'Tamil Nadu', 
-    'Uttar Pradesh', 'Gujarat', 'Rajasthan', 
-    'Punjab', 'Kerala', 'West Bengal', 
+    'Maharashtra', 'Karnataka', 'Tamil Nadu',
+    'Uttar Pradesh', 'Gujarat', 'Rajasthan',
+    'Punjab', 'Kerala', 'West Bengal',
     'Madhya Pradesh', 'Bihar', 'Odisha'
   ];
-  
+
   const districtMap = {
     'Maharashtra': ['Mumbai', 'Pune', 'Nagpur', 'Nashik', 'Aurangabad'],
     'Karnataka': ['Bangalore', 'Mysore', 'Hubli', 'Mangalore', 'Belgaum'],
@@ -126,7 +134,7 @@ const CommodityForm = () => {
     'Bihar': ['Patna', 'Gaya', 'Bhagalpur', 'Muzaffarpur', 'Darbhanga'],
     'Odisha': ['Bhubaneswar', 'Cuttack', 'Rourkela', 'Puri', 'Berhampur']
   };
-  
+
 
   const totalInUnits = [
     { value: 'kg', label: 'Kilograms (kg)' },
@@ -138,7 +146,7 @@ const CommodityForm = () => {
   // File Upload Handler
   const handleFileUpload = (event, setFieldValue) => {
     const uploadedFiles = Array.from(event.target.files);
-    
+
     if (uploadedFiles.length + files.length > 2) {
       setSnackbar({
         open: true,
@@ -162,7 +170,7 @@ const CommodityForm = () => {
   // Submit Handler
   const handleSubmit = async (values, { resetForm }) => {
     const formData = new FormData();
-    
+
     Object.keys(values).forEach(key => {
       if (key !== 'images') {
         formData.append(key, values[key]);
@@ -204,14 +212,14 @@ const CommodityForm = () => {
     if (!open) return null;
 
     return (
-      <div 
+      <div
         className={`
           fixed bottom-4 left-1/2 transform -translate-x-1/2 
           px-4 py-3 rounded-lg shadow-lg z-50
           flex items-center space-x-3
           w-96 max-w-full
-          ${type === 'success' 
-            ? 'bg-green-600 text-white' 
+          ${type === 'success'
+            ? 'bg-green-600 text-white'
             : 'bg-red-600 text-white'
           }
           animate-slide-up
@@ -220,8 +228,8 @@ const CommodityForm = () => {
         <div className="absolute bottom-0 left-0 h-1 bg-white/30 animate-progress-bar"></div>
         {icon}
         <span className="flex-grow">{message}</span>
-        <button 
-          onClick={onClose} 
+        <button
+          onClick={onClose}
           className="hover:bg-white/20 rounded-full p-1 transition-colors"
         >
           <X size={20} />
@@ -236,7 +244,7 @@ const CommodityForm = () => {
         <h2 className="text-3xl font-bold text-center text-[#2CB21A] mb-6">
           Add New Commodity
         </h2>
-        
+
         <Formik
           initialValues={{
             commodity: '',
@@ -251,12 +259,12 @@ const CommodityForm = () => {
           validationSchema={CommoditySchema}
           onSubmit={handleSubmit}
         >
-          {({ 
-            values, 
-            errors, 
-            touched, 
+          {({
+            values,
+            errors,
+            touched,
             setFieldValue,
-            handleChange 
+            handleChange
           }) => (
             <Form className="space-y-4">
               {/* Commodity Name Input */}
@@ -270,8 +278,8 @@ const CommodityForm = () => {
                     w-full px-3 py-2.5 border-2 rounded-lg 
                     transition-all duration-300 ease-in-out
                     focus:outline-none focus:ring-2 focus:ring-[#2CB21A]/50
-                    ${errors.commodity && touched.commodity 
-                      ? 'border-red-500' 
+                    ${errors.commodity && touched.commodity
+                      ? 'border-red-500'
                       : 'border-[#2CB21A]'
                     }
                   `}
@@ -294,8 +302,8 @@ const CommodityForm = () => {
                     w-full px-3 py-2.5 border-2 rounded-lg 
                     transition-all duration-300 ease-in-out
                     focus:outline-none focus:ring-2 focus:ring-[#2CB21A]/50
-                    ${errors.varietyType && touched.varietyType 
-                      ? 'border-red-500' 
+                    ${errors.varietyType && touched.varietyType
+                      ? 'border-red-500'
                       : 'border-[#2CB21A]'
                     }
                   `}
@@ -318,8 +326,8 @@ const CommodityForm = () => {
                   }}
                   className={`
                     w-full px-3 py-2.5 border-2 rounded-lg
-                    ${errors.state && touched.state 
-                      ? 'border-red-500' 
+                    ${errors.state && touched.state
+                      ? 'border-red-500'
                       : 'border-[#2CB21A]'
                     }
                   `}
@@ -339,8 +347,8 @@ const CommodityForm = () => {
                   disabled={!values.state}
                   className={`
                     w-full px-3 py-2.5 border-2 rounded-lg
-                    ${errors.district && touched.district 
-                      ? 'border-red-500' 
+                    ${errors.district && touched.district
+                      ? 'border-red-500'
                       : 'border-[#2CB21A]'
                     }
                     ${!values.state ? 'opacity-50 cursor-not-allowed' : ''}
@@ -362,25 +370,19 @@ const CommodityForm = () => {
                   name="quantity"
                   placeholder="Quantity"
                   value={values.quantity}
-                  onChange={handleChange}
-                  className={`
-                    w-full px-3 py-2.5 border-2 rounded-lg
-                    ${errors.quantity && touched.quantity 
-                      ? 'border-red-500' 
-                      : 'border-[#2CB21A]'
-                    }
-                  `}
+                  onChange={(e) => handleQuantityChange(e, setFieldValue)}  // Custom handler to prevent negative numbers
+                  className={`w-full px-3 py-2.5 border-2 rounded-lg ${errors.quantity && touched.quantity ? 'border-red-500' : 'border-[#2CB21A]'}`}
                 />
                 <input
                   type="number"
                   name="price"
                   placeholder="Price"
                   value={values.price}
-                  onChange={handleChange}
+                  onChange={(e) => handleQuantityChange(e, setFieldValue)}
                   className={`
                     w-full px-3 py-2.5 border-2 rounded-lg
-                    ${errors.price && touched.price 
-                      ? 'border-red-500' 
+                    ${errors.price && touched.price
+                      ? 'border-red-500'
                       : 'border-[#2CB21A]'
                     }
                   `}
@@ -395,8 +397,8 @@ const CommodityForm = () => {
                   onChange={handleChange}
                   className={`
                     w-full px-3 py-2.5 border-2 rounded-lg
-                    ${errors.totalIn && touched.totalIn 
-                      ? 'border-red-500' 
+                    ${errors.totalIn && touched.totalIn
+                      ? 'border-red-500'
                       : 'border-[#2CB21A]'
                     }
                   `}
@@ -425,8 +427,8 @@ const CommodityForm = () => {
                   className="hidden"
                   id="file-upload"
                 />
-                <label 
-                  htmlFor="file-upload" 
+                <label
+                  htmlFor="file-upload"
                   className="
                     flex items-center justify-center 
                     border-2 border-dashed 
@@ -441,19 +443,19 @@ const CommodityForm = () => {
                   <span>Upload Images (Max 2)</span>
                 </label>
 
-                               {/* Images Preview */}
-                               {files.length > 0 && (
+                {/* Images Preview */}
+                {files.length > 0 && (
                   <div className="mt-3 flex space-x-2">
                     {files.map((file, index) => (
                       <div key={index} className="relative">
-                        <img 
-                          src={URL.createObjectURL(file)} 
-                          alt={`upload-${index}`} 
-                          className="w-16 h-16 object-cover rounded border-2 border-[#2CB21A] shadow" 
+                        <img
+                          src={URL.createObjectURL(file)}
+                          alt={`upload-${index}`}
+                          className="w-16 h-16 object-cover rounded border-2 border-[#2CB21A] shadow"
                         />
-                        <button 
-                          type="button" 
-                          onClick={() => removeImage(index, setFieldValue)} 
+                        <button
+                          type="button"
+                          onClick={() => removeImage(index, setFieldValue)}
                           className="absolute top-0 right-0 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all"
                         >
                           <X size={14} />
@@ -465,8 +467,8 @@ const CommodityForm = () => {
               </div>
 
               {/* Submit Button */}
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={isUploading}
                 className="
                   w-full py-2 rounded-lg 
@@ -485,14 +487,14 @@ const CommodityForm = () => {
       </div>
 
       {/* Snackbar */}
-      <Snackbar 
+      <Snackbar
         open={snackbar.open}
         onClose={() => setSnackbar({ ...snackbar, open: false })}
         message={snackbar.message}
         type={snackbar.type}
         icon={
-          snackbar.type === 'success' 
-            ? <CheckCircle className="text-white" /> 
+          snackbar.type === 'success'
+            ? <CheckCircle className="text-white" />
             : <AlertCircle className="text-white" />
         }
       />
