@@ -93,15 +93,19 @@ const UserCommodities = () => {
               </div>
 
               {/* Images */}
-              <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 bg-gray-50">
+              <div className="relative grid grid-cols-2 gap-2 p-2 bg-gray-50">
             
                   {commodity.images.map((image, index) => (
+                    <div
+                  key={index}
+                  className="relative group overflow-hidden rounded-lg shadow-md"
+                >
                     <img
-                      key={index}
                       src={`${import.meta.env.VITE_API_URL}/${image}`}
-                      alt={`Image ${index + 1} of ${commodity.commodity}`}
-                      className="relative group overflow-hidden rounded-lg shadow-md w-full aspect-w-4 aspect-h-3 object-cover"
+                      alt={`${commodity.commodity} image ${index + 1}`}
+                      className="w-full h-32 object-cover"
                       />
+                      </div>
                   ))
                   }
               </div>
