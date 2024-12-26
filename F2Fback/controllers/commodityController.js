@@ -92,6 +92,7 @@ exports.getSellerCommodities = async (req, res) => {
 // Controller to get buyer commodities
 exports.getBuyerCommodities = async (req, res) => {
     try {
+        const loggedInUserId = req.user._id;
         const listings = await Commodity.aggregate([
             {
                 $lookup: {
@@ -124,6 +125,11 @@ exports.getBuyerCommodities = async (req, res) => {
                         email: { $arrayElemAt: ["$buyerDetails.email", 0] },
                         mobile: { $arrayElemAt: ["$buyerDetails.mobile", 0] },
                     },
+                },
+            },
+            {
+                $match: {
+                    "buyer._id": { $ne: loggedInUserId }, // Exclude the logged-in user from the list of seller commodities
                 },
             },
         ]);
