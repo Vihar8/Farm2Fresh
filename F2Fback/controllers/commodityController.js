@@ -15,22 +15,24 @@ exports.addCommodity = async (req, res) => {
             state,
             district,
             images: imagePaths,
-            createdBy: req.user._id  // Ensure createdBy is the logged-in user's ID
+            createdBy: req.user._id, // Logged-in user's ID
         });
 
         await newCommodity.save();
         res.status(201).json({ message: 'Commodity added successfully', commodity: newCommodity });
     } catch (error) {
+        console.error("Error adding commodity:", error);
         res.status(500).json({ error: 'Failed to add commodity', details: error.message });
     }
 };
 
-// Controller to get all commodities excluding the logged-in user's commodities
+// Controller to get all commodities
 exports.getCommodities = async (req, res) => {
     try {
-        const commodities = await Commodity.find().populate('createdBy', 'name email'); 
-        res.json(commodities);
+        const commodities = await Commodity.find().populate('createdBy', 'name email');
+        res.status(200).json(commodities);
     } catch (error) {
+        console.error("Error fetching commodities:", error);
         res.status(500).json({ error: 'Failed to fetch commodities', details: error.message });
     }
 };
@@ -38,23 +40,18 @@ exports.getCommodities = async (req, res) => {
 // Controller to get seller commodities excluding the logged-in user's commodities
 exports.getSellerCommodities = async (req, res) => {
     try {
-        const loggedInUserId = req.user._id; // The logged-in user's ID
+        const loggedInUserId = req.user._id;
 
-        // Get seller commodities excluding the logged-in user's commodities
         const listings = await Commodity.aggregate([
             {
                 $lookup: {
-                    from: "users", // Name of the users collection
+                    from: "users",
                     localField: "createdBy",
                     foreignField: "_id",
                     as: "sellerDetails",
                 },
             },
-            {
-                $match: {
-                    "sellerDetails.user_type": "seller", // Filter only sellers
-                },
-            },
+            { $match: { "sellerDetails.user_type": "seller" } },
             {
                 $project: {
                     commodity: 1,
@@ -75,38 +72,31 @@ exports.getSellerCommodities = async (req, res) => {
                     },
                 },
             },
-            {
-                $match: {
-                    "seller._id": { $ne: loggedInUserId }, // Exclude the logged-in user from the list of seller commodities
-                },
-            },
+            { $match: { "seller._id": { $ne: loggedInUserId } } },
         ]);
 
         res.status(200).json(listings);
     } catch (error) {
-        console.error(error);
+        console.error("Error fetching seller commodities:", error);
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
 
-// Controller to get buyer commodities
+// Controller to get buyer commodities excluding the logged-in user's commodities
 exports.getBuyerCommodities = async (req, res) => {
     try {
         const loggedInUserId = req.user._id;
+
         const listings = await Commodity.aggregate([
             {
                 $lookup: {
-                    from: "users", // Name of the users collection
+                    from: "users",
                     localField: "createdBy",
                     foreignField: "_id",
                     as: "buyerDetails",
                 },
             },
-            {
-                $match: {
-                    "buyerDetails.user_type": "buyer", // Filter only buyers
-                },
-            },
+            { $match: { "buyerDetails.user_type": "buyer" } },
             {
                 $project: {
                     commodity: 1,
@@ -127,58 +117,50 @@ exports.getBuyerCommodities = async (req, res) => {
                     },
                 },
             },
-            {
-                $match: {
-                    "buyer._id": { $ne: loggedInUserId }, // Exclude the logged-in user from the list of seller commodities
-                },
-            },
+            { $match: { "buyer._id": { $ne: loggedInUserId } } },
         ]);
 
         res.status(200).json(listings);
     } catch (error) {
-        console.error(error);
+        console.error("Error fetching buyer commodities:", error);
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
 
-// Controller to delete a commodity listing by the logged-in user
+// Controller to delete a commodity listing
 exports.deleteCommodity = async (req, res) => {
     try {
-        const commodityId = req.params.id; // Get the commodity ID from the request params
-        const loggedInUserId = req.user._id; // Get the logged-in user's ID
-        console.log("hjkhaj",commodityId);
-        // Find the commodity and check ownership
+        const commodityId = req.params.id;
+        const loggedInUserId = req.user._id;
+
         const commodity = await Commodity.findOne({ _id: commodityId, createdBy: loggedInUserId });
         if (!commodity) {
-            return res.status(404).json({ message: "Commodity not found or not authorized to delete" });
+            return res.status(404).json({ message: "Commodity not found or unauthorized to delete" });
         }
 
-        // Delete the commodity
         await Commodity.deleteOne({ _id: commodityId });
-        res.status(200).json({ message: "Commodity deleted successfully" });
+        res.status(200).json({ message: "Commodity deleted successfully", commodityId });
     } catch (error) {
-        console.error(error);
+        console.error("Error deleting commodity:", error);
         res.status(500).json({ message: "Failed to delete commodity", details: error.message });
     }
 };
 
-
-// Controller to get logged-in user's commodity listings
+// Controller to get the logged-in user's commodities
 exports.getUserCommodities = async (req, res) => {
     try {
-        const loggedInUserId = req.user._id; // Extract logged-in user's ID from the request
+        const loggedInUserId = req.user._id;
 
-        // Fetch commodities created by the logged-in user
         const userCommodities = await Commodity.find({ createdBy: loggedInUserId })
-            .sort({ createdAt: -1 }) // Sort by most recent
-            .populate("createdBy", "name email"); // Optional: Populate user details if needed
+            .sort({ createdAt: -1 })
+            .populate("createdBy", "name email");
 
         res.status(200).json({ 
             message: "User commodities fetched successfully", 
             commodities: userCommodities 
         });
     } catch (error) {
-        console.error(error);
+        console.error("Error fetching user commodities:", error);
         res.status(500).json({ 
             message: "Failed to fetch user commodities", 
             details: error.message 
