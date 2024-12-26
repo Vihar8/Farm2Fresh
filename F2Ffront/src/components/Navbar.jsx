@@ -189,7 +189,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/home">
           <div className="flex items-center space-x-2">
-            <img className="w-32 h-36" src="./f2f.jpg" alt="logo" />
+            <img className="w-32" src="./f2f.jpg" alt="logo" />
             <h1 className="text-lg font-bold text-greenCustom">
               Farm<span className="text-black">2</span><span className="text-greenCustom">Fresh</span>
             </h1>
