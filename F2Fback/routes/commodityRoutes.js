@@ -16,4 +16,8 @@ router.get('/getSellerCommodities', authenticateUser, commodityController.getSel
 // Route to get all buyer commodities
 router.get('/getBuyerCommodities', authenticateUser, commodityController.getBuyerCommodities);
 
+router.delete('/deleteCommodity',authenticateUser, commodityController.deleteCommodity);
+
+
+router.get("/commodities", authenticateUser, commodityController.getUserCommodities);
 module.exports = router;

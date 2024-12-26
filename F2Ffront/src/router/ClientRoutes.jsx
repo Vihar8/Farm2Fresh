@@ -8,6 +8,7 @@ import Buyesrs from "../pages/Buyesrs";
 import MandiPrices from "../pages/MandiPrices";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
 import TermsAndConditions from "../pages/TermsAndConditions";
+import Mylisting from "../pages/Mylisting";
 
 const Home = Loadable(lazy(() => import("../pages/Home")));
 const Start = Loadable(lazy(() => import("../pages/Start")));
@@ -75,6 +76,16 @@ const ClientRoutes = {
         <AuthGuard allowedRoles={[1]}>
           <Layout>
             <MandiPrices />
+          </Layout>
+        </AuthGuard>
+      ),
+    },
+    {
+      path: "/my-listing", // This is the protected commodity listing route
+      element: (
+        <AuthGuard allowedRoles={[1]}>
+          <Layout>
+            <Mylisting />
           </Layout>
         </AuthGuard>
       ),

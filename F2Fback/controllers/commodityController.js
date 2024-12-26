@@ -140,3 +140,48 @@ exports.getBuyerCommodities = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
+// Controller to delete a commodity listing by the logged-in user
+exports.deleteCommodity = async (req, res) => {
+    try {
+        const commodityId = req.params.id; // Get the commodity ID from the request params
+        const loggedInUserId = req.user._id; // Get the logged-in user's ID
+        console.log("hjkhaj",commodityId);
+        // Find the commodity and check ownership
+        const commodity = await Commodity.findOne({ _id: commodityId, createdBy: loggedInUserId });
+        if (!commodity) {
+            return res.status(404).json({ message: "Commodity not found or not authorized to delete" });
+        }
+
+        // Delete the commodity
+        await Commodity.deleteOne({ _id: commodityId });
+        res.status(200).json({ message: "Commodity deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to delete commodity", details: error.message });
+    }
+};
+
+
+// Controller to get logged-in user's commodity listings
+exports.getUserCommodities = async (req, res) => {
+    try {
+        const loggedInUserId = req.user._id; // Extract logged-in user's ID from the request
+
+        // Fetch commodities created by the logged-in user
+        const userCommodities = await Commodity.find({ createdBy: loggedInUserId })
+            .sort({ createdAt: -1 }) // Sort by most recent
+            .populate("createdBy", "name email"); // Optional: Populate user details if needed
+
+        res.status(200).json({ 
+            message: "User commodities fetched successfully", 
+            commodities: userCommodities 
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ 
+            message: "Failed to fetch user commodities", 
+            details: error.message 
+        });
+    }
+};
