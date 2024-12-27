@@ -2,7 +2,7 @@ import axios from "axios";
 import { commonLoader } from "../utils/commonEnum";
 
 const axiosServices = axios.create({
-  baseURL: import.meta.env.VITE_APP_API_URL || "https://farm2fresh-kyhc.onrender.com",
+  baseURL: import.meta.env.VITE_APP_API_URL || "http://localhost:3000/",
 });
 
 // ==============================|| AXIOS - FOR MOCK SERVICES ||============================== //
