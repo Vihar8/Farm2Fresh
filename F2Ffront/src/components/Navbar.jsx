@@ -245,6 +245,7 @@ const Navbar = () => {
                 onClose={handleMenuClose}
               >
                 {user && <MenuItem onClick={handleMenuClose}>Hello, {user?.name}</MenuItem>}
+                {user && <MenuItem onClick={handleMenuClose}>{user?.email}</MenuItem>}
                 <MenuItem onClick={logout}>Logout</MenuItem>
               </Menu>
             </>
@@ -268,13 +269,16 @@ const Navbar = () => {
       >
         <div className="flex flex-col p-4 bg-white space-y-14 w-96">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2 ">
+            <div className="flex items-center space-x-3 ">
               {user?.profilePic ? (
                 <Avatar alt={user?.name} src={user?.profilePic} />
               ) : (
                 <AccountCircle />
               )}
-              <p className="text-xl text-black font-semibold">{user?.name || 'Guest'}</p>
+             <div className='flex-col justify-center pt-5'>
+             <p className="text-xl text-black font-semibold">{user?.name || 'Guest'}</p>
+             <p className="text-lg text-black font-semibold">{user?.email || ''}</p>
+             </div>
             </div>
             <IconButton onClick={handleDrawerToggle}>
               <FaTimes />

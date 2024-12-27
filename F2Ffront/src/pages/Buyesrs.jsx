@@ -186,7 +186,7 @@ const BuyerCommodities = () => {
                 {item.state}, {item.district}
               </p>
               <p className="text-sm font-semibold text-green-700 mb-1">
-                Selling Price: <span className="text-black font-bold">₹{item.price} / {item.totalIn}</span>
+                Buying Price: <span className="text-black font-bold">₹{item.price} / {item.totalIn}</span>
               </p>
               <p className="text-sm font-semibold text-green-700">
                 Trade Volume: <span className="text-black font-bold">{item.quantity} {item.totalIn}</span>
