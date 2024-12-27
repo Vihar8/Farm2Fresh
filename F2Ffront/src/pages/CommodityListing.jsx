@@ -239,7 +239,7 @@ const CommodityForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="max-h-screen bg-gray-50 flex items-center justify-center p-5 mt-2">
       <div className="w-full max-w-md bg-white border-2 border-[#2CB21A] rounded-xl p-6 shadow-lg">
         <h2 className="text-3xl font-bold text-center text-[#2CB21A] mb-6">
           Add New Commodity

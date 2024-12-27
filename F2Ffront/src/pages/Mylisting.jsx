@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import api from "../api/axios";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Button } from "@mui/material";
 
 const UserCommodities = () => {
   const [commodities, setCommodities] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [commodityToDelete, setCommodityToDelete] = useState(null); // Track commodity to delete
 
   // Function to fetch logged-in user's commodities
   const fetchCommodities = async () => {
@@ -35,8 +37,8 @@ const UserCommodities = () => {
   };
 
   // Function to delete a commodity
-  const deleteCommodity = async (commodityId) => {
-    if (!window.confirm("Are you sure you want to delete this commodity?")) return;
+  const deleteCommodity = async () => {
+    if (!commodityToDelete) return;
 
     try {
       const token = localStorage.getItem("serviceToken");
@@ -45,16 +47,18 @@ const UserCommodities = () => {
         return;
       }
 
-      await api.delete(`/api/deleteCommodity/${commodityId}`, {
+      await api.delete(`/api/deleteCommodity/${commodityToDelete}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      setCommodities((prev) => prev.filter((commodity) => commodity._id !== commodityId));
-      alert("Commodity deleted successfully!");
+      setCommodities((prev) => prev.filter((commodity) => commodity._id !== commodityToDelete));
+      
     } catch (error) {
       console.error("Error deleting commodity:", error.response?.data || error.message);
+    } finally {
+      setOpenDialog(false); // Close the dialog after the operation
     }
   };
 
@@ -87,14 +91,25 @@ const UserCommodities = () => {
               <div className="px-4 py-2 bg-gray-100 text-sm text-gray-600">
                 Date: {new Date(commodity.createdAt).toLocaleDateString("en-GB")}
               </div>
-              {/* Image */}
-              <div className="relative">
-                <img
-                  src={commodity.images?.[0] ? `${import.meta.env.VITE_API_URL}/${commodity.images[0]}` : "placeholder.jpg"}
-                  alt={commodity.commodity}
-                  className="w-full h-48 object-cover"
-                />
+
+              {/* Images */}
+              <div className="relative grid grid-cols-2 gap-2 p-2 bg-gray-50">
+            
+                  {commodity.images.map((image, index) => (
+                    <div
+                  key={index}
+                  className="relative group overflow-hidden rounded-lg shadow-md"
+                >
+                    <img
+                      src={`${import.meta.env.VITE_API_URL}/${image}`}
+                      alt={`${commodity.commodity} image ${index + 1}`}
+                      className="w-full h-32 object-cover"
+                      />
+                      </div>
+                  ))
+                  }
               </div>
+
               {/* Commodity Details */}
               <div className="p-4">
                 <h3 className="text-lg font-semibold text-gray-800 capitalize mb-1">
@@ -110,6 +125,7 @@ const UserCommodities = () => {
                   Location: {commodity.state}, {commodity.district}
                 </p>
               </div>
+
               {/* Buttons */}
               <div className="p-4 bg-gray-50 flex justify-between">
                 <button
@@ -120,7 +136,10 @@ const UserCommodities = () => {
                 </button>
                 <button
                   className="w-1/2 bg-red-600 text-white py-2 rounded shadow hover:bg-red-700"
-                  onClick={() => deleteCommodity(commodity._id)}
+                  onClick={() => {
+                    setCommodityToDelete(commodity._id); // Set the commodity to delete
+                    setOpenDialog(true); // Open the dialog
+                  }}
                 >
                   Delete
                 </button>
@@ -129,6 +148,22 @@ const UserCommodities = () => {
           ))}
         </div>
       )}
+
+      {/* Dialog for confirmation */}
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>
+          <p>Are you sure you want to delete this commodity?</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={deleteCommodity} color="secondary">
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

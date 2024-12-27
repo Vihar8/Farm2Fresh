@@ -1,5 +1,7 @@
 import { Suspense, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
+
+// project import
 import LinearProgress from '@mui/material/LinearProgress';
 import { useLocation } from 'react-router-dom';
 
@@ -13,6 +15,7 @@ const Grid = styled('div')(({ theme }) => ({
         marginTop: theme.spacing(2)
     }
 }));
+// ==============================|| LOADABLE - LAZY LOADING ||============================== //
 
 const Loadable = (Component) => (props) => {
     const { pathname } = useLocation();
@@ -25,16 +28,10 @@ const Loadable = (Component) => (props) => {
     }, [pathname]);
 
     return (
-        <Suspense
-            fallback={
-                <Grid>
-                    <LinearProgress />
-                </Grid>
-            }
-        >
+        <Suspense fallback={<Grid><LinearProgress /></Grid>}>
             <Component {...props} />
         </Suspense>
-    );
-};
+    )
+}
 
 export default Loadable;

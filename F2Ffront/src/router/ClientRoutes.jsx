@@ -3,12 +3,7 @@ import { lazy } from "react";
 import Loadable from "../commoncomponents/Loadable/Loadable";
 import Layout from "../layouts/Layout";
 import AuthGuard from "../commoncomponents/AuthGuard";
-import Sellers from "../pages/Sellers";
-import Buyesrs from "../pages/Buyesrs";
-import MandiPrices from "../pages/MandiPrices";
-import PrivacyPolicy from "../pages/PrivacyPolicy";
-import TermsAndConditions from "../pages/TermsAndConditions";
-import Mylisting from "../pages/Mylisting";
+
 
 const Home = Loadable(lazy(() => import("../pages/Home")));
 const Start = Loadable(lazy(() => import("../pages/Start")));
@@ -16,6 +11,12 @@ const UserLogin = Loadable(lazy(() => import("../pages/UserLogin")));
 const UserSignup = Loadable(lazy(() => import("../pages/UserSignup")));
 const CommodityListing = Loadable(lazy(() => import("../pages/CommodityListing")));
 const ContactUs = Loadable(lazy(() => import("../pages/ContactUs")));
+const Sellers = Loadable(lazy(() => import("../pages/Sellers")));
+const Buyesrs = Loadable(lazy(() => import("../pages/Buyesrs")));
+const MandiPrices = Loadable(lazy(() => import("../pages/MandiPrices")));
+const PrivacyPolicy = Loadable(lazy(() => import("../pages/PrivacyPolicy")));
+const TermsAndConditions = Loadable(lazy(() => import("../pages/TermsAndConditions")));
+const Mylisting = Loadable(lazy(() => import("../pages/Mylisting")));
 
 const ClientRoutes = {
   path: "/",

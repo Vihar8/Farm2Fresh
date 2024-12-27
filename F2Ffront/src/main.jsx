@@ -4,9 +4,9 @@ import { RouterProvider } from 'react-router-dom';
 import { JWTProvider } from './context/JWTContext';
 import { SnackbarProvider } from './context/SnackbarContext';
 import router from './router';
-import './index.css';
-import Loadable from './commoncomponents/Loadable/Loadable';  // Ensure Loadable is correctly defined
 import Box from '@mui/material/Box';
+import "./styles/index.scss";
+import LoaderCommon from './commoncomponents/Loader/LoaderCommon';
 
 
 const rootElement = document.getElementById('root');
@@ -17,7 +17,7 @@ root.render(
     <SnackbarProvider>
       <RouterProvider router={router}>
         <Box id="appCommonLoader">
-          <Loadable />
+          <LoaderCommon />
         </Box>
       </RouterProvider>
     </SnackbarProvider>
