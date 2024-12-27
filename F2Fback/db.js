@@ -9,8 +9,7 @@ if (!mongoURL) {
 }
 
 mongoose.connect(mongoURL, { 
-    useNewUrlParser: true, 
-    useUnifiedTopology: true 
+    useNewUrlParser: true, // 'useNewUrlParser' is still valid
 });
 
 const db = mongoose.connection;
