@@ -2,7 +2,8 @@ import React, { useContext, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from "yup";
 import { Mail, Phone, MessageSquare, Send, CheckCircle } from 'lucide-react';
-import SnackbarContext from "../context/snackbarcontext";
+import SnackbarContext from '../context/SnackbarContext';
+
 
 const ContactUs = () => {
   const [loading, setLoading] = useState(false);
