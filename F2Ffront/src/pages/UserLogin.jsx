@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useContext } from "react";
@@ -155,14 +155,15 @@ const SignInSide = () => {
             <a href="#" className="text-greenCustom font-medium hover:underline">
               Forgot password?
             </a>
-            <a href="/usersignup" className="text-greenCustom font-medium hover:underline">
-              Don't have an account? Sign Up
-            </a>
+            <Link to="/usersignup" className="text-greenCustom font-medium hover:underline">
+  Don't have an account? Sign Up
+</Link>
+
           </div>
           <p className="mt-10 text-sm text-center text-black">
             Connect With Us at{" "}
             <a
-              href="https://bodyshody.vercel.app/"
+              href="https://farm2fresh.vercel.app/"
               className="text-greenCustom font-medium hover:underline"
             >
               Farm2Fresh
