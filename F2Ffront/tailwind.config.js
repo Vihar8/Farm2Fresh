@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   mode: "jit",
   content: [
     "./index.html",
@@ -130,7 +130,6 @@ module.exports = {
     right: ['responsive', 'direction'],
   },
   plugins: [
-
     // Add useful Tailwind plugins here (uncomment if needed)
     // require('@tailwindcss/forms'),
     // require('@tailwindcss/aspect-ratio'),
