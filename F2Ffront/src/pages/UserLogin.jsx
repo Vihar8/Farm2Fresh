@@ -6,7 +6,7 @@ import { useContext } from "react";
 import JWTContext from "../context/JWTContext";
 import api from "../api/axios";
 import { LOGIN } from "../context/actions"; // Ensure actions.js is properly structured
-import SnackbarContext from "../context/snackbarcontext";
+import SnackbarContext from "../context/SnackbarContext";
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 
 const SignInSide = () => {
