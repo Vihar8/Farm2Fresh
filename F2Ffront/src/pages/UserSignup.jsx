@@ -396,6 +396,7 @@ export default function SignUp() {
       console.log("OTP verified successfully:", response.data);
       showSnackbar("Email verified successfully!", "success");
       setOtpVerified(true); // OTP verified, show user info
+      navigate('/login')
     } catch (error) {
       console.error("OTP verification error:", error);
       showSnackbar("Failed to verify OTP. Please try again.", "error");
@@ -601,20 +602,7 @@ export default function SignUp() {
 
             </form>
           )}
-          {/* After OTP verification */}
-          {otpVerified && (
-            <div className="text-center">
-              <p className="text-xl font-semibold text-black">Account Verified Successfully!</p>
-              <p className="mt-2 text-lg text-black">Your user type is: {userType || formik.values.user_type}</p>
-              <button
-                onClick={() => navigate("/login")}
-                className="mt-4 w-full px-4 py-3 text-white bg-greenCustom rounded-lg font-semibold shadow-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 focus:outline-none"
-              >
-                Go to Login Page
-              </button>
-            </div>
-          )}
-        </div>
+          </div>
       </div>
     </div>
   );
