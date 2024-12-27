@@ -85,7 +85,7 @@ const SellerCommodities = () => {
             <div className="flex items-center px-4 py-2 bg-gray-50">
               <div className="ml-3 flex-grow">
                 <p className="text-sm font-medium text-gray-800">{item.seller.name}</p>
-                <p className="text-xs text-gray-500">{item.seller.role || 'Farmer'}</p>
+                <p className="text-xs text-gray-500">{item.seller.user_type || 'Farmer'}</p>
                 <p className="text-xs text-gray-500">Mobile: {item.seller.mobile || 'N/A'}</p> {/* Mobile number */}
               </div>
               <div className="flex flex-col gap-2 items-center">

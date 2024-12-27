@@ -87,7 +87,7 @@ const BuyerCommodities = () => {
             <div className="flex items-center px-4 py-2 bg-gray-50">
               <div className="ml-3 flex-grow">
                 <p className="text-sm font-medium text-gray-800">{item.buyer.name}</p>
-                <p className="text-xs text-gray-500">{item.buyer.role || 'Buyer'}</p>
+                <p className="text-xs text-gray-500">{item.buyer.user_type || 'Buyer'}</p>
                 <p className="text-xs text-gray-600">{item.buyer.mobile}</p>
               </div>
               <div className="flex flex-col gap-2 items-center">
