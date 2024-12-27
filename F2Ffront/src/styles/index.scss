@@ -1,0 +1,489 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply m-0 p-0 box-border;
+}
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Target the entire scrollbar */
+::-webkit-scrollbar {
+  width: 8px; /* Adjust width as needed */
+  height: 8px; /* Adjust the height of the scrollbar */
+}
+
+/* Target the scrollbar track */
+::-webkit-scrollbar-track {
+  background: #dbdbdb; /* Color of the scrollbar track */
+}
+
+/* Target the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background: #888888; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners of the scrollbar thumb */
+}
+
+/* Hover state for the scrollbar thumb */
+::-webkit-scrollbar-thumb:hover {
+  background: #555555; /* Color of the scrollbar thumb when hovered */
+}
+/*common loader css*/
+#appCommonLoader {
+  display: none;
+}
+
+.show-loader #appCommonLoader {
+  display: block;
+}
+
+body {
+  @apply m-0 overflow-x-hidden;
+  font-family: "Open Sans", sans-serif !important;
+
+  .MuiButton-containedSuccess {
+    @apply bg-primary-Color1;
+
+    &:hover {
+      @apply bg-primary-Color1;
+    }
+  }
+
+  .MuiButtonBase-root.MuiRadio-root.Mui-checked,
+  .MuiButtonBase-root.MuiCheckbox-root.Mui-checked,
+  .MuiButtonBase-root.MuiCheckbox-root.MuiCheckbox-indeterminate {
+    @apply text-primary-Color1;
+  }
+
+  .MuiFormHelperText-root {
+    @apply mx-0 font-sans;
+  }
+
+  .MuiTypography-root {
+    @apply font-sans text-normaltext;
+  }
+
+  .MuiTooltip-tooltip {
+    @apply font-sans text-smalltext;
+  }
+
+  .mainLayout {
+    @apply pt-[70px] pb-5 min-h-[100vh] bg-[#f1f5f9];
+  }
+
+  .tableStyle {
+    @apply relative whitespace-nowrap;
+    color: #262626 !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    padding: 3px 10px !important;
+
+    &:not(:last-child)::after {
+      @apply absolute w-[2px] right-0 top-[11px] bg-[#d8d4d4];
+      content: "";
+      height: calc(100% - 20px);
+    }
+  }
+
+  .tableCellStyle {
+    @apply border-0.5 border-solid border-other-Gray7 whitespace-nowrap font-sans;
+    font-size: 13px !important;
+    color: #262626 !important;
+    padding: 6px 10px !important;
+  }
+
+  .tableHeads {
+    @apply bg-[#eeeeee] border-t-2 border-b-2 border-solid border-[#e2e2e2];
+  }
+
+  .tableOdd {
+    &:nth-of-type(odd) {
+      @apply bg-other-Gray4;
+      &:hover {
+        background-color: rgba(76, 175, 80, 0.2) !important;
+      }
+    }
+
+    &:nth-of-type(even) {
+      @apply bg-primary-Color6;
+      &:hover {
+        background-color: rgba(76, 175, 80, 0.2) !important;
+      }
+    }
+  }
+
+  .pageStyle {
+    ul {
+      li {
+        button.Mui-disabled {
+          @apply bg-primary-Color6 opacity-50;
+        }
+
+        button.Mui-selected {
+          background-color: #0fbc3a !important;
+          color: #ffffff !important;
+        }
+
+        button.MuiPaginationItem-root {
+          @apply bg-primary-Color6;
+        }
+
+        button:hover {
+          background-color: #0fbc3a !important;
+          color: #ffffff !important;
+        }
+      }
+    }
+  }
+
+  .btnStyle {
+    @apply text-smalltext capitalize h-7;
+    transition-property: transform, box-shadow;
+    transition-duration: 0.3s;
+    min-width: auto !important;
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow:
+        0 20px 25px -5px #0000001a,
+        0 8px 10px -6px #0000001a;
+    }
+  }
+
+  .addPageTitle {
+    @apply border-b-1 bg-[#f9fafb] px-4 py-2 font-bold text-normaltext;
+  }
+
+  .formLabel {
+    @apply text-normaltext mb-1 block font-semibold text-primary-Color2;
+  }
+
+  .checkboxLabel {
+    .MuiFormControlLabel-label {
+      @apply text-normaltext font-sans;
+    }
+  }
+
+  .checkSpacing {
+    span.MuiCheckbox-sizeMedium {
+      @apply pt-0 pb-0;
+    }
+  }
+
+  .gridMargin {
+    @apply mb-5;
+  }
+
+  .MuiButton-containedInfo {
+    background-color: #8c8c8c;
+
+    &:hover {
+      background-color: #636161;
+    }
+  }
+
+  .btnSeparate {
+    @apply flex items-center justify-center gap-3;
+  }
+
+  .addCardContents {
+    padding: 1.25rem 1rem 1rem !important;
+  }
+
+  .addCardMain {
+    @apply shadow-card mb-4;
+  }
+
+  .addCardHeadingSeparate {
+    @apply flex items-center justify-between;
+  }
+
+  .mainDrawer {
+    div.MuiDrawer-paper {
+      @apply rounded-tl-xl rounded-bl-xl p-4;
+      box-shadow: -10px 0px 32px 2px rgb(46, 125, 50, 0.2);
+    }
+  }
+
+  .MuiPopper-root-MuiAutocomplete-popper {
+    z-index: 9999 !important;
+  }
+
+  .MuiInputLabel-formControl,
+  .MuiButtonBase-root,
+  .MuiInputBase-root {
+    @apply font-sans;
+  }
+
+  .MuiAutocomplete-root .MuiAutocomplete-inputRoot {
+    @apply text-normaltext font-sans;
+  }
+
+  .MuiInputBase-input.MuiOutlinedInput-input {
+    height: 20px;
+    @apply text-normaltext font-sans;
+  }
+
+  .MuiOutlinedInput-root.Mui-disabled {
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .MuiButton-outlined.MuiButton-outlinedSuccess {
+    @apply bg-primary-Color6;
+  }
+
+  .headingSeparate {
+    @apply flex items-center justify-between mb-3;
+  }
+
+  .rightSection {
+    @apply flex items-end justify-end;
+  }
+
+  // start filter css
+  .filterCard {
+    @apply overflow-x-hidden overflow-y-auto;
+    padding: 8px 6px 16px 0px !important;
+  }
+
+  .filterAction {
+    @apply mt-0 flex flex-row gap-1 justify-end w-full pt-0 pr-4 pb-4;
+  }
+
+  .filters {
+    @apply opacity-0 max-h-0 overflow-hidden;
+    transition: all 0.3s ease-in-out;
+    transform: translateY(-10px);
+  }
+
+  .filters.show {
+    @apply opacity-100 max-h-80;
+    transform: translateY(0);
+  }
+
+  .filters.hide {
+    @apply opacity-0 max-h-0;
+    transform: translateY(-10px);
+  }
+  // end filter css
+
+  .swapIcons {
+    @apply text-message-Warning mr-3;
+    transition-property: transform, box-shadow;
+    transition-duration: 0.3s;
+    &:hover {
+      transform: scale(1.25);
+    }
+  }
+
+  .viewIcons {
+    @apply text-message-Info mr-3;
+    transition-property: transform, box-shadow;
+    transition-duration: 0.3s;
+    &:hover {
+      transform: scale(1.25);
+    }
+  }
+
+  .editIcons {
+    @apply text-primary-Color1 mr-3;
+    transition-property: transform, box-shadow;
+    transition-duration: 0.3s;
+    &:hover {
+      transform: scale(1.25);
+    }
+  }
+
+  .deleteIcons {
+    @apply text-message-Error;
+    transition-property: transform, box-shadow;
+    transition-duration: 0.3s;
+    &:hover {
+      transform: scale(1.25);
+    }
+  }
+
+  .searchingField {
+    div {
+      @apply pr-1;
+    }
+  }
+
+  .lableStar {
+    @apply text-message-Error ml-1;
+  }
+
+  .menuHover {
+    &:hover {
+      background-color: rgba(76, 175, 80, 0.2) !important;
+    }
+  }
+
+  .MuiAutocomplete-listbox .MuiAutocomplete-option {
+    @apply text-normaltext font-sans;
+  }
+
+  .MuiAutocomplete-listbox .MuiAutocomplete-option.Mui-focused {
+    background-color: rgba(76, 175, 80, 0.2) !important;
+  }
+
+  .colMenuItems {
+    padding: 5px 12px !important;
+  }
+
+  .colCheckbox {
+    padding: 0px 9px 0px 0px !important;
+  }
+
+  .headerIconShow {
+    @apply hidden md:inline-flex;
+  }
+
+  /* Start Sidebar */
+  .sidebarsMenu {
+    a.ps-menu-button {
+      @apply px-[10px] h-10;
+    }
+
+    .ps-menu-icon {
+      @apply mr-1 w-6 min-w-6;
+    }
+
+    .ps-submenu-expand-icon {
+      @apply mr-3 text-other-Gray6;
+
+      span {
+        @apply w-[7px] h-[7px];
+      }
+    }
+
+    .ps-submenu-expand-icon.ps-open {
+      @apply mt-[-5px];
+    }
+  }
+
+  .sidebarSubMenu {
+    a.ps-menu-button {
+      @apply px-5 h-7 relative text-primary-Color2;
+
+      .ps-menu-label {
+        @apply pl-5;
+      }
+
+      &::after {
+        @apply absolute w-2 h-[2px] bg-other-Gray6;
+        content: "";
+      }
+    }
+  }
+
+  .sidebarHideSubMenu {
+    a.ps-menu-button {
+      @apply pl-4 pr-5;
+    }
+
+    .ps-menu-icon {
+      @apply w-9 min-w-9 text-[15px];
+    }
+
+    .ps-submenu-expand-icon {
+      @apply hidden;
+    }
+  }
+
+  .sidebarCollapse.ps-collapsed {
+    width: 76px !important;
+    min-width: 76px !important;
+    box-shadow: 0px 9px 10px 0px rgba(0, 0, 0, 0.16);
+    @media (max-width: 767px) {
+      // left: 0px !important;
+      top: 57px !important;
+    }
+  }
+
+  .sidebarNotCollapse {
+    width: 205px !important;
+    min-width: 205px !important;
+    box-shadow: 0px 9px 10px 0px rgba(0, 0, 0, 0.16);
+    @media (max-width: 767px) {
+      left: 0px !important;
+      top: 57px !important;
+    }
+  }
+
+  .activeMenuItem {
+    a.ps-menu-button {
+      @apply text-primary-Color1 font-bold;
+      &::after {
+        @apply bg-primary-Color1;
+      }
+    }
+  }
+
+  .activeMainMenuItem {
+    @apply bg-primary-Color1 text-primary-Color6 font-bold;
+    a.ps-menu-button:hover {
+      @apply bg-inherit;
+    }
+    .ps-submenu-expand-icon {
+      @apply text-primary-Color6;
+    }
+  }
+
+  .ps-menu-button {
+    &:hover {
+      background-color: rgba(76, 175, 80, 0.2) !important;
+    }
+  }
+  /* End Sidebar */
+
+  /* start stepper */
+  .MuiStepConnector-root.MuiStepConnector-horizontal {
+    right: calc(50% + 14px);
+    left: calc(-50% + 18px);
+
+    @media (max-width: 1280px) {
+      left: calc(-60% + 10px);
+      right: calc(50% + 10px);
+    }
+  }
+
+  .MuiStepLabel-label {
+    @apply font-sans capitalize text-primary-Color2;
+  }
+
+  .MuiStepLabel-label.Mui-active {
+    @apply text-primary-Color1 font-semibold;
+  }
+
+  .mainStepper {
+    @apply w-full flex-wrap bg-primary-Color6 p-2;
+    @media (max-width: 1180px) {
+      justify-content: center;
+    }
+  }
+
+  .stepStyles {
+    @apply cursor-pointer;
+    width: 10% !important;
+    max-width: 10% !important;
+    display: inline-block;
+    text-align: center;
+    @media (max-width: 1180px) {
+      width: 18% !important;
+      max-width: 18% !important;
+    }
+
+    @media (max-width: 767px) {
+      width: 30% !important;
+      max-width: 30% !important;
+    }
+  }
+  /* end stepper */
+}

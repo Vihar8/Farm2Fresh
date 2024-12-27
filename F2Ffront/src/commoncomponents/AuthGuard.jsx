@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import JWTContext from '../context/JWTContext';
+import Loadable from './Loadable/Loadable';
+import LoaderCommon from './Loader/LoaderCommon';
 
 const AuthGuard = ({ children, allowedRoles }) => {
   const { state } = useContext(JWTContext);
@@ -25,7 +27,7 @@ const AuthGuard = ({ children, allowedRoles }) => {
 
   // If the state is still initializing, or the user is not logged in, return null (or a loading spinner)
   if (state.isInitializing) {
-    return <div>Loading...</div>; // Optionally, show a loading indicator
+    return <LoaderCommon/>; // Optionally, show a loading indicator
   }
 
   // Strict check: If the user is not logged in, redirect immediately without rendering the children
