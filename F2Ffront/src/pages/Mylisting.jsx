@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import api from "../api/axios";
-import { CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Button } from "@mui/material";
 
 const UserCommodities = () => {
   const [commodities, setCommodities] = useState([]);
@@ -73,7 +72,7 @@ const UserCommodities = () => {
     fetchCommodities();
   }, []);
 
-  if (loading) return <CircularProgress />;
+
 
   return (
     <div className="container mx-auto p-4">

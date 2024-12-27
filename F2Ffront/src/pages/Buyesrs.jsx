@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
 import api from '../api/axios';
-import Loadable from '../commoncomponents/Loadable/Loadable';
-import { CircularProgress } from '@mui/material';
-import LoaderCommon from '../commoncomponents/Loader/LoaderCommon';
 
 const BuyerCommodities = () => {
   const [commodities, setCommodities] = useState([]);
@@ -28,7 +25,6 @@ const BuyerCommodities = () => {
     fetchCommodities();
   }, []);
 
-  if (loading) return <CircularProgress/>;
 
   return (
     <div className="container mx-auto p-4">
