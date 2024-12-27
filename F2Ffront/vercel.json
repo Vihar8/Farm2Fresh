@@ -9,7 +9,7 @@
       }
     }
   ],
-  "router": [
+  "routes": [
     {
       "src": "/(.*)",
       "dest": "/index.html"
