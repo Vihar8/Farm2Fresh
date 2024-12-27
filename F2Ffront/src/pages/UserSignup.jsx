@@ -412,7 +412,7 @@ export default function SignUp() {
 
       {/* Right Side Form */}
       <div className="w-1/2 flex flex-col items-center justify-center p-6">
-      <div className="w-16 h-16 flex items-center justify-center bg-greenCustom rounded-full shadow-md">
+      <div className="w-12 h-12 flex items-center justify-center bg-greenCustom rounded-full shadow-md">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -428,7 +428,7 @@ export default function SignUp() {
                 />
               </svg>
             </div>
-        <div className="max-w-lg w-full p-8 bg-gray-50 rounded-lg shadow-lg">
+        <div className="max-w-lg w-full p-4 bg-gray-50 rounded-lg shadow-lg">
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-semibold text-black">Sign Up</h1>
