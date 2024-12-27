@@ -319,7 +319,7 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import api from "../api/axios";
-import SnackbarContext from "../context/snackbarcontext";
+import SnackbarContext from '../context/SnackbarContext';
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 
 export default function SignUp() {
