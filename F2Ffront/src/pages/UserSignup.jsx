@@ -380,7 +380,7 @@ export default function SignUp() {
         showSnackbar("Sign-up successful & verification code sent!", "success");
       } catch (error) {
         console.error("Sign-up error:", error);
-        // showSnackbar("Sign-up failed. Please try again.", "error");
+        showSnackbar("Sign-up failed. Please try again.", "error");
       }
     },
   });
@@ -412,6 +412,22 @@ export default function SignUp() {
 
       {/* Right Side Form */}
       <div className="w-1/2 flex flex-col items-center justify-center p-6">
+      <div className="w-16 h-16 flex items-center justify-center bg-greenCustom rounded-full shadow-md">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="2"
+                stroke="currentColor"
+                className="w-8 h-8 text-white"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 11c.552 0 1 .448 1 1s-.448 1-1-1-.448-1-1-1zm-1-2V7m0 10v-2m-4.95-4.95l-1.414-1.414m10.828 10.828l1.414 1.414M17 12h2m-10 0H5m8.485-8.485l1.414-1.414m-10.828 10.828l1.414 1.414"
+                />
+              </svg>
+            </div>
         <div className="max-w-lg w-full p-8 bg-gray-50 rounded-lg shadow-lg">
           {/* Header */}
           <div className="text-center mb-8">
