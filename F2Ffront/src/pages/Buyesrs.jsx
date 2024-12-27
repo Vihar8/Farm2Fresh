@@ -85,7 +85,7 @@ const BuyerCommodities = () => {
                 <a href={`tel:${item.buyer.mobile}`} target="_blank" rel="noopener noreferrer">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#28a745" width="32px" height="32px">
                     <path d="M6.62 10.79a15.07 15.07 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.11-.21 11.36 11.36 0 0 0 3.57.72 1 1 0 0 1 1 1v3.26a1 1 0 0 1-1 1A18 18 0 0 1 3.5 5a1 1 0 0 1 1-1H7.75a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .72 3.57 1 1 0 0 1-.21 1.11z" />
-                  </svg>
+                   </svg>
                 </a>
 
                 {/* WhatsApp Icon */}
