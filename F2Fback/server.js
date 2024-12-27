@@ -5,6 +5,7 @@ const app = express(); // Create an instance of Express
 const db = require('./db');
 require('dotenv').config();
 const path = require('path');
+const allowedOrigins = ["http://localhost:5173", "https://farm2fresh.vercel.app"];
 
 
 const commodityRoutes = require('./routes/commodityRoutes');
@@ -16,11 +17,18 @@ app.use(cors()) // Allow all origins by default
 // Additional CORS configuration
 app.use(
 	cors({
-		origin:"http://localhost:5173", // Allow requests from this origin (adjust the URL as per your frontend)
-		credentials:true, // Allow credentials (cookies, authorization headers) to be included in requests
+	  origin: function (origin, callback) {
+		// Allow requests with no origin (like mobile apps or curl requests)
+		if (!origin) return callback(null, true);
+		if (allowedOrigins.includes(origin)) {
+		  return callback(null, true);
+		} else {
+		  return callback(new Error("Not allowed by CORS"));
+		}
+	  },
+	  credentials: true, // Allow credentials
 	})
-)
-
+  );
 
 const PORT = process.env.PORT || 3000;
 

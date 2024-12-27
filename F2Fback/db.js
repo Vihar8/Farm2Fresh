@@ -1,9 +1,13 @@
-const mongoose = require('mongoose');
 require('dotenv').config();
-    const mongoURL = 'mongodb://localhost:27017/fresh2farm'; 
-    // const mongoURL = process.env.MONGODB_URL;
+const mongoose = require('mongoose');
 
-//setup mongodb connection
+const mongoURL = process.env.MONGODB_URL;
+
+if (!mongoURL) {
+    console.error("MONGODB_URL is not defined in the environment variables.");
+    process.exit(1); // Exit the process if the URL is missing
+}
+
 mongoose.connect(mongoURL, { 
     useNewUrlParser: true, 
     useUnifiedTopology: true 
@@ -16,9 +20,9 @@ db.on('connected', () => {
 });
 
 db.on('error', (err) => {
-    console.log('MongoDB connection error');  
+    console.error('MongoDB connection error:', err);  
 });
 
 db.on('disconnected', () => {
     console.log('MongoDB disconnected');
-});  
+});
