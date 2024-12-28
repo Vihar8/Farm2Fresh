@@ -30,7 +30,7 @@ const ContactUs = () => {
     onSubmit: async (values, { resetForm }) => {
       setLoading(true);
       try {
-        const response = await api.post("http://localhost:3000/api/enquiryform", values, {
+        const response = await api.post("/api/enquiryform", values, {
           headers: {
             "Content-Type": "application/json",
           },
