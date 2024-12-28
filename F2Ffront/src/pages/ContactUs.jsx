@@ -72,25 +72,25 @@ const ContactUs = () => {
         </div>
 
         {/* Right side with form */}
-        <div className="p-6 space-y-4">
+        <div className="p-5 space-y-4 relative">
           {/* Header */}
-          <div className="text-center mb-6">
+          <div className=" mb-5">
             <h2 className="text-2xl font-bold text-gray-800">Contact Us</h2>
-            <p className="text-gray-600">We're here to help! Share your requirements and we'll get back to you soon.</p>
+            <div className=" w-20 border-t-4 border-lime-500 my-5" />
+            <p className="text-gray-700 text-center">We're here to help! Share your requirements and we'll get back to you soon.</p>
           </div>
-
+          {/* Hero Section (Ensure it's relative) */}
           {/* Submission Success Overlay */}
           {submitted && (
-            <div className="absolute inset-0 bg-white/90 z-50 flex flex-col items-center justify-center">
-              <CheckCircle className="h-20 w-20 text-green-500 mb-4 animate-bounce" />
-              <h3 className="text-2xl font-bold text-green-600 mb-2">Thank You!</h3>
-              <p className="text-gray-600">Your enquiry has been submitted successfully.</p>
+            <div className="absolute inset-0 bg-white/80 z-50 flex flex-col items-center justify-center">
+              <CheckCircle className="h-20 w-20 text-green-600 mb-8 animate-bounce z-70" />
+              <h3 className="text-2xl font-bold text-green-600 mb-2 z-70">Thank You!</h3>
+              <p className="text-gray-600 z-70">Your enquiry has been submitted successfully.</p>
             </div>
           )}
-
           {/* Form */}
-          <form 
-            onSubmit={formik.handleSubmit} 
+          <form
+            onSubmit={formik.handleSubmit}
             className={`relative space-y-4 ${submitted ? 'opacity-20 pointer-events-none' : ''}`}
           >
             {/* Email Input */}

@@ -3,8 +3,8 @@ import React from 'react';
 const PrivacyPolicy = () => {
   return (
     <div className="privacy-policy container mx-auto p-4">
-      <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
-
+      <h1 className="text-4xl font-bold mb-5">Privacy Policy</h1>
+      <div className=" w-20 justify-start border-t-4 border-lime-500 my-5" />
       <p className="mb-4">
         At <strong>Farm2Fresh</strong>, we value your privacy and are committed to protecting your personal data. This Privacy Policy outlines the types of information we collect, how we use it, and the steps we take to ensure your information remains secure. By accessing or using our services, you consent to the practices described in this Privacy Policy.
       </p>
