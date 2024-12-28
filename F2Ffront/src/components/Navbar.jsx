@@ -57,9 +57,9 @@ const Navbar = () => {
           {!isLoggedIn ? (
             <Link
               to="/login"
-              className="bg-greenCustom hover:bg-green-700 text-white font-medium py-2 px-4 rounded uppercase"
+              className="bg-greenCustom hover:bg-green-700 text-white font-medium py-2 px-4 rounded"
             >
-              Login
+              Login/Register
             </Link>
           ) : (
             <>
@@ -77,7 +77,7 @@ const Navbar = () => {
                 >
                   {user && <MenuItem onClick={handleMenuClose}>Hello, {user?.name}</MenuItem>}
                   {user && <MenuItem onClick={handleMenuClose}>{user?.email}</MenuItem>}
-                  <div className="bg-greenCustom hover:bg-green-700 text-white font-medium py-1 px-4 rounded uppercase block ml-3 w-[90%]"
+                  <div className="bg-orange-600 hover:bg-orange-700 text-white font-medium py-1 px-4 rounded block ml-3 w-[90%]"
                   >
                     <MenuItem
                       onClick={logout}
@@ -90,7 +90,7 @@ const Navbar = () => {
           )}
           <Link
             to="/commoditylisting"
-            className="bg-greenCustom hover:bg-green-700 text-white font-medium py-2 px-4 rounded uppercase"
+            className="bg-greenCustom hover:bg-green-700 text-white font-medium py-2 px-4 rounded"
           >
             Sell / Buy
           </Link>
@@ -101,9 +101,9 @@ const Navbar = () => {
           {!isLoggedIn ? (
             <Link
               to="/login"
-              className="bg-greenCustom hover:bg-green-700 text-white font-medium py-1.5 px-3 rounded uppercase text-sm"
+              className="bg-greenCustom hover:bg-green-700 text-white font-medium py-1.5 px-3 rounded text-sm"
             >
-              Login
+              Login/Register
             </Link>
           ) : (
             <IconButton color="inherit">
@@ -169,7 +169,7 @@ const Navbar = () => {
               <ListItem className="p-0">
                 <Link
                   to="/commoditylisting"
-                  className="bg-greenCustom hover:bg-green-700 text-white font-medium py-2 px-4 rounded uppercase text-center block w-full"
+                  className="bg-greenCustom hover:bg-green-700 text-white font-medium py-2 px-4 rounded text-center block w-full"
                 >
                   Sell / Buy
                 </Link>
@@ -180,7 +180,7 @@ const Navbar = () => {
                 <div className="flex flex-col space-y-2 ">
            <Link
                 to="/home"
-                className="bg-greenCustom  hover:bg-green-700 text-white font-medium py-2 ml-5 rounded uppercase text-center block w-56"
+                className="bg-orange-600  hover:bg-orange-700 text-white font-medium py-2 ml-5 rounded text-center block w-56"
                 onClick={() => { logout(); handleDrawerToggle(); }}
               >
                 Logout
