@@ -30,6 +30,10 @@ export default {
         lg: "1.5rem",
         xl: "3rem",
       },
+      fontFamily: {
+        heading: ['Poppins', 'sans-serif'],
+        body: ['Roboto', 'sans-serif'],
+      },
       borderRadius: {
         default: "5px",
         badge: "10px",
