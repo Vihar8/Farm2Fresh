@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from "yup";
 import { Mail, Phone, MessageSquare, Send, CheckCircle } from 'lucide-react';
 import SnackbarContext from '../context/SnackbarContext';
-
+import api from "../api/axios";
 
 const ContactUs = () => {
   const [loading, setLoading] = useState(false);
@@ -30,14 +30,13 @@ const ContactUs = () => {
     onSubmit: async (values, { resetForm }) => {
       setLoading(true);
       try {
-        const response = await fetch("http://localhost:3000/api/enquiryform", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(values),
+        const response = await api.post("http://localhost:3000/api/enquiryform", values, {
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
 
-        const data = await response.json();
-        if (response.ok) {
+        if (response.status === 200) {
           showSnackbar("Your enquiry has been submitted successfully!", "success");
           resetForm();
           setSubmitted(true);
@@ -47,7 +46,7 @@ const ContactUs = () => {
             setSubmitted(false);
           }, 3000);
         } else {
-          showSnackbar(data.error || "Failed to submit enquiry. Please try again.", "error");
+          showSnackbar(response.data.error || "Failed to submit enquiry. Please try again.", "error");
         }
       } catch (error) {
         console.error("Error submitting form:", error);
@@ -65,13 +64,12 @@ const ContactUs = () => {
     <div className="max-h-screen bg-gray-50 flex items-center justify-center p-4 m-2">
       <div className="w-full max-w-7xl bg-white shadow-2xl rounded-2xl border border-gray-100 overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-4">
 
-       {/* Left side with image */}
-<div className="relative bg-cover bg-center" style={{ backgroundImage: 'url(../public/ContactUs.jpg)' }}>
-  <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-    <h2 className="text-white pt-80 text-4xl font-bold">Get in Touch</h2>
-  </div>
-</div>
-
+        {/* Left side with image */}
+        <div className="relative bg-cover bg-center" style={{ backgroundImage: 'url(../public/ContactUs.jpg)' }}>
+          <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+            <h2 className="text-white pt-80 text-4xl font-bold">Get in Touch</h2>
+          </div>
+        </div>
 
         {/* Right side with form */}
         <div className="p-6 space-y-4">
