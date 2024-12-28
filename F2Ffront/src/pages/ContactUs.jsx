@@ -65,7 +65,7 @@ const ContactUs = () => {
       <div className="w-full max-w-7xl bg-white shadow-2xl rounded-2xl border border-gray-100 overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-4">
 
         {/* Left side with image */}
-        <div className="relative bg-cover bg-center" style={{ backgroundImage: 'url(../public/ContactUs.jpg)' }}>
+        <div className="relative bg-cover bg-center"  style={{ backgroundImage: 'url(/ContactUs.jpg)' }}>
           <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
             <h2 className="text-white pt-80 text-4xl font-bold">Get in Touch</h2>
           </div>
