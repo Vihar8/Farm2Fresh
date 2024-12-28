@@ -28,9 +28,9 @@ const Navbar = () => {
       <Toolbar className="flex justify-between items-center px-4">
         {/* Logo */}
         <Link to="/home" className="flex-shrink-0">
-          <div className="flex items-center space-x-2">
-            <img className="w-24 md:w-32" src="./f2f.jpg" alt="logo" />
-            <h1 className="text-lg font-bold text-greenCustom">
+          <div className="flex items-center -space-x-2">
+            <img className="w-20 md:w-28" src="./f2f.jpg" alt="logo" />
+            <h1 className="text-lg font-bold text-greenCustom mt-2">
               Farm<span className="text-black">2</span><span className="text-greenCustom">Fresh</span>
             </h1>
           </div>
@@ -97,7 +97,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Login and Menu */}
-        <div className="md:hidden flex items-center space-x-2">
+        <div className="md:hidden flex items-center space-x-1 mt-2">
           {!isLoggedIn ? (
             <Link
               to="/login"
