@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <div className="relative w-full min-h-screen bg-gray-100">
       {/* Video Section */}
-      <div className="w-full h-[45vh] overflow-hidden">
+      <div className=" relative w-full h-[45vh] overflow-hidden">
         <video
           className="w-full h-full object-cover"
           autoPlay
@@ -15,6 +15,11 @@ const Home = () => {
           <source src="/f2f.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
+        <div className="absolute inset-0 bg-black/25 pt-72 flex items-center justify-center">
+    <h2 className="text-white text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-center">
+      Revolutionize Farming With Farm2Fresh
+    </h2>
+  </div>
       </div>
 
       {/* Content Section */}
