@@ -36,7 +36,7 @@ const ContactUs = () => {
           },
         });
 
-        if (response.status === 200) {
+        if (response.status === 201) {
           showSnackbar("Your enquiry has been submitted successfully!", "success");
           resetForm();
           setSubmitted(true);
