@@ -42,7 +42,7 @@ const Start = () => {
         <p>
           Empowering Farmers, Enriching Lives -{" "}
           <a
-            href="https://bodyshody.vercel.app/"
+            href="https://farm2fresh.vercel.app/home"
             className="underline hover:text-green-400"
           >
             Visit Farm2Fresh

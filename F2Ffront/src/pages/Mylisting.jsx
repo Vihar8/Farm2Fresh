@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../api/axios";
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import FarmingLoaderSun from "../commoncomponents/FarmingLoaderSun";
 
 const UserCommodities = () => {
   const [commodities, setCommodities] = useState([]);
@@ -74,8 +75,7 @@ const UserCommodities = () => {
   }, []);
 
   
-  if (loading) return <CircularProgress style={{ color: "lawngreen" }}/> ;
-
+  if (loading) return <FarmingLoaderSun/> ;
 
 
   return (
