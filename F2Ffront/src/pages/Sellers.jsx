@@ -101,7 +101,7 @@ const SellerCommodities = () => {
                   <p className="text-sm font-medium text-gray-800">{item.seller.name}</p>
                   <p className="text-xs text-gray-500">
                     <span className="inline-flex items-center px-1 py-1 bg-green-100 text-green-700 font-medium rounded-full border border-green-300 shadow-sm">
-                      {item.buyer.user_type || 'Farmer'}
+                      {item.seller.user_type || 'Farmer'}
                     </span>
                   </p>
                   <p className="text-xs text-gray-500">Mobile: {item.seller.mobile || 'N/A'}</p> {/* Mobile number */}
