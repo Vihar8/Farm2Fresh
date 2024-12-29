@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '../api/axios';
-import { CircularProgress } from '@mui/material';
+import FarmingLoaderSun from '../commoncomponents/FarmingLoaderSun';
 
 
 const BuyerCommodities = () => {
@@ -27,7 +27,7 @@ const BuyerCommodities = () => {
     fetchCommodities();
   }, []);
 
-  if (loading) return <CircularProgress style={{ color: "lawngreen" }}/> ;
+  if (loading) return <FarmingLoaderSun/> ;
 
   return (
     <div className="container mx-auto p-4">
