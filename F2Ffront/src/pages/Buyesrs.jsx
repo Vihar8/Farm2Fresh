@@ -59,9 +59,10 @@ const BuyerCommodities = () => {
                     className="relative group overflow-hidden rounded-lg shadow-md"
                   >
                     <img
-                      src={`${import.meta.env.VITE_API_URL}/${image}`}
+                      src={image}
                       alt={`${item.commodity} image ${index + 1}`}
                       className="w-full h-32 object-cover"
+                      onError={(e) => (e.target.src = "/fallback-image.jpg")}
                     />
                   </div>
                 ))}
