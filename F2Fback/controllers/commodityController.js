@@ -1,10 +1,12 @@
 const Commodity = require('../models/commodity');
-
 // Controller to add a new commodity
+const cloudinary = require('../middlewares/cloudinaryConfig');
+
+
 exports.addCommodity = async (req, res) => {
     try {
         const { commodity, varietyType, quantity, totalIn, price, state, district } = req.body;
-        const imagePaths = req.files.map(file => file.path);
+        const imagePaths = req.files.map(file => file.path); // Cloudinary URLs
 
         const newCommodity = new Commodity({
             commodity,

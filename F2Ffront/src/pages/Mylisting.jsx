@@ -93,21 +93,27 @@ const UserCommodities = () => {
               </div>
 
               {/* Images */}
-              <div className="relative grid grid-cols-2 gap-2 p-2 bg-gray-50">
-            
-                  {commodity.images.map((image, index) => (
-                    <div
-                  key={index}
-                  className="relative group overflow-hidden rounded-lg shadow-md"
-                >
+              <div
+                className={`relative grid ${commodity.images.length === 1
+                    ? "grid-cols-1"
+                    : commodity.images.length === 2
+                      ? "grid-cols-2"
+                      : "grid-cols-2 sm:grid-cols-3"
+                  } gap-2 p-2 bg-gray-50`}
+              >
+                {commodity.images.map((image, index) => (
+                  <div
+                    key={index}
+                    className="relative group overflow-hidden rounded-lg shadow-md"
+                  >
                     <img
-                      src={`${import.meta.env.VITE_API_URL}/${image}`}
+                      src={image}
                       alt={`${commodity.commodity} image ${index + 1}`}
                       className="w-full h-32 object-cover"
-                      />
-                      </div>
-                  ))
-                  }
+                      onError={(e) => (e.target.src = "/fallback-image.jpg")}
+                    />
+                  </div>
+                ))}
               </div>
 
               {/* Commodity Details */}
