@@ -550,34 +550,46 @@ const Navbar = () => {
                     <div className='flex-col justify-center'>
                       <p className="text-lg text-black font-semibold">Guest</p>
                     </div>
-                  </>
-                )}
+                </>
+              )}
               <IconButton onClick={handleDrawerToggle}>
                 <FaTimes />
               </IconButton>
             </div>
             <Divider />
             <List>
-              <ListItem button component={Link} to="/my-listing" onClick={handleDrawerToggle}>
-                <FiList className="text-lg mr-2" />
-                <ListItemText primary="My Listing" />
+              <ListItem button component={Link} to="/my-listing" onClick={handleDrawerToggle} className="group">
+                <FiList
+                  className="group-hover:text-green-500 text-lg mr-2"
+                />
+                <ListItemText primary="My Listing"
+                  className="group-hover:text-green-500"
+                />
               </ListItem>
-              <ListItem button component={Link} to="/sellers" onClick={handleDrawerToggle}>
-                <FiUsers className="text-lg mr-2" />
-                <ListItemText primary="Sellers" />
+              <ListItem button component={Link} to="/sellers" onClick={handleDrawerToggle} className="group">
+                <FiUsers
+                  className="group-hover:text-green-500 text-lg mr-2" />
+                <ListItemText primary="Sellers"
+                  className="group-hover:text-green-500"
+                />
               </ListItem>
-              <ListItem button component={Link} to="/buyers" onClick={handleDrawerToggle}>
-                <FiShoppingBag className="text-lg mr-2" />
-                <ListItemText primary="Buyers" />
+              <ListItem button component={Link} to="/buyers" onClick={handleDrawerToggle} className="group">
+                <FiShoppingBag className="group-hover:text-green-500 text-lg mr-2" />
+                <ListItemText primary="Buyers"
+                  className="group-hover:text-green-500"
+                />
               </ListItem>
-              <ListItem button component={Link} to="/mandi-prices" onClick={handleDrawerToggle}>
-                <FiDollarSign className="text-lg mr-2" />
-                <ListItemText primary="Mandi Prices" />
+              <ListItem button component={Link} to="/mandi-prices" onClick={handleDrawerToggle} className="group">
+                <FiDollarSign className="group-hover:text-green-500 text-lg mr-2" />
+                <ListItemText primary="Mandi Prices"
+                  className="group-hover:text-green-500"
+                />
               </ListItem>
-              <ListItem className="p-0">
+              <ListItem className="mt-3">
                 <Link
                   to="/commoditylisting"
-                  className="bg-greenCustom hover:bg-green-700 text-white font-medium py-2 px-4 rounded text-center block w-full flex items-center justify-center gap-2"
+                  onClick={handleDrawerToggle}
+                  className="bg-greenCustom hover:bg-green-700 text-white font-medium py-2 px-4 rounded text-center w-full flex items-center justify-center gap-2"
                 >
                   <FiShoppingCart className="text-lg" /> Sell / Buy
                 </Link>
@@ -588,7 +600,7 @@ const Navbar = () => {
                 <div className="flex flex-col space-y-2 ">
            <Link
                 to="/home"
-                className="bg-orange-600 hover:bg-orange-700 text-white font-medium py-2 ml-5 rounded text-center block w-56 flex items-center justify-center gap-2"
+                className="bg-orange-600 hover:bg-orange-700 text-white font-medium py-2 ml-5 rounded text-center w-56 flex items-center justify-center gap-2"
                 onClick={() => { logout(); handleDrawerToggle(); }}
               >
                 <FiLogOut className="text-lg" /> Logout
