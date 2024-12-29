@@ -43,20 +43,27 @@ const SellerCommodities = () => {
               Date: {new Date(item.createdAt).toLocaleDateString('en-GB')}
             </div>
             {/* Image */}
-            <div className="relative grid grid-cols-2 gap-2 p-2 bg-gray-50">
-              {item.images.map((image, index) => (
-                <div
-                  key={index}
-                  className="relative group overflow-hidden rounded-lg shadow-md"
-                >
-                  {/* Image */}
-                  <img
-                    src={`${import.meta.env.VITE_API_URL}/${image}`}
-                    alt={`${item.commodity} image ${index + 1}`}
-                    className="w-full h-32 object-cover"
-                  />
-                </div>
-              ))}
+            <div
+                className={`relative grid ${
+                  item.images.length === 1
+                    ? 'grid-cols-1'
+                    : item.images.length === 2
+                    ? 'grid-cols-2'
+                    : 'grid-cols-2 sm:grid-cols-3'
+                } gap-2 p-2 bg-gray-50`}
+              >
+                {item.images.map((image, index) => (
+                  <div
+                    key={index}
+                    className="relative group overflow-hidden rounded-lg shadow-md"
+                  >
+                    <img
+                      src={`${import.meta.env.VITE_API_URL}/${image}`}
+                      alt={`${item.commodity} image ${index + 1}`}
+                      className="w-full h-32 object-cover"
+                    />
+                  </div>
+                ))}
 
               {/* Share Button */}
               {/* <button className="absolute top-2 right-2 bg-green-600 text-white text-xs font-semibold px-3 py-1 rounded shadow-md hover:bg-green-700">
