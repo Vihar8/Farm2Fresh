@@ -42,7 +42,7 @@ export default {
         sans: "Open Sans",
         custom: ['"Open Sans"', 'sans-serif'],
       },
-      colors: {
+        colors: {
         primary: {
           Color1: "#0fbc3a",
           Color2: "#000000",

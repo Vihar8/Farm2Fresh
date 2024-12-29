@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '../api/axios';
+import { CircularProgress } from '@mui/material';
 
 const SellerCommodities = () => {
   const [commodities, setCommodities] = useState([]);
@@ -25,7 +26,9 @@ const SellerCommodities = () => {
     fetchCommodities();
   }, []);
 
+  if (loading) return <CircularProgress style={{ color: "lawngreen" }}/> ;
 
+  
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl text-green-600 text-center font-bold mb-6">Seller Commodities</h1>
