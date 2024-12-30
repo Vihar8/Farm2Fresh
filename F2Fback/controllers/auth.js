@@ -153,7 +153,8 @@ const login = async (req, res) => {
                 name: user.name,
                 email: user.email,
                 role: user.role,
-                mobile: user.mobile // Include mobile in the response
+                mobile: user.mobile, // Include mobile in the response
+                user_type: user.user_type
             }
         });
     } catch (err) {
@@ -180,7 +181,8 @@ const getProfile = async (req, res) => {
                 name: user.name,
                 email: user.email,
                 role: user.role,
-                mobile: user.mobile // Include mobile in the response if needed
+                mobile: user.mobile,
+                user_type: user.user_type
             }
         });
     } catch (error) {
