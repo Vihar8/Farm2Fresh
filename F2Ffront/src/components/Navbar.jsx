@@ -478,7 +478,7 @@ const Navbar = () => {
                   open={Boolean(anchorEl)}
                   onClose={handleMenuClose}
                 >
-                  {user && <MenuItem onClick={handleMenuClose}>Hello, {user?.name}</MenuItem>}
+                  {user && <MenuItem onClick={handleMenuClose}>Hello, {user?.name} ({user?.user_type})</MenuItem>}
                   {user && <MenuItem onClick={handleMenuClose}>{user?.email}</MenuItem>}
                   <div className="bg-orange-600 hover:bg-orange-700 text-white font-medium py-1 px-4 rounded block ml-3 w-[90%]"
                   >
@@ -540,7 +540,7 @@ const Navbar = () => {
                     <AccountCircle />
                   )}
                   <div className='flex-col justify-center'>
-                    <p className="text-lg text-black font-semibold">{user?.name || 'Guest'}</p>
+                    <p className="text-lg text-black font-semibold">{user?.name || 'Guest'} ({user?.user_type})</p>
                     <p className="text-sm text-black">{user?.email || ''}</p>
                   </div>
                 </div>
