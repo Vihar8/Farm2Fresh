@@ -3,6 +3,7 @@ import React from 'react'
 import UserLogin from './pages/UserLogin'
 import LoaderCommon from "./commoncomponents/Loader/LoaderCommon";
 import { Box } from "lucide-react";
+import Layout from "./layouts/Layout";
 
 const App = () => {
   return (

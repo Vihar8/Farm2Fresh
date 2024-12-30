@@ -94,7 +94,7 @@ export default function SignUp() {
       }}></div>
 
       {/* Right Side Form */}
-      <div className="lg:w-1/2 w-full flex flex-col items-center justify-center p-6">
+      <div className="lg:w-1/2 w-full flex flex-col items-center  bg-gray-50 justify-center p-6">
         <div className="w-12 h-12 flex items-center justify-center bg-greenCustom rounded-full shadow-md mb-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +111,7 @@ export default function SignUp() {
             />
           </svg>
         </div>
-        <div className="max-w-lg w-full p-4 bg-gray-50 rounded-lg shadow-lg">
+        <div className="max-w-lg w-full p-4 rounded-lg">
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-semibold text-black">Sign Up</h1>
@@ -125,11 +125,12 @@ export default function SignUp() {
                 <label htmlFor="name" className="block text-sm font-medium text-black">Full Name</label>
                 <input
                   type="text"
+                  placeholder="Full Name"
                   id="name"
                   {...formik.getFieldProps("name")}
-                  className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${formik.touched.name && formik.errors.name
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300 focus:ring-greenCustom"
+                  className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.name && formik.errors.name
+                    ? "border-red-500"
+                    : "border-gray-300"
                     }`}
                 />
                 {formik.touched.name && formik.errors.name && (
@@ -142,11 +143,12 @@ export default function SignUp() {
                 <label htmlFor="email" className="block text-sm font-medium text-black">Email Address</label>
                 <input
                   type="email"
+                  placeholder="Email"
                   id="email"
                   {...formik.getFieldProps("email")}
-                  className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${formik.touched.email && formik.errors.email
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300 focus:ring-greenCustom"
+                  className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.email && formik.errors.email
+                    ? "border-red-500 "
+                    : "border-gray-300 "
                     }`}
                 />
                 {formik.touched.email && formik.errors.email && (
@@ -159,11 +161,12 @@ export default function SignUp() {
                 <label htmlFor="mobile" className="block text-sm font-medium text-black">Mobile Number</label>
                 <input
                   type="text"
+                  placeholder="Mobile Number"
                   id="mobile"
                   {...formik.getFieldProps("mobile")}
-                  className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${formik.touched.mobile && formik.errors.mobile
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300 focus:ring-greenCustom"
+                  className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.mobile && formik.errors.mobile
+                    ? "border-red-500 "
+                    : "border-gray-300 "
                     }`}
                 />
                 {formik.touched.mobile && formik.errors.mobile && (
@@ -177,11 +180,12 @@ export default function SignUp() {
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
+                    placeholder="Password"
                     id="password"
                     {...formik.getFieldProps("password")}
-                    className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${formik.touched.password && formik.errors.password
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-gray-300 focus:ring-greenCustom"
+                    className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.password && formik.errors.password
+                      ? "border-red-500 "
+                      : "border-gray-300"
                       }`}
                   />
                   <button
@@ -203,11 +207,12 @@ export default function SignUp() {
                 <div className="relative">
                   <input
                     type={showConfirmPassword ? "text" : "password"}
+                    placeholder="Confirm Password"
                     id="confirmPassword"
                     {...formik.getFieldProps("confirmPassword")}
-                    className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${formik.touched.confirmPassword && formik.errors.confirmPassword
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-gray-300 focus:ring-greenCustom"
+                    className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.confirmPassword && formik.errors.confirmPassword
+                      ? "border-red-500 "
+                      : "border-gray-300"
                       }`}
                   />
                   <button
@@ -230,9 +235,9 @@ export default function SignUp() {
                   id="role"
                   value={role}
                   onChange={(e) => setRole(Number(e.target.value))}
-                  className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${formik.touched.role && formik.errors.role
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300 focus:ring-greenCustom"
+                  className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.role && formik.errors.role
+                    ? "border-red-500"
+                    : "border-gray-300"
                     }`}
                 >
                   <option value={1}>User</option>
@@ -247,9 +252,9 @@ export default function SignUp() {
                   id="user_type"
                   value={userType}
                   onChange={(e) => setUserType(e.target.value)}
-                  className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 ${formik.touched.user_type && formik.errors.user_type
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300 focus:ring-greenCustom"
+                  className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.user_type && formik.errors.user_type
+                    ? "border-red-500 "
+                    : "border-gray-300"
                     }`}
                 >
                   <option value="buyer">Buyer</option>
@@ -272,7 +277,9 @@ export default function SignUp() {
                   type="text"
                   placeholder="Enter OTP"
                   {...formik.getFieldProps("otp")}
-                  className="w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom"
+                  className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.user_type && formik.errors.user_type
+                    ? "border-red-500 "
+                    : "border-gray-300"}`}
                 />
                 {formik.touched.otp && formik.errors.otp && (
                   <p className="mt-1 text-sm text-red-500">{formik.errors.otp}</p>

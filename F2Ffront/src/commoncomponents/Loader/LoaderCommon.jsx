@@ -11,7 +11,7 @@ const LoaderWrapper = styled("div")(({ theme }) => ({
   zIndex: 2001,
   width: "100%",
   height: "calc(100vh - 0px)",
-  background: "rgb(38 38 38 / 51%)",
+  background: "rgb(38 38 38 / 5%)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -33,8 +33,8 @@ const LoaderCommon = () => (
         justifyContent: "center",
       }}
     >
-      <CircularProgress color="primary" />
-      <Typography component="div" style={{ color: "#fff", marginTop: 10 }}>
+      <CircularProgress style={{color: "green"}} />
+      <Typography component="div" style={{ color: "black", marginTop: 10 }}>
         {" "}
         Please Wait...{" "}
       </Typography>
