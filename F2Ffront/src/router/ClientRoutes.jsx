@@ -5,6 +5,8 @@ import Layout from "../layouts/Layout";
 import AuthGuard from "../commoncomponents/AuthGuard";
 
 
+
+
 const Home = Loadable(lazy(() => import("../pages/Home")));
 const Start = Loadable(lazy(() => import("../pages/Start")));
 const UserLogin = Loadable(lazy(() => import("../pages/UserLogin")));
@@ -17,6 +19,7 @@ const MandiPrices = Loadable(lazy(() => import("../pages/MandiPrices")));
 const PrivacyPolicy = Loadable(lazy(() => import("../pages/PrivacyPolicy")));
 const TermsAndConditions = Loadable(lazy(() => import("../pages/TermsAndConditions")));
 const Mylisting = Loadable(lazy(() => import("../pages/Mylisting")));
+const AgriUpdates = Loadable(lazy(() => import("../pages/AgriUpdates")));
 
 const ClientRoutes = {
   path: "/",
@@ -89,6 +92,14 @@ const ClientRoutes = {
             <Mylisting />
           </Layout>
         </AuthGuard>
+      ),
+    },
+    {
+      path: "/agri-updates", // Terms and Conditions page
+      element: (
+          <Layout>
+            <AgriUpdates />
+          </Layout>
       ),
     },
     {
