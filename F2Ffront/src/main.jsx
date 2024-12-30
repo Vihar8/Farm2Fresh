@@ -1,25 +1,21 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import { JWTProvider } from './context/JWTContext';
 import { SnackbarProvider } from './context/SnackbarContext';
 import router from './router';
-import Box from '@mui/material/Box';
 import "./styles/index.scss";
-import LoaderCommon from './commoncomponents/Loader/LoaderCommon';
+import App from './App';
 
 
-const rootElement = document.getElementById('root');
-const root = createRoot(rootElement);
-
-root.render(
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <>
+  <SnackbarProvider>
   <JWTProvider>
-    <SnackbarProvider>
       <RouterProvider router={router}>
-        <Box id="appCommonLoader">
-          <LoaderCommon />
-        </Box>
+        <App/>
       </RouterProvider>
-    </SnackbarProvider>
   </JWTProvider>
+    </SnackbarProvider>
+    </>
 );
