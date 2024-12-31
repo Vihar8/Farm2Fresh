@@ -43,7 +43,7 @@ const MandiPriceFinder = () => {
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <h1 className="text-3xl md:text-4xl font-bold text-center text-greenCustom mb-8 flex items-center justify-center gap-2">
         <GiIndianPalace className="text-4xl" />
-        Mandi Price
+        Mandi Prices
       </h1>
 
       <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
@@ -61,7 +61,7 @@ const MandiPriceFinder = () => {
                     type="text"
                     name="state"
                     placeholder="Enter state"
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent border shadow-sm  focus:outline-none"
                   />
                 </div>
                 <ErrorMessage
@@ -84,7 +84,7 @@ const MandiPriceFinder = () => {
                     type="text"
                     name="market"
                     placeholder="Enter market"
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent border shadow-sm  focus:outline-none"
                   />
                 </div>
                 <ErrorMessage
@@ -107,7 +107,7 @@ const MandiPriceFinder = () => {
                     type="text"
                     name="commodity"
                     placeholder="Enter commodity"
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent border shadow-sm  focus:outline-none"
                   />
                 </div>
                 <ErrorMessage
