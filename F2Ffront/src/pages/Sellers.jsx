@@ -189,7 +189,7 @@ const SellerCommodities = () => {
 
       {/* Search Bar */}
       <div className="flex items-center mb-6">
-      <div className="relative flex-grow">
+      <div className="relative flex-grow border-2 border-gray-400 rounded-lg">
         <input
           type="text"
           placeholder="Search commodities, location, or seller..."

@@ -73,7 +73,7 @@ const otpTemplate = (name, otp) => {
     <body>
     <div class="container">
     <a href="https:Farm2Fresh//.vercel.app"><img class="logo"
-    src="https://i.ibb.co/N3FWmNS/f2f.jpg" alt="Farm2Fresh Logo"></a>
+    src="https://i.ibb.co/vqpGhB6/F2f.jpg" alt="Farm2Fresh Logo"></a>
     <div class="message">OTP Verification Email</div>
     <div class="body">
     <p>Dear ${name},</p>

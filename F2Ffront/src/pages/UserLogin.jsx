@@ -98,6 +98,7 @@ const SignInSide = () => {
               </label>
               <input
                 type="email"
+                placeholder="Email"
                 id="email"
                 name="email"
                 value={formik.values.email}
@@ -121,6 +122,7 @@ const SignInSide = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 id="password"
+                placeholder="Password"
                 name="password"
                 value={formik.values.password}
                 onChange={formik.handleChange}
