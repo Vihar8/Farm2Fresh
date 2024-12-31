@@ -112,28 +112,7 @@ const CommodityForm = () => {
     return () => clearTimeout(timeoutId);
   }, [snackbar.open]);
 
-  // Static Data
-  // const stateOptions = [
-  //   'Maharashtra', 'Karnataka', 'Tamil Nadu',
-  //   'Uttar Pradesh', 'Gujarat', 'Rajasthan',
-  //   'Punjab', 'Kerala', 'West Bengal',
-  //   'Madhya Pradesh', 'Bihar', 'Odisha'
-  // ];
 
-  // const districtMap = {
-  //   'Maharashtra': ['Mumbai', 'Pune', 'Nagpur', 'Nashik', 'Aurangabad'],
-  //   'Karnataka': ['Bangalore', 'Mysore', 'Hubli', 'Mangalore', 'Belgaum'],
-  //   'Tamil Nadu': ['Chennai', 'Coimbatore', 'Madurai', 'Tiruchirapalli', 'Salem'],
-  //   'Uttar Pradesh': ['Lucknow', 'Kanpur', 'Varanasi', 'Agra', 'Meerut'],
-  //   'Gujarat': ['Ahmedabad', 'Surat', 'Vadodara', 'Rajkot', 'Bhavnagar'],
-  //   'Rajasthan': ['Jaipur', 'Jodhpur', 'Udaipur', 'Ajmer', 'Bikaner'],
-  //   'Punjab': ['Amritsar', 'Ludhiana', 'Jalandhar', 'Patiala', 'Bathinda'],
-  //   'Kerala': ['Thiruvananthapuram', 'Kochi', 'Kozhikode', 'Thrissur', 'Alappuzha'],
-  //   'West Bengal': ['Kolkata', 'Darjeeling', 'Asansol', 'Siliguri', 'Howrah'],
-  //   'Madhya Pradesh': ['Bhopal', 'Indore', 'Gwalior', 'Jabalpur', 'Ujjain'],
-  //   'Bihar': ['Patna', 'Gaya', 'Bhagalpur', 'Muzaffarpur', 'Darbhanga'],
-  //   'Odisha': ['Bhubaneswar', 'Cuttack', 'Rourkela', 'Puri', 'Berhampur']
-  // };
 
   const stateOptions = [
     'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
