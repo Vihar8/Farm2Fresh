@@ -1,35 +1,28 @@
 import { useState, useEffect } from "react";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
-import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import FarmingLoaderSun from "../commoncomponents/FarmingLoaderSun";
 
 const UserCommodities = () => {
   const [commodities, setCommodities] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [commodityToDelete, setCommodityToDelete] = useState(null); // Track commodity to delete
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openUpdateDialog, setOpenUpdateDialog] = useState(false); // Dialog for update confirmation
+  const [commodityToDelete, setCommodityToDelete] = useState(null);
+  const [commodityToUpdate, setCommodityToUpdate] = useState(null); // Commodity for update dialog
+  const navigate = useNavigate();
 
-  // Function to fetch logged-in user's commodities
+  // Fetch commodities
   const fetchCommodities = async () => {
     setLoading(true);
     try {
       const token = localStorage.getItem("serviceToken");
-      if (!token) {
-        console.error("No auth token found. Please login again.");
-        return;
-      }
-
+      if (!token) throw new Error("No auth token found. Please login again.");
       const response = await api.get("/api/commodities", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-
-      if (Array.isArray(response.data.commodities)) {
-        setCommodities(response.data.commodities);
-      } else {
-        console.error("Unexpected response format:", response.data);
-      }
+      setCommodities(response.data.commodities || []);
     } catch (error) {
       console.error("Error fetching commodities:", error.response?.data || error.message);
     } finally {
@@ -37,50 +30,49 @@ const UserCommodities = () => {
     }
   };
 
-  // Function to delete a commodity
+  // Delete commodity
   const deleteCommodity = async () => {
-    if (!commodityToDelete) return;
-
     try {
       const token = localStorage.getItem("serviceToken");
-      if (!token) {
-        console.error("No auth token found. Please login again.");
-        return;
-      }
-
+      if (!token) throw new Error("No auth token found. Please login again.");
       await api.delete(`/api/deleteCommodity/${commodityToDelete}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-
-      setCommodities((prev) => prev.filter((commodity) => commodity._id !== commodityToDelete));
-      
+      setCommodities((prev) =>
+        prev.filter((commodity) => commodity._id !== commodityToDelete)
+      );
     } catch (error) {
       console.error("Error deleting commodity:", error.response?.data || error.message);
     } finally {
-      setOpenDialog(false); // Close the dialog after the operation
+      setOpenDeleteDialog(false);
     }
   };
 
-  // Function to handle update (placeholder function)
-  const updateCommodity = (commodityId) => {
-    alert(`Update functionality for commodity ID: ${commodityId} is not yet implemented.`);
-    // Implement your update logic here, e.g., open a form to edit details.
-  };
-
-  // Fetch commodities on component mount
   useEffect(() => {
     fetchCommodities();
   }, []);
 
-  
-  if (loading) return <FarmingLoaderSun/> ;
+  // Handle Update Button Click
+  const handleUpdate = (commodityId, commodityData) => {
+    setCommodityToUpdate(commodityData); // Set the commodity data for confirmation
+    setOpenUpdateDialog(true); // Open the update confirmation dialog
+  };
 
+  // Handle Update Confirmation
+  const confirmUpdate = () => {
+    navigate(`/updateCommodity/${commodityToUpdate._id}`, {
+      state: { commodity: commodityToUpdate },
+    });
+    setOpenUpdateDialog(false); // Close the dialog
+  };
+
+  if (loading) return <FarmingLoaderSun />;
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl text-green-600 text-center font-bold mb-6">My Commodities</h1>
+      <h1 className="text-3xl text-green-600 text-center font-bold mb-6">
+        My Commodities
+      </h1>
       {commodities.length === 0 ? (
         <p className="text-gray-500 text-center">No commodities found.</p>
       ) : (
@@ -90,19 +82,19 @@ const UserCommodities = () => {
               key={commodity._id}
               className="bg-white shadow-md rounded-lg border border-gray-200 overflow-hidden"
             >
-              {/* Date */}
               <div className="px-4 py-2 bg-gray-100 text-sm text-gray-600">
                 Date: {new Date(commodity.createdAt).toLocaleDateString("en-GB")}
               </div>
 
-              {/* Images */}
+              {/* Image Handling */}
               <div
-                className={`relative grid ${commodity.images.length === 1
+                className={`relative grid ${
+                  commodity.images.length === 1
                     ? "grid-cols-1"
                     : commodity.images.length === 2
-                      ? "grid-cols-2"
-                      : "grid-cols-2 sm:grid-cols-3"
-                  } gap-2 p-2 bg-gray-50`}
+                    ? "grid-cols-2"
+                    : "grid-cols-2 sm:grid-cols-3"
+                } gap-2 p-2 bg-gray-50`}
               >
                 {commodity.images.map((image, index) => (
                   <div
@@ -119,7 +111,6 @@ const UserCommodities = () => {
                 ))}
               </div>
 
-              {/* Commodity Details */}
               <div className="p-4">
                 <h3 className="text-lg font-semibold text-gray-800 capitalize mb-1">
                   {commodity.commodity} ({commodity.varietyType})
@@ -128,26 +119,26 @@ const UserCommodities = () => {
                   Price: <span className="text-black font-bold">₹{commodity.price}</span>
                 </p>
                 <p className="text-sm font-semibold text-green-700">
-                  Quantity: <span className="text-black font-bold">{commodity.quantity} {commodity.totalIn}</span>
+                  Quantity: <span className="text-black font-bold">{commodity.quantity}</span>
                 </p>
                 <p className="text-sm text-gray-500">
                   Location: {commodity.state}, {commodity.district}
                 </p>
               </div>
-
-              {/* Buttons */}
               <div className="p-4 bg-gray-50 flex justify-between">
+                {/* Update Button */}
                 <button
                   className="w-1/2 bg-blue-600 text-white py-2 mr-2 rounded shadow hover:bg-blue-700"
-                  onClick={() => updateCommodity(commodity._id)}
+                  onClick={() => handleUpdate(commodity._id, commodity)} // Trigger update confirmation dialog
                 >
                   Update
                 </button>
+                {/* Delete Button */}
                 <button
                   className="w-1/2 bg-red-600 text-white py-2 rounded shadow hover:bg-red-700"
                   onClick={() => {
-                    setCommodityToDelete(commodity._id); // Set the commodity to delete
-                    setOpenDialog(true); // Open the dialog
+                    setCommodityToDelete(commodity._id);
+                    setOpenDeleteDialog(true);
                   }}
                 >
                   Delete
@@ -158,17 +149,33 @@ const UserCommodities = () => {
         </div>
       )}
 
-      {/* Dialog for confirmation */}
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+      {/* Dialog for Delete Confirmation */}
+      <Dialog open={openDeleteDialog} onClose={() => setOpenDeleteDialog(false)}>
         <DialogTitle>Confirm Deletion</DialogTitle>
         <DialogContent>
           <p>Are you sure you want to delete this commodity?</p>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)} color="primary">
+          <Button onClick={() => setOpenDeleteDialog(false)} color="primary">
             Cancel
           </Button>
           <Button onClick={deleteCommodity} color="secondary">
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Dialog for Update Confirmation */}
+      <Dialog open={openUpdateDialog} onClose={() => setOpenUpdateDialog(false)}>
+        <DialogTitle>Confirm Update</DialogTitle>
+        <DialogContent>
+          <p>Are you sure you want to update this commodity?</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenUpdateDialog(false)} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={confirmUpdate} color="secondary">
             Confirm
           </Button>
         </DialogActions>
