@@ -1,8 +1,7 @@
 const Commodity = require('../models/commodity');
+const cloudinary = require('../middlewares/cloudinaryConfig'); // Assuming cloudinaryConfig handles image uploads
+
 // Controller to add a new commodity
-const cloudinary = require('../middlewares/cloudinaryConfig');
-
-
 exports.addCommodity = async (req, res) => {
     try {
         const { commodity, varietyType, quantity, totalIn, price, state, district } = req.body;
@@ -157,15 +156,52 @@ exports.getUserCommodities = async (req, res) => {
             .sort({ createdAt: -1 })
             .populate("createdBy", "name email");
 
-        res.status(200).json({ 
-            message: "User commodities fetched successfully", 
-            commodities: userCommodities 
+        res.status(200).json({
+            message: "User commodities fetched successfully",
+            commodities: userCommodities,
         });
     } catch (error) {
         console.error("Error fetching user commodities:", error);
-        res.status(500).json({ 
-            message: "Failed to fetch user commodities", 
-            details: error.message 
+        res.status(500).json({
+            message: "Failed to fetch user commodities",
+            details: error.message,
         });
+    }
+};
+
+// Controller to update a commodity (without changing images)
+exports.updateCommodity = async (req, res) => {
+    try {
+        const commodityId = req.params.id; // Get the commodity ID from the request params
+        const { commodity, varietyType, quantity, totalIn, price, state, district } = req.body; // Destructure other fields
+        const loggedInUserId = req.user._id; // Get the logged-in user's ID
+
+        // Check if commodityId is provided
+        if (!commodityId) {
+            return res.status(400).json({ message: 'Commodity ID is required' });
+        }
+
+        // Find the commodity to update
+        const existingCommodity = await Commodity.findOne({ _id: commodityId, createdBy: loggedInUserId });
+        if (!existingCommodity) {
+            return res.status(404).json({ message: 'Commodity not found or unauthorized to update' });
+        }
+
+        // Update commodity fields, leave images out
+        existingCommodity.commodity = commodity || existingCommodity.commodity;
+        existingCommodity.varietyType = varietyType || existingCommodity.varietyType;
+        existingCommodity.quantity = quantity || existingCommodity.quantity;
+        existingCommodity.totalIn = totalIn || existingCommodity.totalIn;
+        existingCommodity.price = price || existingCommodity.price;
+        existingCommodity.state = state || existingCommodity.state;
+        existingCommodity.district = district || existingCommodity.district;
+
+        // Save the updated commodity details
+        await existingCommodity.save();
+
+        res.status(200).json({ message: 'Commodity updated successfully', commodity: existingCommodity });
+    } catch (error) {
+        console.error('Error updating commodity:', error);
+        res.status(500).json({ message: 'Failed to update commodity', details: error.message });
     }
 };

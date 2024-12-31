@@ -16,8 +16,13 @@ router.get('/getSellerCommodities', authenticateUser, commodityController.getSel
 // Route to get all buyer commodities
 router.get('/getBuyerCommodities', authenticateUser, commodityController.getBuyerCommodities);
 
-router.delete('/deleteCommodity/:id',authenticateUser, commodityController.deleteCommodity);
+// Route to delete a commodity
+router.delete('/deleteCommodity/:id', authenticateUser, commodityController.deleteCommodity);
 
-
+// Route to get all user commodities (for the logged-in user)
 router.get("/commodities", authenticateUser, commodityController.getUserCommodities);
+
+// Route to update a commodity by ID
+router.put('/updateCommodity/:id', authenticateUser, commodityController.updateCommodity);
+
 module.exports = router;
