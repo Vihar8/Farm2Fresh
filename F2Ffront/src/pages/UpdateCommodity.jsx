@@ -422,12 +422,19 @@ const UpdateCommodity = () => {
     const location = useLocation();
     const { commodityId } = useParams();
     const navigate = useNavigate();
-    const [commodity, setCommodity] = useState(null);
+    const [commodity, setCommodity] = useState({
+        commodity: '',
+        price: '',
+        quantity: '',
+        totalIn: '',
+        state: '',
+        district: '',
+        images: [] // Initialize an empty images array
+    });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [openDialog, setOpenDialog] = useState(false);
     const [districts, setDistricts] = useState([]);
-
     useEffect(() => {
         if (!location.state?.commodity) {
             fetchCommodityData();
@@ -459,19 +466,19 @@ const UpdateCommodity = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         if (name === 'state') {
+            console.log('State changed:', value);
+            // Update districts when state changes
             setDistricts(districtMap[value] || []);
-            setCommodity((prev) => ({ ...prev, district: '', totalIn: '', [name]: value }));
+            setCommodity(prev => ({ ...prev, district: '', [name]: value }));
         } else {
-            // Allow only valid number inputs for price and quantity
-            if (value === "" || (name !== 'totalIn' && !isNaN(value) && parseFloat(value) >= 0)) {
-                setCommodity((prev) => ({ ...prev, [name]: value }));
-            }
+            // Log value updates for debugging
+            console.log(`Updating commodity field ${name}:`, value);
+            setCommodity(prev => ({ ...prev, [name]: value }));
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Ensure we have valid commodity data before submitting
         if (!commodity.commodity || !commodity.price || !commodity.quantity || !commodity.state || !commodity.district) {
             setError("Please fill all necessary fields.");
             return;
