@@ -116,13 +116,13 @@ const UserCommodities = () => {
                   {commodity.commodity} ({commodity.varietyType})
                 </h3>
                 <p className="text-sm font-semibold text-green-700 mb-1">
-                  Price: <span className="text-black font-bold">₹{commodity.price}</span>
+                  Price: <span className="text-black font-bold">₹{commodity.price} / {commodity.totalIn}</span>
                 </p>
-                <p className="text-sm font-semibold text-green-700">
-                  Quantity: <span className="text-black font-bold">{commodity.quantity}</span>
+                 <p className="text-sm font-semibold text-green-700">
+                  Quantity: <span className="text-black font-bold">{commodity.quantity} / {commodity.totalIn}</span>
                 </p>
                 <p className="text-sm text-gray-500">
-                  Location: {commodity.state}, {commodity.district}
+                  Location: {commodity.district} , {commodity.state}
                 </p>
               </div>
               <div className="p-4 bg-gray-50 flex justify-between">
