@@ -383,32 +383,32 @@ const districtMap  = {
                     'Jhargram', 'Murshidabad', 'Nadia', 
                     'North 24 Parganas', 'Paschim Medinipur', 
                     'Purba Medinipur', 'Purulia', 'South 24 Parganas', 
-                    'Kolkata'],
-    
-    'Andaman and Nicobar Islands': ['North and Middle Andaman', 
-                                    'South Andaman', 'Nicobar'],
-    
+        'Kolkata'],
+
+    'Andaman and Nicobar Islands': ['North and Middle Andaman',
+        'South Andaman', 'Nicobar'],
+
     'Chandigarh': ['Chandigarh'],
-    
-    'Dadra and Nagar Haveli and Daman and Diu': ['Dadra and Nagar Haveli', 
-                                                  'Daman', 'Diu'],
-    
+
+    'Dadra and Nagar Haveli and Daman and Diu': ['Dadra and Nagar Haveli',
+        'Daman', 'Diu'],
+
     'Lakshadweep': ['Lakshadweep'], // Single district but multiple islands
-    
-    'Delhi': ['Central Delhi', 'East Delhi', 'New Delhi', 
-              'North Delhi', 'North East Delhi', 
-              'North West Delhi', 'South Delhi', 
-              'South East Delhi', 'West Delhi'],
-    
+
+    'Delhi': ['Central Delhi', 'East Delhi', 'New Delhi',
+        'North Delhi', 'North East Delhi',
+        'North West Delhi', 'South Delhi',
+        'South East Delhi', 'West Delhi'],
+
     'Puducherry': ['Puducherry', 'Karaikal', 'Mahe', 'Yanam'],
-    
+
     'Ladakh': ['Leh', 'Kargil'],
-    
-    'Jammu and Kashmir': ['Jammu', 'Samba', 'Kathua', 'Udhampur', 
-                         'Doda', 'Ramban', 'Reasi', 'Poonch', 
-                         'Rajouri', 'Anantnag', 'Pulwama', 
-                         'Shopian', 'Kulgam', 'Srinagar', 
-                         'Bandipora', 'Ganderbal', 'Baramulla']
+
+    'Jammu and Kashmir': ['Jammu', 'Samba', 'Kathua', 'Udhampur',
+        'Doda', 'Ramban', 'Reasi', 'Poonch',
+        'Rajouri', 'Anantnag', 'Pulwama',
+        'Shopian', 'Kulgam', 'Srinagar',
+        'Bandipora', 'Ganderbal', 'Baramulla']
 };
 
 const totalInUnits = [
@@ -416,7 +416,7 @@ const totalInUnits = [
     { value: 'mt', label: 'Metric Tons (mt)' },
     { value: 'quintal', label: 'Quintal' },
     { value: 'ton', label: 'Ton' }
-  ];
+];
 
 const UpdateCommodity = () => {
     const location = useLocation();
@@ -475,6 +475,46 @@ const UpdateCommodity = () => {
             console.log(`Updating commodity field ${name}:`, value);
             setCommodity(prev => ({ ...prev, [name]: value }));
         }
+    };
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [commoditySearch, setCommoditySearch] = useState('');
+    const [filteredCommodities, setFilteredCommodities] = useState([]);
+
+    const availableCommodities = ['Ajwain', 'Almond', 'Amla', 'Apricot', 'Arecanut',
+        'Ash gourd', 'Atta', 'Avocado', 'Baheda', 'Bajra', 'Banana',
+        'Barley', 'Basmati Rice', 'Bay leaf', 'Beetroot', 'Bitter gourd',
+        'Bottle Gourd', 'Brinjal', 'Broad Beans', 'Cabbage', 'Capsicum',
+        'Cardamom', 'Carrot', 'Cashew', 'Castor Oil', 'Castor Seed',
+        'Cauliflower', 'Chana', 'Chana Dal', 'Cherry', 'Chia seed',
+        'Chow Chow', 'Cinnamon', 'Cloves', 'Cluster Beans', 'Coconut',
+        'Coconut Oil', 'Coffee',
+        'Orange', 'Lemon', 'Lime', 'Grapefruit', 'Tangerine', 'Pomelo',
+        'Strawberry', 'Blueberry', 'Raspberry', 'Blackberry', 'Cranberry', 'Black beans', 'Kidney beans',
+        'Goji berry', 'Acai berry', 'Mango', 'Pineapple', 'Papaya',
+        'Guava', 'Passion fruit', 'Lychee', 'Dragon fruit', 'Durian',
+        'Rambutan', 'Starfruit', 'Jackfruit', 'Peach', 'Plum', 'Apricot',
+        'Nectarine', 'Apple', 'Pear', 'Quince', 'Watermelon', 'Cantaloupe',
+        'Honeydew', 'Fig', 'Date', 'Persimmon', 'Mangosteen', 'Tamarind',
+        'Longan', 'Sapodilla', 'Kiwi', 'Pomegranate', 'Grape', 'Olive',
+        'Spinach', 'Kale', 'Lettuce', 'Cabbage', 'Bok choy', 'Swiss chard',
+        'Collard greens', 'Carrot', 'Beetroot', 'Radish', 'Turnip',
+        'Parsnip', 'Sweet potato', 'Yam', 'Broccoli', 'Cauliflower',
+        'Brussels sprouts', 'Kohlrabi', 'Onion', 'Garlic', 'Leek',
+        'Shallot', 'Chive', 'Spring onion', 'Pumpkin', 'Zucchini',
+        'Butternut squash', 'Spaghetti squash', 'Tomato', 'Eggplant',
+        'Bell pepper', 'Chili pepper', 'Potato', 'Green beans', 'Peas',
+        'Lentils', 'Chickpeas', 'Soybeans', 'Black-eyed peas',
+        'Bitter gourd', 'Bottle gourd', 'Ridge gourd', 'Snake gourd',
+        'Ash gourd', 'Taro', 'Turmeric', 'Ginger', 'Cassava', 'Saffron', 'Jerusalem artichoke', 'Cucumber',
+        'Okra', 'Artichoke', 'Beetroot ', 'Celery', 'Asparagus', 'Corn', 'Mushrooms'];
+
+    const handleCommoditySearchChange = (e) => {
+        const value = e.target.value;
+        setCommoditySearch(value);
+        const filtered = availableCommodities.filter((commodity) =>
+            commodity.toLowerCase().includes(value.toLowerCase())
+        );
+        setFilteredCommodities(filtered);
     };
 
     const handleSubmit = async (e) => {
@@ -540,7 +580,7 @@ const UpdateCommodity = () => {
 
                 {commodity && (
                     <form onSubmit={handleSubmit} className="space-y-6">
-                        <div>
+                        {/* <div>
                             <label htmlFor="commodity" className="block text-sm font-medium text-gray-700">Commodity</label>
                             <input
                                 id="commodity"
@@ -551,6 +591,53 @@ const UpdateCommodity = () => {
                                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                                 required
                             />
+                        </div> */}
+                        <div className="relative">
+                            <input
+                                name="commodity"
+                                placeholder="Select Commodity"
+                                value={commodity.commodity}
+                                onClick={() => setIsDropdownOpen(true)}
+                                readOnly
+                                className={`
+            w-full px-4 py-3 border-2 rounded-lg
+            transition-all duration-300 ease-in-out
+            focus:outline-none focus:ring-2 focus:ring-[#2CB21A]/50
+            cursor-pointer
+            ${error.commodity && touched.commodity
+                                        ? 'border-red-500'
+                                        : 'border-[#2CB21A]'}
+        `}
+                            />
+                            {isDropdownOpen && (
+                                <div className="absolute w-full mt-2 max-h-96 overflow-auto border border-[#4CAF50] rounded-lg bg-[#F1F8E9] z-10 shadow-xl"
+                                >
+                                    <div className="p-4 border-t border-[#4CAF50]">
+                                        <input
+                                            type="text"
+                                            placeholder="Search..."
+                                            value={commoditySearch}
+                                            onChange={handleCommoditySearchChange}
+                                            className="w-full px-4 py-2 border border-[#4CAF50] rounded-lg bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#81C784] focus:border-transparent transition-all duration-200 ease-in-out"
+                                        />
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-3 p-4 max-h-72 overflow-auto">
+                                        {filteredCommodities.map((item, index) => (
+                                            <button
+                                                key={index}
+                                                onClick={() => {
+                                                    setCommodity({ ...commodity, commodity: item });
+                                                    setIsDropdownOpen(false);
+                                                }}
+                                                className="
+                            px-4 py-2 text-center text-sm bg-white border border-[#4CAF50] rounded-lg shadow-sm hover:bg-[#81C784] hover:text-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#66BB6A] transition-all duration-200 ease-in-out"
+                                            >
+                                                {item}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         <div>
