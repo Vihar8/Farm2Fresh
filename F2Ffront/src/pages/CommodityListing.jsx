@@ -23,6 +23,7 @@ class ErrorBoundary extends React.Component {
     console.error("Uncaught error:", error, errorInfo);
     // Optional: Send error to logging service
   }
+  
 
   render() {
     if (this.state.hasError) {
@@ -451,7 +452,7 @@ const districtMap = {
           }) => (
             <Form className="space-y-4">
               {/* Commodity Name Input */}
-              <div>
+              {/* <div>
                 <input
                   name="commodity"
                   placeholder="Commodity Name"
@@ -472,7 +473,97 @@ const districtMap = {
                     {errors.commodity}
                   </p>
                 )}
-              </div>
+              </div> */}
+              <div className="relative">
+  {/* Search bar input */}
+  <input
+    name="commodity"
+    placeholder="commodity"
+    value={values.commodity}
+    onClick={() => setFieldValue('isDropdownOpen', true)} // Open dropdown on click
+    readOnly // Make input field read-only
+    className={`
+      w-full px-3 py-2.5 border-2 rounded-lg 
+      transition-all duration-300 ease-in-out
+      focus:outline-none focus:ring-2 focus:ring-[#2CB21A]/50
+      cursor-pointer
+      ${errors.commodity && touched.commodity
+        ? 'border-red-500'
+        : 'border-[#2CB21A]'
+      }
+    `}
+  />
+  {errors.commodity && touched.commodity && (
+    <p className="text-red-500 text-sm mt-1 pl-1">
+      {errors.commodity}
+    </p>
+  )}
+
+  {/* Dropdown */}
+ {values.isDropdownOpen && (
+  <div
+    className="absolute w-full mt-2 max-h-96 overflow-auto border border-[#4CAF50] rounded-lg bg-[#F1F8E9] z-10 shadow-xl"
+  >
+    <div className="p-4 border-t border-[#4CAF50]">
+      <input
+        name="commoditySearch"
+        placeholder="Search for commodities..."
+        value={values.commoditySearch || ''}
+        onChange={handleChange}
+        className="w-full px-4 py-2 border border-[#4CAF50] rounded-lg bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#81C784] focus:border-transparent transition-all duration-200 ease-in-out"
+      />
+    </div>
+    <div className="grid grid-cols-2 gap-3 p-4 max-h-72 overflow-auto">
+      {[
+        'Ajwain', 'Almond', 'Amla', 'Apricot', 'Arecanut',
+        'Ash gourd', 'Atta', 'Avocado', 'Baheda', 'Bajra', 'Banana',
+        'Barley', 'Basmati Rice', 'Bay leaf', 'Beetroot', 'Bitter gourd',
+        'Bottle Gourd', 'Brinjal', 'Broad Beans', 'Cabbage', 'Capsicum',
+        'Cardamom', 'Carrot', 'Cashew', 'Castor Oil', 'Castor Seed',
+        'Cauliflower', 'Chana', 'Chana Dal', 'Cherry', 'Chia seed',
+        'Chow Chow', 'Cinnamon', 'Cloves', 'Cluster Beans', 'Coconut',
+        'Coconut Oil', 'Coffee',
+        'Orange', 'Lemon', 'Lime', 'Grapefruit', 'Tangerine', 'Pomelo',
+        'Strawberry', 'Blueberry', 'Raspberry', 'Blackberry', 'Cranberry', 'Black beans', 'Kidney beans',
+        'Goji berry', 'Acai berry', 'Mango', 'Pineapple', 'Papaya',
+        'Guava', 'Passion fruit', 'Lychee', 'Dragon fruit', 'Durian',
+        'Rambutan', 'Starfruit', 'Jackfruit', 'Peach', 'Plum', 'Apricot',
+        'Nectarine', 'Apple', 'Pear', 'Quince', 'Watermelon', 'Cantaloupe',
+        'Honeydew', 'Fig', 'Date', 'Persimmon', 'Mangosteen', 'Tamarind',
+        'Longan', 'Sapodilla', 'Kiwi', 'Pomegranate', 'Grape', 'Olive',
+        'Spinach', 'Kale', 'Lettuce', 'Cabbage', 'Bok choy', 'Swiss chard',
+        'Collard greens', 'Carrot', 'Beetroot', 'Radish', 'Turnip',
+        'Parsnip', 'Sweet potato', 'Yam', 'Broccoli', 'Cauliflower',
+        'Brussels sprouts', 'Kohlrabi', 'Onion', 'Garlic', 'Leek',
+        'Shallot', 'Chive', 'Spring onion', 'Pumpkin', 'Zucchini',
+        'Butternut squash', 'Spaghetti squash', 'Tomato', 'Eggplant',
+        'Bell pepper', 'Chili pepper', 'Potato', 'Green beans', 'Peas',
+        'Lentils', 'Chickpeas', 'Soybeans', 'Black-eyed peas',
+        'Bitter gourd', 'Bottle gourd', 'Ridge gourd', 'Snake gourd',
+        'Ash gourd', 'Taro', 'Turmeric', 'Ginger', 'Cassava', 'Saffron', 'Jerusalem artichoke', 'Cucumber',
+        'Okra', 'Artichoke', 'Beetroot ','Celery', 'Asparagus', 'Corn', 'Mushrooms'
+      ]
+        .filter(item =>
+          item.toLowerCase().includes(values.commoditySearch?.toLowerCase() || '')
+        )
+        .map((item, index) => (
+          <button
+            key={index}
+            onClick={() => {
+              setFieldValue('commodity', item); // Set selected value
+              setFieldValue('isDropdownOpen', false); // Close dropdown
+            }}
+            className="px-4 py-2 text-center text-sm bg-white border border-[#4CAF50] rounded-lg shadow-sm hover:bg-[#81C784] hover:text-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#66BB6A] transition-all duration-200 ease-in-out"
+          >
+            {item}
+          </button>
+        ))}
+    </div>
+  </div>
+)}
+
+</div>
+
 
               {/* Variety Type Input */}
               <div>
