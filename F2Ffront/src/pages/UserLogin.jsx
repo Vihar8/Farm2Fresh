@@ -104,11 +104,10 @@ const SignInSide = () => {
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${
-                  formik.touched.email && formik.errors.email
-                    ? "border-red-500"
-                    : "border-gray-300"
-                }`}
+                className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.email && formik.errors.email
+                  ? "border-red-500"
+                  : "border-gray-300"
+                  }`}
               />
               {formik.touched.email && formik.errors.email && (
                 <p className="text-sm text-red-500">{formik.errors.email}</p>
@@ -119,28 +118,27 @@ const SignInSide = () => {
                 Password
               </label>
               <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                placeholder="Password"
-                name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className={`block w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${
-                  formik.touched.password && formik.errors.password
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  placeholder="Password"
+                  name="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className={`block w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.password && formik.errors.password
                     ? "border-red-500"
                     : "border-gray-300"
-                }`}
-              />
-              <button
+                    }`}
+                />
+                <button
                   type="button"
                   onClick={togglePasswordVisibility}
                   className="absolute inset-y-0 right-3 flex items-center text-gray-500"
                 >
                   {showPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
                 </button>
-                </div>
+              </div>
               {formik.touched.password && formik.errors.password && (
                 <p className="text-sm text-red-500">{formik.errors.password}</p>
               )}
@@ -154,13 +152,15 @@ const SignInSide = () => {
             </button>
           </form>
           <div className="flex justify-between items-center mt-8 text-sm">
-            <a href="#" className="text-greenCustom font-medium hover:underline">
+            <button
+              onClick={() => navigate("/forgot-password")}
+              className="text-greenCustom font-medium hover:underline"
+            >
               Forgot password?
-            </a>
+            </button>
             <Link to="/usersignup" className="text-greenCustom font-medium hover:underline">
-  Don't have an account? Sign Up
-</Link>
-
+              Don&apos;t have an account? Sign Up
+            </Link>
           </div>
           <p className="mt-10 text-sm text-center text-black">
             Connect With Us at{" "}
