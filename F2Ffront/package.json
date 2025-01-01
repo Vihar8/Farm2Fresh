@@ -2,7 +2,7 @@
   "name": "farm2fresh",
   "private": true,
   "version": "0.0.0",
- "proxy": "http://localhost:3000",
+  "proxy": "http://localhost:3000",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -28,6 +28,8 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.0",
     "react-icons": "^4.2.0",
+    "react-multi-date-picker": "^4.5.2",
+    "react-pro-sidebar": "^1.1.0",
     "react-router-dom": "^7.0.2",
     "tss-react": "^4.9.14",
     "yup": "^1.5.0"

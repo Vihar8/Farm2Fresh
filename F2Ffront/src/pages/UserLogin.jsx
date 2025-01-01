@@ -47,7 +47,7 @@ const SignInSide = () => {
         showSnackbar("SignIn successfully!", "success");
 
         // Redirect to home page after successful login
-        navigate("/home");
+        navigate("/dashboard");
       } catch (error) {
         setFieldError("email", "Invalid email or password");
         setFieldError("password", "Invalid email or password");
