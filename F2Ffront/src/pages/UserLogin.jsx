@@ -51,7 +51,7 @@ const SignInSide = () => {
       } catch (error) {
         setFieldError("email", "Invalid email or password");
         setFieldError("password", "Invalid email or password");
-        showSnackbar("Failed to SignIn. Please try again.", "error");
+        showSnackbar(error?.message, "error");
       } finally {
         setSubmitting(false);
       }

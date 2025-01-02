@@ -59,11 +59,11 @@ export default function SignUp() {
       const { otp, ...userData } = updatedValues;
       try {
         const response = await api.post("/auth/signup", userData);
-        console.log("Sign-up successful:", response.data);
+        console.log("Sign-up successful:", response.message);
         showSnackbar("Sign-up successful & verification code sent!", "success");
       } catch (error) {
         console.error("Sign-up error:", error);
-        showSnackbar("Sign-up failed. Please try again.", "error");
+        showSnackbar(error?.message, "error");
       }
     },
   });

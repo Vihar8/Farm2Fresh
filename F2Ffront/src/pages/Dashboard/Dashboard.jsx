@@ -11,10 +11,17 @@ const Dashboards = () => {
       links: "/admin/orders",
       counts: "1,245",
       bgcolor: "#98C890",
-      details: "Total Commodity",
+      details: "Seller Commodity",
     },
     {
       id: 2,
+      links: "/admin/orders",
+      counts: "1,245",
+      bgcolor: "#98C890",
+      details: "Seller Commodity",
+    },
+    {
+      id: 3,
       links: "/admin/orders-completed",
       counts: "3,980",
       bgcolor: "#ADDCE7",
