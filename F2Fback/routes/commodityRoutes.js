@@ -25,4 +25,6 @@ router.get("/commodities", authenticateUser, commodityController.getUserCommodit
 // Route to update a commodity by ID
 router.put('/updateCommodity/:id', authenticateUser, commodityController.updateCommodity);
 
+router.get("/dashboard", commodityController.getDashboardCounts);
+
 module.exports = router;

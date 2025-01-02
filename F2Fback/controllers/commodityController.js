@@ -1,5 +1,6 @@
 const Commodity = require('../models/commodity');
 const cloudinary = require('../middlewares/cloudinaryConfig'); // Assuming cloudinaryConfig handles image uploads
+const userModel = require('../models/user');
 
 // Controller to add a new commodity
 exports.addCommodity = async (req, res) => {
@@ -203,5 +204,44 @@ exports.updateCommodity = async (req, res) => {
     } catch (error) {
         console.error('Error updating commodity:', error);
         res.status(500).json({ message: 'Failed to update commodity', details: error.message });
+    }
+};
+
+// Controller to get the counts of seller and buyer commodities for the dashboard
+exports.getDashboardCounts = async (req, res) => {
+    try {
+        const totalSellerCommodities = await Commodity.aggregate([
+            {
+                $lookup: {
+                    from: 'users', // Lookup user details
+                    localField: 'createdBy',
+                    foreignField: '_id',
+                    as: 'sellerDetails',
+                },
+            },
+            { $match: { 'sellerDetails.user_type': 'seller' } },
+            { $count: 'totalSellerCommodities' },
+        ]);
+
+        const totalBuyerCommodities = await Commodity.aggregate([
+            {
+                $lookup: {
+                    from: 'users', // Lookup user details
+                    localField: 'createdBy',
+                    foreignField: '_id',
+                    as: 'buyerDetails',
+                },
+            },
+            { $match: { 'buyerDetails.user_type': 'buyer' } },
+            { $count: 'totalBuyerCommodities' },
+        ]);
+
+        res.status(200).json({
+            totalSellerCommodities: totalSellerCommodities[0]?.totalSellerCommodities || 0,
+            totalBuyerCommodities: totalBuyerCommodities[0]?.totalBuyerCommodities || 0,
+        });
+    } catch (error) {
+        console.error('Error fetching dashboard counts:', error);
+        res.status(500).json({ message: 'Failed to fetch dashboard counts', details: error.message });
     }
 };
