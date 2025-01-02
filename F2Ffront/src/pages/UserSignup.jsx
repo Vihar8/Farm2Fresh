@@ -228,22 +228,22 @@ export default function SignUp() {
                 )}
               </div>
 
-              {/* Role */}
-              <div>
+              <div style={{ display: 'none' }}>
                 <label htmlFor="role" className="block text-sm font-medium text-black">Role</label>
                 <select
                   id="role"
-                  value={role}
+                  value={1}
                   onChange={(e) => setRole(Number(e.target.value))}
                   className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.role && formik.errors.role
                     ? "border-red-500"
                     : "border-gray-300"
                     }`}
+                  disabled
                 >
                   <option value={1}>User</option>
-                  <option value={2}>Admin</option>
                 </select>
               </div>
+
 
               {/* User Type */}
               <div>
