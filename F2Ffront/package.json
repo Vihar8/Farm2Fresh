@@ -2,7 +2,7 @@
   "name": "farm2fresh",
   "private": true,
   "version": "0.0.0",
-  "proxy": "http://localhost:3000",
+  "proxy": "https://farm2fresh-kyhc.onrender.com",
   "type": "module",
   "scripts": {
     "dev": "vite",
