@@ -44,9 +44,15 @@ const DepartmentListing = () => {
     fetchTableData();
   }, []);
 
-  const handleDelete = (id) => {
-    // Simulate deleting the record from the UI (you can also add API call for deletion)
-    setTableData((prev) => prev.filter((item) => item.id !== id));
+  const handleDelete = async (id) => {
+    try {
+      // API call to delete the enquiry
+      await api.delete(`/api/enquiryform/delete/${id}`);
+      // Remove the deleted record from the table data
+      setTableData((prev) => prev.filter((item) => item.id !== id));
+    } catch (error) {
+      alert("Failed to delete the enquiry. Please try again.");
+    }
   };
 
   if (loading)
@@ -103,7 +109,7 @@ const DepartmentListing = () => {
                             className="flex items-center gap-2 text-red-500 hover:text-red-700 transition-colors"
                           >
                             <Trash2 size={18} />
-                            Delete
+                            Resolved
                           </button>
                         ) : (
                           <div className="break-words">{row[column.id]}</div>
