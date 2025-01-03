@@ -1,71 +1,53 @@
-// import React from "react";
-// import ReactApexChart from "react-apexcharts";
-
-// const TotalUserGraph = ({ buyerCount, sellerCount }) => {
-//   const chartData = {
-//     series: [
-//       {
-//         name: "Buyers",
-//         data: [
-//           Math.round(buyerCount),
-//           Math.round(buyerCount * 0.9),
-//           Math.round(buyerCount * 1.1),
-//           Math.round(buyerCount),
-//         ],
-//       },
-//       {
-//         name: "Sellers",
-//         data: [
-//           Math.round(sellerCount),
-//           Math.round(sellerCount * 1.2),
-//           Math.round(sellerCount * 0.8),
-//           Math.round(sellerCount),
-//         ],
-//       },
-//     ],
-//     options: {
-//       chart: {
-//         height: 265,
-//         type: "line",
-//         zoom: { enabled: false },
-//         toolbar: { tools: { download: false } },
-//       },
-//       dataLabels: { enabled: false },
-//       stroke: { curve: "smooth" },
-//       xaxis: { categories: ["Q1", "Q2", "Q3", "Q4"] },
-//       legend: { show: true },
-//       tooltip: { y: { formatter: (val) => `${val}` } },
-//       grid: { borderColor: "#f1f1f1" },
-//     },
-//   };
-
-//   return (
-//     <div className="mt-12 ">
-//       <h3 className="text-lg font-semibold mb-6">User Growth Over Quarters</h3>
-//       <ReactApexChart
-//         options={chartData.options}
-//         series={chartData.series}
-//         type="line"
-//         height={265}
-//       />
-//     </div>
-//   );
-// };
-
-// export default TotalUserGraph;
-
 import React from "react";
-import TotalUserGraph from "./TotalUserGraph";
+import { Bar } from "react-chartjs-2";
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 
-const App = () => {
-  const buyerCount = 1500;  // Example buyer count for the year
-  const sellerCount = 800;  // Example seller count for the year
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
+
+const TotalUserGraph = ({ buyerCount, sellerCount }) => {
+  // Data for the chart
+  const data = {
+    labels: ['Buyers', 'Sellers'],
+    datasets: [
+      {
+        label: 'Total Accounts',
+        data: [buyerCount, sellerCount],
+        backgroundColor: [
+          'rgba(75, 192, 192, 0.6)', // Color for Buyers
+          'rgba(255, 99, 132, 0.6)'   // Color for Sellers
+        ],
+        borderColor: [
+          'rgba(75, 192, 192, 1)',
+          'rgba(255, 99, 132, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Total Users Overview',
+      },
+    },
+  };
 
   return (
-    <div>
-      <TotalUserGraph buyerCount={buyerCount} sellerCount={sellerCount} />
+    <div className="my-4">
+      <Bar data={data} options={options} />
     </div>
   );
 };
 
-export default App;
+export default TotalUserGraph;
