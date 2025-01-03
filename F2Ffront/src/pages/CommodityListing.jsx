@@ -515,7 +515,7 @@ const districtMap = {
     </div>
     <div className="grid grid-cols-2 gap-3 p-4 max-h-72 overflow-auto">
       {[
-        'Ajwain', 'Almond', 'Amla', 'Apricot', 'Arecanut',
+        'Ajwain', 'Almond', 'Coriander', 'Coriander Leaves', 'Amla', 'Apricot', 'Arecanut',
         'Ash gourd', 'Atta', 'Avocado', 'Baheda', 'Bajra', 'Banana',
         'Barley', 'Basmati Rice', 'Bay leaf', 'Beetroot', 'Bitter gourd',
         'Bottle Gourd', 'Brinjal', 'Broad Beans', 'Cabbage', 'Capsicum',
