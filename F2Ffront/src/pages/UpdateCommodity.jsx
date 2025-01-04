@@ -483,7 +483,7 @@ const UpdateCommodity = () => {
     const availableCommodities = ['Ajwain', 'Almond', 'Amla', 'Apricot', 'Arecanut',
         'Ash gourd', 'Atta', 'Avocado', 'Baheda', 'Bajra', 'Banana',
         'Barley', 'Basmati Rice', 'Bay leaf', 'Beetroot', 'Bitter gourd',
-        'Bottle Gourd', 'Brinjal', 'Broad Beans', 'Cabbage', 'Capsicum',
+        'Bottle Gourd', 'Brinjal', 'Broad Beans','Coriander', 'Coriander Leaves', 'Cabbage', 'Capsicum',
         'Cardamom', 'Carrot', 'Cashew', 'Castor Oil', 'Castor Seed',
         'Cauliflower', 'Chana', 'Chana Dal', 'Cherry', 'Chia seed',
         'Chow Chow', 'Cinnamon', 'Cloves', 'Cluster Beans', 'Coconut',

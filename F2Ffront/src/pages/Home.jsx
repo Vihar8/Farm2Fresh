@@ -51,7 +51,7 @@ export default Home;
 //       _id: '1',
 //       createdAt: '2023-11-01T00:00:00Z',
 //       images: ['sample-image-1.jpg', 'sample-image-2.jpg'],
-//       commodity: 'Soybeans',
+//       commodity: 'Soyabeans',
 //       district: 'Mysore',
 //       state: 'Karnataka',
 //       price: 5000,

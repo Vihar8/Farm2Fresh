@@ -191,9 +191,60 @@ const getProfile = async (req, res) => {
     }
 };
 
+// Get User Counts Controller
+const getUserCounts = async (req, res) => {
+    try {
+        // Count the number of buyers
+        const buyerCount = await userModel.countDocuments({ user_type: 'buyer' });
+
+        // Count the number of sellers
+        const sellerCount = await userModel.countDocuments({ user_type: 'seller' });
+
+        return res.status(200).json({
+            success: true,
+            message: "User counts fetched successfully",
+            counts: {
+                buyers: buyerCount,
+                sellers: sellerCount,
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+// Delete User Controller
+const deleteUser = async (req, res) => {
+    try {
+        // Get user ID from request params
+        const { id } = req.params; 
+
+        // Check if ID is provided
+        if (!id) {
+            return res.status(400).json({ success: false, message: "User ID is required" });
+        }
+
+        // Find and delete the user
+        const deletedUser = await userModel.findByIdAndDelete(id);
+        
+        // Check if user was found and deleted
+        if (!deletedUser) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        return res.status(200).json({ success: true, message: "User deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
 module.exports = {
     signup,
     verifyEmail,
     login,
-    getProfile
+    getProfile,
+    getUserCounts,
+    deleteUser
 };

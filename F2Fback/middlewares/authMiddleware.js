@@ -9,7 +9,7 @@ exports.authenticateUser = async (req, res, next) => {
             return res.status(401).json({ error: 'No token provided' });
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const decoded = jwt.verify(token, process.env.JWT_SECRET, { expiresIn: '2h' });
         req.user = await userModel.findById(decoded.id).select('-password'); // Attach user to request
         next();
     } catch (error) {
