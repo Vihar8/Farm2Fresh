@@ -24,7 +24,7 @@ axiosServices.interceptors.request.use(
 axiosServices.interceptors.response.use(
   (response) => response,
   (error) => {
-    
+
     if (
       error.response.status === 401 &&
       !window.location.href.includes("/")
@@ -48,7 +48,7 @@ export const fetcher = async (args) => {
 };
 
 export const fetcherPost = async (args) => {
-  
+
   commonLoader("show");
   const [url, config] = Array.isArray(args) ? args : [args];
 
@@ -67,46 +67,46 @@ export const fetcherPostFormData = async (args) => {
 };
 
 export const fetcherDownload = async (args, headers) => {
-	commonLoader("show");axiosServices.interceptors.request.use(
-  async (config) => {
-    console.log('Request:', config);
-    const accessToken = localStorage.getItem("serviceToken");
-    if (accessToken) {
-      config.headers["Authorization"] = `Bearer ${accessToken}`;
+  commonLoader("show"); axiosServices.interceptors.request.use(
+    async (config) => {
+      console.log('Request:', config);
+      const accessToken = localStorage.getItem("serviceToken");
+      if (accessToken) {
+        config.headers["Authorization"] = `Bearer ${accessToken}`;
+      }
+      return config;
+    },
+    (error) => {
+      console.error('Request Error:', error);
+      return Promise.reject(error);
     }
-    return config;
-  },
-  (error) => {
-    console.error('Request Error:', error);
-    return Promise.reject(error);
-  }
-);
+  );
 
-axiosServices.interceptors.response.use(
-  (response) => {
-    console.log('Response:', response);
-    return response;
-  },
-  (error) => {
-    console.error('Response Error:', error);
-    if (
-      error.response.status === 401 &&
-      !window.location.href.includes("/")
-    ) {
-      window.location = "/";
+  axiosServices.interceptors.response.use(
+    (response) => {
+      console.log('Response:', response);
+      return response;
+    },
+    (error) => {
+      console.error('Response Error:', error);
+      if (
+        error.response.status === 401 &&
+        !window.location.href.includes("/")
+      ) {
+        window.location = "/";
+      }
+      return Promise.reject(
+        (error.response && error.response.data) || "Wrong Services"
+      );
     }
-    return Promise.reject(
-      (error.response && error.response.data) || "Wrong Services"
-    );
-  }
-);
-	// Extract URL and config from args
-	const [url, config = {}] = Array.isArray(args) ? args : [args];
+  );
+  // Extract URL and config from args
+  const [url, config = {}] = Array.isArray(args) ? args : [args];
 
-	// Pass the config directly to Axios
-	const res = await axiosServices.post(url, config, headers);
+  // Pass the config directly to Axios
+  const res = await axiosServices.post(url, config, headers);
 
-	commonLoader("hide");
+  commonLoader("hide");
 
-	return res;
+  return res;
 };

@@ -19,6 +19,7 @@ const TermsAndConditions = Loadable(lazy(() => import("../pages/TermsAndConditio
 const Mylisting = Loadable(lazy(() => import("../pages/Mylisting")));
 const AgriUpdates = Loadable(lazy(() => import("../pages/AgriUpdates")));
 const UpdateCommodity = Loadable(lazy(() => import("../pages/UpdateCommodity.jsx"))); // Import the new component
+const MyProfile = Loadable(lazy(() => import("../components/Myprofile/profile.jsx"))); // Import the new component
 
 const ClientRoutes = {
   path: "/",
@@ -42,10 +43,6 @@ const ClientRoutes = {
     {
       path: "/usersignup",
       element: <UserSignup />,
-    },
-    {
-      path: "/forgot-password", // Added ForgetPassword route
-      element: <ForgetPassword />,
     },
     {
       path: "/commoditylisting",
