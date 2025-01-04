@@ -9,7 +9,6 @@ const Home = Loadable(lazy(() => import("../pages/Home")));
 const Start = Loadable(lazy(() => import("../pages/Start")));
 const UserLogin = Loadable(lazy(() => import("../pages/UserLogin")));
 const UserSignup = Loadable(lazy(() => import("../pages/UserSignup")));
-const ForgetPassword = Loadable(lazy(() => import("../pages/Forgotpassword.jsx"))); // Import ForgetPassword component
 const CommodityListing = Loadable(lazy(() => import("../pages/CommodityListing")));
 const ContactUs = Loadable(lazy(() => import("../pages/ContactUs")));
 const Sellers = Loadable(lazy(() => import("../pages/Sellers")));
