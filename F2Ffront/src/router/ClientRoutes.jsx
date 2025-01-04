@@ -4,6 +4,7 @@ import Loadable from "../commoncomponents/Loadable/Loadable";
 import Layout from "../layouts/Layout";
 import AuthGuard from "../commoncomponents/AuthGuard";
 
+
 const Home = Loadable(lazy(() => import("../pages/Home")));
 const Start = Loadable(lazy(() => import("../pages/Start")));
 const UserLogin = Loadable(lazy(() => import("../pages/UserLogin")));
@@ -18,7 +19,7 @@ const TermsAndConditions = Loadable(lazy(() => import("../pages/TermsAndConditio
 const Mylisting = Loadable(lazy(() => import("../pages/Mylisting")));
 const AgriUpdates = Loadable(lazy(() => import("../pages/AgriUpdates")));
 const UpdateCommodity = Loadable(lazy(() => import("../pages/UpdateCommodity.jsx"))); // Import the new component
-
+const MyProfile = Loadable(lazy(() => import("../components/Myprofile/profile.jsx")))
 const ClientRoutes = {
   path: "/",
   children: [
@@ -68,6 +69,16 @@ const ClientRoutes = {
         <AuthGuard allowedRoles={[1]}>
           <Layout>
             <Buyesrs />
+          </Layout>
+        </AuthGuard>
+      ),
+    },
+    {
+      path: "/my-profile",
+      element: (
+        <AuthGuard allowedRoles={[1]}>
+          <Layout>
+            <MyProfile />
           </Layout>
         </AuthGuard>
       ),
