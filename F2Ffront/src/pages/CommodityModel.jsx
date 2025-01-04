@@ -1,5 +1,5 @@
 import { Descriptions } from 'antd';
-import { IndianRupeeIcon, LeafIcon, Mail, MapPin, Package, Phone, User, X } from 'lucide-react';
+import { IndianRupeeIcon, LeafIcon, Mail, MapPin, MessageSquareText, Package, Phone, Sparkles, User, X } from 'lucide-react';
 import { memo } from 'react';
 
 const CommodityModalSel = memo(({ isOpen, onClose, commodity }) => {
@@ -18,7 +18,7 @@ const CommodityModalSel = memo(({ isOpen, onClose, commodity }) => {
             role="dialog"
             aria-modal="true"
         >
-            <div className="bg-white rounded-lg p-6 max-w-full mx-4 overflow-auto h-[70%] relative shadow-lg">
+            <div className="bg-white rounded-lg p-6 max-w-full mx-4 overflow-auto h-[75%] relative shadow-lg">
                 {/* Header */}
                 <button
                     onClick={onClose}
@@ -48,7 +48,7 @@ const CommodityModalSel = memo(({ isOpen, onClose, commodity }) => {
                 <div className="border-t border-gray-200 pt-4 space-y-6">
                 <div className="space-y-4">
                         <div className="flex items-center gap-3">
-                            <Package className="w-5 h-5 text-gray-500" />
+                            <Sparkles className="w-5 h-5 text-gray-500" />
                             <div className="text-sm">
                                 <span className="font-semibold">Variety: </span>
                                 {commodity.varietyType}
@@ -69,7 +69,7 @@ const CommodityModalSel = memo(({ isOpen, onClose, commodity }) => {
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
-                            <Package className="w-5 h-5 text-gray-500" />
+                            <MessageSquareText className="w-5 h-5 text-gray-500" />
                             <div className="text-sm">
                                 <span className="font-semibold">Product Description: </span>
                                 {commodity.description}

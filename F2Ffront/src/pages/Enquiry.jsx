@@ -145,7 +145,7 @@ const DepartmentListing = () => {
                   className="mt-4 flex items-center gap-2 text-red-500 hover:text-red-700"
                 >
                   <Trash2 size={18} />
-                  Delete
+                  Resolved
                 </button>
               </div>
             ))}

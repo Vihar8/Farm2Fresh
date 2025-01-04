@@ -61,7 +61,6 @@ const signup = async (req, res) => {
             mobile // Save mobile number
         });
 
-        console.log(user);
         await user.save();
 
         // Send the verification email
@@ -79,8 +78,6 @@ const verifyEmail = async (req, res) => {
     try {
         const { code } = req.body;
 
-        // Log the received code for debugging
-        console.log("Received verification code:", code);
 
         // Find user with matching code and non-expired token
         const user = await userModel.findOne({
@@ -109,9 +106,7 @@ const verifyEmail = async (req, res) => {
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        console.log(email)
-        console.log(password)
-
+       
         // Check if email and password are provided
         if (!email || !password) {
             return res.status(400).json({ success: false, message: "Email and password are required" });
