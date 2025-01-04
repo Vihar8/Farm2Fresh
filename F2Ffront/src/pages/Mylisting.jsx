@@ -3,6 +3,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import FarmingLoaderSun from "../commoncomponents/FarmingLoaderSun";
+import { Clock2 } from "lucide-react";
 
 const UserCommodities = () => {
   const [commodities, setCommodities] = useState([]);
@@ -82,10 +83,11 @@ const UserCommodities = () => {
               key={commodity._id}
               className="bg-white shadow-md rounded-lg border border-gray-200 overflow-hidden"
             >
-              <div className="px-4 py-2 bg-gray-100 text-sm text-gray-600">
-                Date: {new Date(commodity.createdAt).toLocaleDateString("en-GB")}
+                           {/* Date */}
+                           <div className="flex items-center px-4 py-2 bg-gray-100 text-sm text-gray-600">
+                <Clock2 className="w-5 h-5 text-gray-600 mr-2" />
+                <span>{new Date(commodity.createdAt).toLocaleDateString('en-GB')}</span>
               </div>
-
               {/* Image Handling */}
               <div
                 className={`relative grid ${

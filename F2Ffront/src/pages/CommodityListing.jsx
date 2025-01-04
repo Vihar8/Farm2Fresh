@@ -23,7 +23,7 @@ class ErrorBoundary extends React.Component {
     console.error("Uncaught error:", error, errorInfo);
     // Optional: Send error to logging service
   }
-  
+
 
   render() {
     if (this.state.hasError) {
@@ -88,6 +88,9 @@ const CommodityForm = () => {
       .positive('Price must be positive'),
     state: Yup.string().required('State is required'),
     district: Yup.string().required('District is required'),
+    description: Yup.string()
+      .required('Description is required')
+      .min(10, 'Description must be at least 10 characters long'), // Example length requirement
     images: Yup.array()
       .min(1, 'At least one image is required')
       .max(2, 'Maximum 2 images allowed')
@@ -122,204 +125,204 @@ const CommodityForm = () => {
     'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab',
     'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura',
     'Uttar Pradesh', 'Uttarakhand', 'West Bengal',
-    'Andaman and Nicobar Islands', 'Chandigarh', 
+    'Andaman and Nicobar Islands', 'Chandigarh',
     'Dadra and Nagar Haveli and Daman and Diu', 'Lakshadweep',
     'Delhi', 'Puducherry', 'Ladakh', 'Jammu and Kashmir'
-];
+  ];
 
-const districtMap = {
+  const districtMap = {
     'Andhra Pradesh': ['Anantapur', 'Chittoor', 'East Godavari', 'Guntur', 'Krishna',
-                       'Kurnool', 'Prakasam', 'SPSR Nellore', 'Srikakulam',
-                       'Visakhapatnam', 'Vizianagaram', 'West Godavari', 'YSR Kadapa'],
-    
+      'Kurnool', 'Prakasam', 'SPSR Nellore', 'Srikakulam',
+      'Visakhapatnam', 'Vizianagaram', 'West Godavari', 'YSR Kadapa'],
+
     'Arunachal Pradesh': ['Aalo', 'Anjaw', 'Changlang', 'Dibang Valley', 'East Kameng',
-                          'East Siang', 'Kamle', 'Khandung', 'Kra Daadi', 'Kurung Kumey',
-                          'Lohit', 'Longding', 'Namsai', 'Papum Pare', 'Siang',
-                          'Tawang', 'Tirap', 'Upper Siang', 'Upper Subansiri', 
-                          'West Kameng', 'West Siang'],
-    
+      'East Siang', 'Kamle', 'Khandung', 'Kra Daadi', 'Kurung Kumey',
+      'Lohit', 'Longding', 'Namsai', 'Papum Pare', 'Siang',
+      'Tawang', 'Tirap', 'Upper Siang', 'Upper Subansiri',
+      'West Kameng', 'West Siang'],
+
     'Assam': ['Ad Lakhtakung', 'Barpeta', 'Biswanath', 'Bongaigaon', 'Cachar',
-              'Charaideo', 'Chirang', 'Darrang', 'Dhemaji', 'Dhubri',
-              'Dibrugarh', 'Goalpara', 'Golaghat', 'Hailakandi', 
-              'Jorhat', 'Kamrup', 'Karimganj', 'Kokrajhar', 'Lakhimpur',
-              'Majuli', 'Morigaon', 'Nagaon', 'Nalbari', 'Sivasagar', 
-              'Sonitpur', 'Tinsukia', 'Udalguri'],
-    
+      'Charaideo', 'Chirang', 'Darrang', 'Dhemaji', 'Dhubri',
+      'Dibrugarh', 'Goalpara', 'Golaghat', 'Hailakandi',
+      'Jorhat', 'Kamrup', 'Karimganj', 'Kokrajhar', 'Lakhimpur',
+      'Majuli', 'Morigaon', 'Nagaon', 'Nalbari', 'Sivasagar',
+      'Sonitpur', 'Tinsukia', 'Udalguri'],
+
     'Bihar': ['Arwal', 'Aurangabad', 'Banka', 'Begusarai', 'Bhagalpur',
-              'Bhojpur', 'Buxar', 'Darbhanga', 'East Champaran', 
-              'Gaya', 'Gopalganj', 'Jamui', 'Jehanabad', 'Katihar',
-              'Khagaria', 'Kishanganj', 'Madhubani', 'Munger', 'Nawada',
-              'Patna', 'Purnia', 'Rohtas', 'Saharsa', 'Samastipur', 
-              'Saran', 'Sheikhpura', 'Sitamarhi', 'Siwan', 'Supaul', 
-              'Vaishali', 'West Champaran'],
-    
+      'Bhojpur', 'Buxar', 'Darbhanga', 'East Champaran',
+      'Gaya', 'Gopalganj', 'Jamui', 'Jehanabad', 'Katihar',
+      'Khagaria', 'Kishanganj', 'Madhubani', 'Munger', 'Nawada',
+      'Patna', 'Purnia', 'Rohtas', 'Saharsa', 'Samastipur',
+      'Saran', 'Sheikhpura', 'Sitamarhi', 'Siwan', 'Supaul',
+      'Vaishali', 'West Champaran'],
+
     'Chhattisgarh': ['Balod', 'Baloda Bazar', 'Bastar', 'Bilaspur',
-                     'Dantewada', 'Dhamtari', 'Durg', 'Janjgir-Champa', 
-                     'Jashpur', 'Kanker', 'Kawardha', 'Korba', 
-                     'Kondagaon', 'Mahasamund', 'Raigarh', 'Raipur', 
-                     'Ramanagara', 'Sukma', 'Surguja'],
-    
+      'Dantewada', 'Dhamtari', 'Durg', 'Janjgir-Champa',
+      'Jashpur', 'Kanker', 'Kawardha', 'Korba',
+      'Kondagaon', 'Mahasamund', 'Raigarh', 'Raipur',
+      'Ramanagara', 'Sukma', 'Surguja'],
+
     'Goa': ['North Goa', 'South Goa'],
-    
+
     'Gujarat': ['Ahmedabad', 'Anand', 'Aravalli', 'Banaskantha', 'Bharuch',
-                 'Bhavnagar', 'Botad', 'Dahod', 'Dangs', 'Gandhinagar',
-                 'Kutch', 'Mahisagar', 'Mehsana', 'Narmada', 'Navsari', 
-                 'Panchmahal', 'Patan', 'Porbandar', 'Rajkot', 
-                 'Sabarkantha', 'Surat', 'Tapi', 'Vadodara', 'Valsad'],
-    
+      'Bhavnagar', 'Botad', 'Dahod', 'Dangs', 'Gandhinagar',
+      'Kutch', 'Mahisagar', 'Mehsana', 'Narmada', 'Navsari',
+      'Panchmahal', 'Patan', 'Porbandar', 'Rajkot',
+      'Sabarkantha', 'Surat', 'Tapi', 'Vadodara', 'Valsad'],
+
     'Haryana': ['Ambala', 'Bhiwani', 'Charkhi Dadri', 'Faridabad', 'Fatehabad',
-                'Gurugram', 'Hisar', 'Jhajjar', 'Jind', 'Mahendragarh',
-                'Nuh', 'Panchkula', 'Panipat', 'Rewari', 'Rohtak',
-                'Sirsa', 'Sonipat'],
-    
-    'Himachal Pradesh': ['Bilaspur', 'Chamba', 'Hamirpur', 'Kangra', 
-                         'Kinnaur', 'Kullu', 'Mandi', 'Shimla', 
-                         'Sirmaur', 'Solan', 'Una'],
-    
-    'Jharkhand': ['Bokaro', 'Chatra', 'Deoghar', 'Dhanbad', 'Dumka', 
-                  'East Singhbhum', 'Garhwa', 'Giridih', 'Godda', 
-                  'Gumla', 'Hazaribagh', 'Jamtara', 'Khunti', 
-                  'Latehar', 'Lohardaga', 'Pakur', 'Palamu', 
-                  'Ramgarh', 'Ranchi', 'Sahebganj', 'Seraikela Kharsawan',
-                  'Simdega', 'West Singhbhum'],
-    
-    'Karnataka': ['Bangalore', 'Belgaum', 'Bellary', 'Bidar', 'Chamarajanagar', 
-                  'Chikkamagaluru', 'Chitradurga', 'Dakshina Kannada', 
-                  'Davanagere', 'Dharwad', 'Gadag', 'Hassan', 'Haveri', 
-                  'Kodagu', 'Kolar', 'Koppal', 'Mandya', 'Mysore', 
-                  'Raichur', 'Ramanagara', 'Shimoga', 'Tumkur', 
-                  'Udupi', 'Uttara Kannada', 'Yadgir'],
-    
+      'Gurugram', 'Hisar', 'Jhajjar', 'Jind', 'Mahendragarh',
+      'Nuh', 'Panchkula', 'Panipat', 'Rewari', 'Rohtak',
+      'Sirsa', 'Sonipat'],
+
+    'Himachal Pradesh': ['Bilaspur', 'Chamba', 'Hamirpur', 'Kangra',
+      'Kinnaur', 'Kullu', 'Mandi', 'Shimla',
+      'Sirmaur', 'Solan', 'Una'],
+
+    'Jharkhand': ['Bokaro', 'Chatra', 'Deoghar', 'Dhanbad', 'Dumka',
+      'East Singhbhum', 'Garhwa', 'Giridih', 'Godda',
+      'Gumla', 'Hazaribagh', 'Jamtara', 'Khunti',
+      'Latehar', 'Lohardaga', 'Pakur', 'Palamu',
+      'Ramgarh', 'Ranchi', 'Sahebganj', 'Seraikela Kharsawan',
+      'Simdega', 'West Singhbhum'],
+
+    'Karnataka': ['Bangalore', 'Belgaum', 'Bellary', 'Bidar', 'Chamarajanagar',
+      'Chikkamagaluru', 'Chitradurga', 'Dakshina Kannada',
+      'Davanagere', 'Dharwad', 'Gadag', 'Hassan', 'Haveri',
+      'Kodagu', 'Kolar', 'Koppal', 'Mandya', 'Mysore',
+      'Raichur', 'Ramanagara', 'Shimoga', 'Tumkur',
+      'Udupi', 'Uttara Kannada', 'Yadgir'],
+
     'Kerala': ['Alappuzha', 'Ernakulam', 'Idukki', 'Kannur', 'Kasaragod',
-               'Kottayam', 'Kozhikode', 'Malappuram', 'Palakkad',
-               'Pathanamthitta', 'Thrissur', 'Wayanad'],
-    
-    'Madhya Pradesh': ['Aden', 'Alirajpur', 'Anuppur', 'Ashok Nagar', 
-                       'Balaghat', 'Barwani', 'Betul', 'Bhind', 
-                       'Bhopal', 'Burhanpur', 'Chhatarpur', 'Chhindwara', 
-                       'Damoh', 'Datia', 'Dewas', 'Dhar', 'Dindori', 
-                       'Guna', 'Gwalior', 'Hoshangabad', 'Jabalpur', 
-                       'Jawad', 'Khandwa', 'Khargone', 'Mandsaur', 
-                       'Morena', 'Narmada', 'Neemuch', 'Panna', 
-                       'Raisen', 'Rajgarh', 'Ratlam', 'Rewa', 
-                       'Satna', 'Sehore', 'Shahdol', 'Shajapur', 
-                       'Sidhi', 'Singrauli', 'Tikamgarh', 'Ujjain', 
-                       'Umaria', 'Vidisha'],
-    
-    'Maharashtra': ['Ahmednagar', 'Akola', 'Amravati', 'Aurangabad', 
-                    'Beed', 'Bhandara', 'Bhivandi', 'Buldhana', 'Chandrapur', 
-                    'Dhule', 'Gadchiroli', 'Gondia', 'Jalna', 'Mumbai', 
-                    'Nashik', 'Nagpur', 'Nanded', 'Nandurbar', 
-                    'Osmanabad', 'Palghar', 'Pune', 'Raigad', 
-                    'Ratnagiri', 'Sangli', 'Satara', 'Sindhudurg', 
-                    'Solapur', 'Thane', 'Wardha', 'Washim', 'Yavatmal'],
-    
-    'Manipur': ['Bishnupur', 'Chandel', 'Churachandpur', 'Imphal East', 
-                'Imphal West', 'Senapati', 'Tamenglong', 'Tengnoupal', 
-                'Thoubal', 'Ukhrul'],
-    
-    'Meghalaya': ['East Garo Hills', 'East Khasi Hills', 'South Garo Hills', 
-                  'West Garo Hills', 'West Khasi Hills', 'Jaintia Hills'],
-    
-    'Mizoram': ['Aizawl', 'Champhai', 'Kolasib', 'Lawngtlai', 'Lungsai', 
-                'Mamit', 'Saiha', 'Serchhip'],
-    
-    'Nagaland': ['Dimapur', 'Kohima', 'Longleng', 'Mokokchung', 'Peren', 
-                 'Phek', 'Tuensang', 'Wokha', 'Zunheboto'],
-    
+      'Kottayam', 'Kozhikode', 'Malappuram', 'Palakkad',
+      'Pathanamthitta', 'Thrissur', 'Wayanad'],
+
+    'Madhya Pradesh': ['Aden', 'Alirajpur', 'Anuppur', 'Ashok Nagar',
+      'Balaghat', 'Barwani', 'Betul', 'Bhind',
+      'Bhopal', 'Burhanpur', 'Chhatarpur', 'Chhindwara',
+      'Damoh', 'Datia', 'Dewas', 'Dhar', 'Dindori',
+      'Guna', 'Gwalior', 'Hoshangabad', 'Jabalpur',
+      'Jawad', 'Khandwa', 'Khargone', 'Mandsaur',
+      'Morena', 'Narmada', 'Neemuch', 'Panna',
+      'Raisen', 'Rajgarh', 'Ratlam', 'Rewa',
+      'Satna', 'Sehore', 'Shahdol', 'Shajapur',
+      'Sidhi', 'Singrauli', 'Tikamgarh', 'Ujjain',
+      'Umaria', 'Vidisha'],
+
+    'Maharashtra': ['Ahmednagar', 'Akola', 'Amravati', 'Aurangabad',
+      'Beed', 'Bhandara', 'Bhivandi', 'Buldhana', 'Chandrapur',
+      'Dhule', 'Gadchiroli', 'Gondia', 'Jalna', 'Mumbai',
+      'Nashik', 'Nagpur', 'Nanded', 'Nandurbar',
+      'Osmanabad', 'Palghar', 'Pune', 'Raigad',
+      'Ratnagiri', 'Sangli', 'Satara', 'Sindhudurg',
+      'Solapur', 'Thane', 'Wardha', 'Washim', 'Yavatmal'],
+
+    'Manipur': ['Bishnupur', 'Chandel', 'Churachandpur', 'Imphal East',
+      'Imphal West', 'Senapati', 'Tamenglong', 'Tengnoupal',
+      'Thoubal', 'Ukhrul'],
+
+    'Meghalaya': ['East Garo Hills', 'East Khasi Hills', 'South Garo Hills',
+      'West Garo Hills', 'West Khasi Hills', 'Jaintia Hills'],
+
+    'Mizoram': ['Aizawl', 'Champhai', 'Kolasib', 'Lawngtlai', 'Lungsai',
+      'Mamit', 'Saiha', 'Serchhip'],
+
+    'Nagaland': ['Dimapur', 'Kohima', 'Longleng', 'Mokokchung', 'Peren',
+      'Phek', 'Tuensang', 'Wokha', 'Zunheboto'],
+
     'Odisha': ['Angul', 'Balangir', 'Balasore', 'Bargarh', 'Bhadrak',
-               'Boudh', 'Cuttack', 'Deogarh', 'Dhenkanal', 'Ganjam',
-               'Gajapati', 'Jharsuguda', 'Kalahandi', 'Kandhamal',
-               'Kendrapara', 'Keonjhar', 'Koraput', 'Malkangiri',
-               'Mayurbhanj', 'Nabarangpur', 'Nayagarh', 'Nuapada',
-               'Puri', 'Rayagada', 'Sambalpur', 'Sonepur', 'Sundargarh'],
-    
-    'Punjab': ['Amritsar', 'Barnala', 'Batala', 'Fatehgarh Sahib', 
-               'Faridkot', 'Ferozepur', 'Gurdaspur', 'Kapurthala', 
-               'Ludhiana', 'Mansa', 'Moga', 'Pathankot', 'Rupnagar', 
-               'Sangrur', 'Tarn Taran'],
-    
-    'Rajasthan': ['Ajmer', 'Alwar', 'Banswara', 'Baran', 'Barmer', 
-                  'Bharatpur', 'Bhilwara', 'Bikaner', 'Chittorgarh', 
-                  'Churu', 'Dausa', 'Dholpur', 'Hanumangarh', 'Jaipur', 
-                  'Jaisalmer', 'Jalore', 'Jhunjhunu', 'Jodhpur', 
-                  'Karauli', 'Kota', 'Nagaur', 'Pali', 'Rajsamand', 
-                  'Sikar', 'Sirohi', 'Tonk', 'Udaipur'],
-    
+      'Boudh', 'Cuttack', 'Deogarh', 'Dhenkanal', 'Ganjam',
+      'Gajapati', 'Jharsuguda', 'Kalahandi', 'Kandhamal',
+      'Kendrapara', 'Keonjhar', 'Koraput', 'Malkangiri',
+      'Mayurbhanj', 'Nabarangpur', 'Nayagarh', 'Nuapada',
+      'Puri', 'Rayagada', 'Sambalpur', 'Sonepur', 'Sundargarh'],
+
+    'Punjab': ['Amritsar', 'Barnala', 'Batala', 'Fatehgarh Sahib',
+      'Faridkot', 'Ferozepur', 'Gurdaspur', 'Kapurthala',
+      'Ludhiana', 'Mansa', 'Moga', 'Pathankot', 'Rupnagar',
+      'Sangrur', 'Tarn Taran'],
+
+    'Rajasthan': ['Ajmer', 'Alwar', 'Banswara', 'Baran', 'Barmer',
+      'Bharatpur', 'Bhilwara', 'Bikaner', 'Chittorgarh',
+      'Churu', 'Dausa', 'Dholpur', 'Hanumangarh', 'Jaipur',
+      'Jaisalmer', 'Jalore', 'Jhunjhunu', 'Jodhpur',
+      'Karauli', 'Kota', 'Nagaur', 'Pali', 'Rajsamand',
+      'Sikar', 'Sirohi', 'Tonk', 'Udaipur'],
+
     'Sikkim': ['East Sikkim', 'North Sikkim', 'South Sikkim', 'West Sikkim'],
-    
-    'Tamil Nadu': ['Chennai', 'Coimbatore', 'Cuddalore', 'Dharmapuri', 
-                   'Dindigul', 'Erode', 'Kanchipuram', 'Kanniyakumari', 
-                   'Karur', 'Krishnagiri', 'Madurai', 'Nagapattinam', 
-                   'Nilgiris', 'Perambalur', 'Pudukkottai', 'Ramnathapuram', 
-                   'Salem', 'Sivagangai', 'Thanjavur', 'Theni', 
-                   'Thoothukudi', 'Tiruchirappalli', 'Tirunelveli', 
-                   'Tiruvarur', 'Vellore', 'Viluppuram', 'Virudhunagar'],
-    
-    'Telangana': ['Adilabad', 'Hyderabad', 'Khammam', 'Mahabubnagar', 
-                  'Medak', 'Nalgonda', 'Nizamabad', 'Ranga Reddy', 
-                  'Sangareddy', 'Warangal', 'Karimnagar', 
-                  'Medchal–Malkajgiri', 'Jagtiyal', 'Jagtial', 
-                  'Kamareddy', 'Mahabubnagar'],
-    
+
+    'Tamil Nadu': ['Chennai', 'Coimbatore', 'Cuddalore', 'Dharmapuri',
+      'Dindigul', 'Erode', 'Kanchipuram', 'Kanniyakumari',
+      'Karur', 'Krishnagiri', 'Madurai', 'Nagapattinam',
+      'Nilgiris', 'Perambalur', 'Pudukkottai', 'Ramnathapuram',
+      'Salem', 'Sivagangai', 'Thanjavur', 'Theni',
+      'Thoothukudi', 'Tiruchirappalli', 'Tirunelveli',
+      'Tiruvarur', 'Vellore', 'Viluppuram', 'Virudhunagar'],
+
+    'Telangana': ['Adilabad', 'Hyderabad', 'Khammam', 'Mahabubnagar',
+      'Medak', 'Nalgonda', 'Nizamabad', 'Ranga Reddy',
+      'Sangareddy', 'Warangal', 'Karimnagar',
+      'Medchal–Malkajgiri', 'Jagtiyal', 'Jagtial',
+      'Kamareddy', 'Mahabubnagar'],
+
     'Tripura': ['Dhalai', 'Gomati', 'North Tripura', 'South Tripura',
-                'Sepahijala', 'West Tripura'],
-    
-    'Uttar Pradesh': ['Agra', 'Aligarh', 'Ambedkar Nagar', 'Ayodhya', 
-                      'Azamgarh', 'Bahraich', 'Ballia', 'Banda', 
-                      'Barabanki', 'Bareilly', 'Bijnor', 'Budaun', 
-                      'Bulandshahr', 'Chitrakoot', 'Deoria', 
-                      'Etah', 'Etawah', 'Farrukhabad', 
-                      'Fatehpur', 'Firozabad', 'Gautam Buddh Nagar', 
-                      'Ghaziabad', 'Ghazipur', 'Gonda', 'Hamirpur', 
-                      'Hardoi', 'Hathras', 'Jhansi', 'Kanpur Dehat', 
-                      'Kanpur Nagar', 'Kheri', 'Kushinagar', 
-                      'Lalitpur', 'Lucknow', 'Maharajganj', 
-                      'Mainpuri', 'Mathura', 'Mau', 'Mirzapur', 
-                      'Moradabad', 'Muzaffarnagar', 'Pilbit', 
-                      'Pratapgarh', 'Rae Bareli', 'Rampur', 
-                      'Saharanpur', 'Sant Ravidas Nagar', 
-                      'Shahjahanpur', 'Shamli', 'Shravasti', 
-                      'Siddharthnagar', 'Sitapur', 'Sonbhadra', 
-                      'Sultanpur', 'Unnao', 'Varanasi'],
-    
-    'Uttarakhand': ['Almora', 'Bageshwar', 'Chamoli', 'Champawat', 
-                    'Dehradun', 'Haridwar', 'Nainital', 'Pauri Garhwal', 
-                    'Pithoragarh', 'Rudraprayag', 'Tehri Garhwal', 
-                    'Udham Singh Nagar', 'Uttarkashi'],
-    
-    'West Bengal': ['Bankura', 'Bardhaman', 'Birbhum', 'Darjeeling', 
-                    'Dakshin Dinajpur', 'Howrah', 'Jalpaiguri', 
-                    'Jhargram', 'Murshidabad', 'Nadia', 
-                    'North 24 Parganas', 'Paschim Medinipur', 
-                    'Purba Medinipur', 'Purulia', 'South 24 Parganas', 
-                    'Kolkata'],
-    
-    'Andaman and Nicobar Islands': ['North and Middle Andaman', 
-                                    'South Andaman', 'Nicobar'],
-    
+      'Sepahijala', 'West Tripura'],
+
+    'Uttar Pradesh': ['Agra', 'Aligarh', 'Ambedkar Nagar', 'Ayodhya',
+      'Azamgarh', 'Bahraich', 'Ballia', 'Banda',
+      'Barabanki', 'Bareilly', 'Bijnor', 'Budaun',
+      'Bulandshahr', 'Chitrakoot', 'Deoria',
+      'Etah', 'Etawah', 'Farrukhabad',
+      'Fatehpur', 'Firozabad', 'Gautam Buddh Nagar',
+      'Ghaziabad', 'Ghazipur', 'Gonda', 'Hamirpur',
+      'Hardoi', 'Hathras', 'Jhansi', 'Kanpur Dehat',
+      'Kanpur Nagar', 'Kheri', 'Kushinagar',
+      'Lalitpur', 'Lucknow', 'Maharajganj',
+      'Mainpuri', 'Mathura', 'Mau', 'Mirzapur',
+      'Moradabad', 'Muzaffarnagar', 'Pilbit',
+      'Pratapgarh', 'Rae Bareli', 'Rampur',
+      'Saharanpur', 'Sant Ravidas Nagar',
+      'Shahjahanpur', 'Shamli', 'Shravasti',
+      'Siddharthnagar', 'Sitapur', 'Sonbhadra',
+      'Sultanpur', 'Unnao', 'Varanasi'],
+
+    'Uttarakhand': ['Almora', 'Bageshwar', 'Chamoli', 'Champawat',
+      'Dehradun', 'Haridwar', 'Nainital', 'Pauri Garhwal',
+      'Pithoragarh', 'Rudraprayag', 'Tehri Garhwal',
+      'Udham Singh Nagar', 'Uttarkashi'],
+
+    'West Bengal': ['Bankura', 'Bardhaman', 'Birbhum', 'Darjeeling',
+      'Dakshin Dinajpur', 'Howrah', 'Jalpaiguri',
+      'Jhargram', 'Murshidabad', 'Nadia',
+      'North 24 Parganas', 'Paschim Medinipur',
+      'Purba Medinipur', 'Purulia', 'South 24 Parganas',
+      'Kolkata'],
+
+    'Andaman and Nicobar Islands': ['North and Middle Andaman',
+      'South Andaman', 'Nicobar'],
+
     'Chandigarh': ['Chandigarh'],
-    
-    'Dadra and Nagar Haveli and Daman and Diu': ['Dadra and Nagar Haveli', 
-                                                  'Daman', 'Diu'],
-    
+
+    'Dadra and Nagar Haveli and Daman and Diu': ['Dadra and Nagar Haveli',
+      'Daman', 'Diu'],
+
     'Lakshadweep': ['Lakshadweep'], // Single district but multiple islands
-    
-    'Delhi': ['Central Delhi', 'East Delhi', 'New Delhi', 
-              'North Delhi', 'North East Delhi', 
-              'North West Delhi', 'South Delhi', 
-              'South East Delhi', 'West Delhi'],
-    
+
+    'Delhi': ['Central Delhi', 'East Delhi', 'New Delhi',
+      'North Delhi', 'North East Delhi',
+      'North West Delhi', 'South Delhi',
+      'South East Delhi', 'West Delhi'],
+
     'Puducherry': ['Puducherry', 'Karaikal', 'Mahe', 'Yanam'],
-    
+
     'Ladakh': ['Leh', 'Kargil'],
-    
-    'Jammu and Kashmir': ['Jammu', 'Samba', 'Kathua', 'Udhampur', 
-                         'Doda', 'Ramban', 'Reasi', 'Poonch', 
-                         'Rajouri', 'Anantnag', 'Pulwama', 
-                         'Shopian', 'Kulgam', 'Srinagar', 
-                         'Bandipora', 'Ganderbal', 'Baramulla']
-};
+
+    'Jammu and Kashmir': ['Jammu', 'Samba', 'Kathua', 'Udhampur',
+      'Doda', 'Ramban', 'Reasi', 'Poonch',
+      'Rajouri', 'Anantnag', 'Pulwama',
+      'Shopian', 'Kulgam', 'Srinagar',
+      'Bandipora', 'Ganderbal', 'Baramulla']
+  };
   const totalInUnits = [
     { value: 'kg', label: 'Kilograms (kg)' },
     { value: 'mt', label: 'Metric Tons (mt)' },
@@ -438,6 +441,7 @@ const districtMap = {
             price: '',
             state: '',
             district: '',
+            description: '',
             images: []
           }}
           validationSchema={CommoditySchema}
@@ -475,94 +479,94 @@ const districtMap = {
                 )}
               </div> */}
               <div className="relative">
-  {/* Search bar input */}
-  <input
-    name="commodity"
-    placeholder="commodity"
-    value={values.commodity}
-    onClick={() => setFieldValue('isDropdownOpen', true)} // Open dropdown on click
-    readOnly // Make input field read-only
-    className={`
+                {/* Search bar input */}
+                <input
+                  name="commodity"
+                  placeholder="commodity"
+                  value={values.commodity}
+                  onClick={() => setFieldValue('isDropdownOpen', true)} // Open dropdown on click
+                  readOnly // Make input field read-only
+                  className={`
       w-full px-3 py-2.5 border-2 rounded-lg 
       transition-all duration-300 ease-in-out
       focus:outline-none focus:ring-2 focus:ring-[#2CB21A]/50
       cursor-pointer
       ${errors.commodity && touched.commodity
-        ? 'border-red-500'
-        : 'border-[#2CB21A]'
-      }
+                      ? 'border-red-500'
+                      : 'border-[#2CB21A]'
+                    }
     `}
-  />
-  {errors.commodity && touched.commodity && (
-    <p className="text-red-500 text-sm mt-1 pl-1">
-      {errors.commodity}
-    </p>
-  )}
+                />
+                {errors.commodity && touched.commodity && (
+                  <p className="text-red-500 text-sm mt-1 pl-1">
+                    {errors.commodity}
+                  </p>
+                )}
 
-  {/* Dropdown */}
- {values.isDropdownOpen && (
-  <div
-    className="absolute w-full mt-2 max-h-96 overflow-auto border border-[#4CAF50] rounded-lg bg-[#F1F8E9] z-10 shadow-xl"
-  >
-    <div className="p-4 border-t border-[#4CAF50]">
-      <input
-        name="commoditySearch"
-        placeholder="Search for commodities..."
-        value={values.commoditySearch || ''}
-        onChange={handleChange}
-        className="w-full px-4 py-2 border border-[#4CAF50] rounded-lg bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#81C784] focus:border-transparent transition-all duration-200 ease-in-out"
-      />
-    </div>
-    <div className="grid grid-cols-2 gap-3 p-4 max-h-72 overflow-auto">
-      {[
-        'Ajwain', 'Almond', 'Coriander', 'Coriander Leaves', 'Amla', 'Apricot', 'Arecanut',
-        'Ash gourd', 'Atta', 'Avocado', 'Baheda', 'Bajra', 'Banana',
-        'Barley', 'Basmati Rice', 'Bay leaf', 'Beetroot', 'Bitter gourd',
-        'Bottle Gourd', 'Brinjal', 'Broad Beans', 'Cabbage', 'Capsicum',
-        'Cardamom', 'Carrot', 'Cashew', 'Castor Oil', 'Castor Seed',
-        'Cauliflower', 'Chana', 'Chana Dal', 'Cherry', 'Chia seed',
-        'Chow Chow', 'Cinnamon', 'Cloves', 'Cluster Beans', 'Coconut',
-        'Coconut Oil', 'Coffee',
-        'Orange', 'Lemon', 'Lime', 'Grapefruit', 'Tangerine', 'Pomelo',
-        'Strawberry', 'Blueberry', 'Raspberry', 'Blackberry', 'Cranberry', 'Black beans', 'Kidney beans',
-        'Goji berry', 'Acai berry', 'Mango', 'Pineapple', 'Papaya',
-        'Guava', 'Passion fruit', 'Lychee', 'Dragon fruit', 'Durian',
-        'Rambutan', 'Starfruit', 'Jackfruit', 'Peach', 'Plum', 'Apricot',
-        'Nectarine', 'Apple', 'Pear', 'Quince', 'Watermelon', 'Cantaloupe',
-        'Honeydew', 'Fig', 'Date', 'Persimmon', 'Mangosteen', 'Tamarind',
-        'Longan', 'Sapodilla', 'Kiwi', 'Pomegranate', 'Grape', 'Olive',
-        'Spinach', 'Kale', 'Lettuce', 'Cabbage', 'Bok choy', 'Swiss chard',
-        'Collard greens', 'Carrot', 'Beetroot', 'Radish', 'Turnip',
-        'Parsnip', 'Sweet potato', 'Yam', 'Broccoli', 'Cauliflower',
-        'Brussels sprouts', 'Kohlrabi', 'Onion', 'Garlic', 'Leek',
-        'Shallot', 'Chive', 'Spring onion', 'Pumpkin', 'Zucchini',
-        'Butternut squash', 'Spaghetti squash', 'Tomato', 'Eggplant',
-        'Bell pepper', 'Chili pepper', 'Potato', 'Green beans', 'Peas',
-        'Lentils', 'Chickpeas', 'Soybeans', 'Black-eyed peas',
-        'Bitter gourd', 'Bottle gourd', 'Ridge gourd', 'Snake gourd',
-        'Ash gourd', 'Taro', 'Turmeric', 'Ginger', 'Cassava', 'Saffron', 'Jerusalem artichoke', 'Cucumber',
-        'Okra', 'Artichoke', 'Beetroot ','Celery', 'Asparagus', 'Corn', 'Mushrooms'
-      ]
-        .filter(item =>
-          item.toLowerCase().includes(values.commoditySearch?.toLowerCase() || '')
-        )
-        .map((item, index) => (
-          <button
-            key={index}
-            onClick={() => {
-              setFieldValue('commodity', item); // Set selected value
-              setFieldValue('isDropdownOpen', false); // Close dropdown
-            }}
-            className="px-4 py-2 text-center text-sm bg-white border border-[#4CAF50] rounded-lg shadow-sm hover:bg-[#81C784] hover:text-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#66BB6A] transition-all duration-200 ease-in-out"
-          >
-            {item}
-          </button>
-        ))}
-    </div>
-  </div>
-)}
+                {/* Dropdown */}
+                {values.isDropdownOpen && (
+                  <div
+                    className="absolute w-full mt-2 max-h-96 overflow-auto border border-[#4CAF50] rounded-lg bg-[#F1F8E9] z-10 shadow-xl"
+                  >
+                    <div className="p-4 border-t border-[#4CAF50]">
+                      <input
+                        name="commoditySearch"
+                        placeholder="Search for commodities..."
+                        value={values.commoditySearch || ''}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 border border-[#4CAF50] rounded-lg bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#81C784] focus:border-transparent transition-all duration-200 ease-in-out"
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 p-4 max-h-72 overflow-auto">
+                      {[
+                        'Ajwain', 'Almond', 'Coriander', 'Coriander Leaves', 'Amla', 'Apricot', 'Arecanut',
+                        'Ash gourd', 'Atta', 'Avocado', 'Baheda', 'Bajra', 'Banana',
+                        'Barley', 'Basmati Rice', 'Bay leaf', 'Beetroot', 'Bitter gourd',
+                        'Bottle Gourd', 'Brinjal', 'Broad Beans', 'Cabbage', 'Capsicum',
+                        'Cardamom', 'Carrot', 'Cashew', 'Castor Oil', 'Castor Seed',
+                        'Cauliflower', 'Chana', 'Chana Dal', 'Cherry', 'Chia seed',
+                        'Chow Chow', 'Cinnamon', 'Cloves', 'Cluster Beans', 'Coconut',
+                        'Coconut Oil', 'Coffee',
+                        'Orange', 'Lemon', 'Lime', 'Grapefruit', 'Tangerine', 'Pomelo',
+                        'Strawberry', 'Blueberry', 'Raspberry', 'Blackberry', 'Cranberry', 'Black beans', 'Kidney beans',
+                        'Goji berry', 'Acai berry', 'Mango', 'Pineapple', 'Papaya',
+                        'Guava', 'Passion fruit', 'Lychee', 'Dragon fruit', 'Durian',
+                        'Rambutan', 'Starfruit', 'Jackfruit', 'Peach', 'Plum', 'Apricot',
+                        'Nectarine', 'Apple', 'Pear', 'Quince', 'Watermelon', 'Cantaloupe',
+                        'Honeydew', 'Fig', 'Date', 'Persimmon', 'Mangosteen', 'Tamarind',
+                        'Longan', 'Sapodilla', 'Kiwi', 'Pomegranate', 'Grape', 'Olive',
+                        'Spinach', 'Kale', 'Lettuce', 'Cabbage', 'Bok choy', 'Swiss chard',
+                        'Collard greens', 'Carrot', 'Beetroot', 'Radish', 'Turnip',
+                        'Parsnip', 'Sweet potato', 'Yam', 'Broccoli', 'Cauliflower',
+                        'Brussels sprouts', 'Kohlrabi', 'Onion', 'Garlic', 'Leek',
+                        'Shallot', 'Chive', 'Spring onion', 'Pumpkin', 'Zucchini',
+                        'Butternut squash', 'Spaghetti squash', 'Tomato', 'Eggplant',
+                        'Bell pepper', 'Chili pepper', 'Potato', 'Green beans', 'Peas',
+                        'Lentils', 'Chickpeas', 'Soybeans', 'Black-eyed peas',
+                        'Bitter gourd', 'Bottle gourd', 'Ridge gourd', 'Snake gourd',
+                        'Ash gourd', 'Taro', 'Turmeric', 'Ginger', 'Cassava', 'Saffron', 'Jerusalem artichoke', 'Cucumber',
+                        'Okra', 'Artichoke', 'Beetroot ', 'Celery', 'Asparagus', 'Corn', 'Mushrooms'
+                      ]
+                        .filter(item =>
+                          item.toLowerCase().includes(values.commoditySearch?.toLowerCase() || '')
+                        )
+                        .map((item, index) => (
+                          <button
+                            key={index}
+                            onClick={() => {
+                              setFieldValue('commodity', item); // Set selected value
+                              setFieldValue('isDropdownOpen', false); // Close dropdown
+                            }}
+                            className="px-4 py-2 text-center text-sm bg-white border border-[#4CAF50] rounded-lg shadow-sm hover:bg-[#81C784] hover:text-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#66BB6A] transition-all duration-200 ease-in-out"
+                          >
+                            {item}
+                          </button>
+                        ))}
+                    </div>
+                  </div>
+                )}
 
-</div>
+              </div>
 
 
               {/* Variety Type Input */}
@@ -687,6 +691,29 @@ const districtMap = {
                 {errors.totalIn && touched.totalIn && (
                   <p className="text-red-500 text-sm mt-1 pl-1">
                     {errors.totalIn}
+                  </p>
+                )}
+              </div>
+              <div>
+                <textarea
+                  name="description"
+                  placeholder="Description"
+                  value={values.description}
+                  onChange={handleChange}
+                  rows="4"
+                  className={`
+      w-full px-3 py-2.5 border-2 rounded-lg 
+      transition-all duration-300 ease-in-out
+      focus:outline-none focus:ring-2 focus:ring-[#2CB21A]/50
+      ${errors.description && touched.description
+                      ? 'border-red-500'
+                      : 'border-[#2CB21A]'
+                    }
+    `}
+                />
+                {errors.description && touched.description && (
+                  <p className="text-red-500 text-sm mt-1 pl-1">
+                    {errors.description}
                   </p>
                 )}
               </div>

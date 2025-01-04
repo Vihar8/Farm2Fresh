@@ -5,7 +5,7 @@ const userModel = require('../models/user');
 // Controller to add a new commodity
 exports.addCommodity = async (req, res) => {
     try {
-        const { commodity, varietyType, quantity, totalIn, price, state, district } = req.body;
+        const { commodity, varietyType, quantity, totalIn, price, state, district, description } = req.body;
         const imagePaths = req.files.map(file => file.path); // Cloudinary URLs
 
         const newCommodity = new Commodity({
@@ -16,6 +16,7 @@ exports.addCommodity = async (req, res) => {
             price,
             state,
             district,
+            description,
             images: imagePaths,
             createdBy: req.user._id, // Logged-in user's ID
         });
@@ -63,6 +64,7 @@ exports.getSellerCommodities = async (req, res) => {
                     price: 1,
                     state: 1,
                     district: 1,
+                    description: 1,
                     images: 1,
                     createdAt: 1,
                     updatedAt: 1,
@@ -108,6 +110,7 @@ exports.getBuyerCommodities = async (req, res) => {
                     price: 1,
                     state: 1,
                     district: 1,
+                    description: 1,
                     images: 1,
                     createdAt: 1,
                     updatedAt: 1,
@@ -174,7 +177,7 @@ exports.getUserCommodities = async (req, res) => {
 exports.updateCommodity = async (req, res) => {
     try {
         const commodityId = req.params.id; // Get the commodity ID from the request params
-        const { commodity, varietyType, quantity, totalIn, price, state, district } = req.body; // Destructure other fields
+        const { commodity, varietyType, quantity, totalIn, price, state, district, description } = req.body; // Destructure other fields
         const loggedInUserId = req.user._id; // Get the logged-in user's ID
 
         // Check if commodityId is provided
@@ -196,7 +199,7 @@ exports.updateCommodity = async (req, res) => {
         existingCommodity.price = price || existingCommodity.price;
         existingCommodity.state = state || existingCommodity.state;
         existingCommodity.district = district || existingCommodity.district;
-
+        existingCommodity.description = description || existingCommodity.description; // Update description
         // Save the updated commodity details
         await existingCommodity.save();
 

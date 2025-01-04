@@ -38,6 +38,7 @@ const commoditySchema = new mongoose.Schema({
         required: true 
     },
     images: [{ type: String }],
+    description: { type: String, required: false },
     createdBy: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'user', // Reference to the user model

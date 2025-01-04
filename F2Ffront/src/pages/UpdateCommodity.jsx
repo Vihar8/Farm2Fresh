@@ -225,10 +225,12 @@ const UpdateCommodity = () => {
     const [commodity, setCommodity] = useState({
         commodity: '',
         price: '',
+        varietyType: '',
         quantity: '',
         totalIn: '',
         state: '',
         district: '',
+        description: '',
         images: [] // Initialize an empty images array
     });
     const [loading, setLoading] = useState(false);
@@ -265,6 +267,10 @@ const UpdateCommodity = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        if ((name === 'totalIn' || name === 'price' || name === 'quantity') && (isNaN(value) || value < 0)) {
+            console.log(`Invalid value for ${name}. It cannot be negative.`);
+            return; // Prevent setting negative or invalid numeric value
+        }
         if (name === 'state') {
             console.log('State changed:', value);
             // Update districts when state changes
@@ -279,7 +285,8 @@ const UpdateCommodity = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [commoditySearch, setCommoditySearch] = useState('');
     const [filteredCommodities, setFilteredCommodities] = useState([]);
-
+    const [errorDialogOpen, setErrorDialogOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const availableCommodities = ['Ajwain', 'Almond', 'Amla', 'Apricot', 'Arecanut',
         'Ash gourd', 'Atta', 'Avocado', 'Baheda', 'Bajra', 'Banana',
         'Barley', 'Basmati Rice', 'Bay leaf', 'Beetroot', 'Bitter gourd',
@@ -321,6 +328,12 @@ const UpdateCommodity = () => {
         e.preventDefault();
         if (!commodity.commodity || !commodity.price || !commodity.quantity || !commodity.state || !commodity.district) {
             setError("Please fill all necessary fields.");
+            return;
+        }
+        if (commodity.price < 0 || commodity.quantity < 0) {
+            setErrorMessage("Price and Quantity cannot be negative.");
+            setErrorDialogOpen(true);
+            setErrorDialogOpen(true);
             return;
         }
 
@@ -441,6 +454,23 @@ const UpdateCommodity = () => {
                         </div>
 
                         <div>
+                            <input
+                                name="varietyType"
+                                placeholder="Variety Type"
+                                value={commodity.varietyType || ''}
+                                onChange={handleChange}
+                                className={`w-full px-3 py-2.5 border-2 rounded-lg 
+                transition-all duration-300 ease-in-out
+                focus:outline-none focus:ring-2 focus:ring-[#2CB21A]/50
+                ${error.varietyType ? 'border-red-500' : 'border-[#2CB21A]'}`}
+                            />
+                            {error.varietyType && (
+                                <p className="text-red-500 text-sm mt-1 pl-1">
+                                    {error.varietyType}
+                                </p>
+                            )}
+                        </div>
+                        <div>
                             <label htmlFor="price" className="block text-sm font-medium text-gray-700">Price (₹)</label>
                             <input
                                 id="price"
@@ -465,24 +495,6 @@ const UpdateCommodity = () => {
                                 required
                             />
                         </div>
-
-                        <div>
-                            <label htmlFor="totalIn" className="block text-sm font-medium text-gray-700">Unit</label>
-                            <select
-                                id="totalIn"
-                                name="totalIn"
-                                value={commodity.totalIn || ''}
-                                onChange={handleChange}
-                                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-                                required
-                            >
-                                <option value="" disabled>Select Unit</option>
-                                {totalInUnits.map(unit => (
-                                    <option key={unit.value} value={unit.value}>{unit.label}</option>
-                                ))}
-                            </select>
-                        </div>
-
                         <div>
                             <label htmlFor="state" className="block text-sm font-medium text-gray-700">State</label>
                             <select
@@ -517,6 +529,47 @@ const UpdateCommodity = () => {
                             </select>
                         </div>
 
+                        <div>
+                            <label htmlFor="totalIn" className="block text-sm font-medium text-gray-700">Unit</label>
+                            <select
+                                id="totalIn"
+                                name="totalIn"
+                                value={commodity.totalIn || ''}
+                                onChange={handleChange}
+                                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                                required
+                            >
+                                <option value="" disabled>Select Unit</option>
+                                {totalInUnits.map(unit => (
+                                    <option key={unit.value} value={unit.value}>{unit.label}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div>
+                            <textarea
+                                name="description"
+                                placeholder="Description"
+                                value={commodity.description}
+                                onChange={handleChange}
+                                rows="4"
+                                className={`
+      w-full px-3 py-2.5 border-2 rounded-lg 
+      transition-all duration-300 ease-in-out
+      focus:outline-none focus:ring-2 focus:ring-[#2CB21A]/50
+      ${error.description && touched.description
+                                        ? 'border-red-500'
+                                        : 'border-[#2CB21A]'
+                                    }
+    `}
+                            />
+                            {error.description && touched.description && (
+                                <p className="text-red-500 text-sm mt-1 pl-1">
+                                    {error.description}
+                                </p>
+                            )}
+                        </div>
+
+
                         <div className="flex justify-between">
                             <button
                                 type="button"
@@ -537,12 +590,30 @@ const UpdateCommodity = () => {
             </div>
 
             <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-                <DialogTitle>Commodity Updated</DialogTitle>
+                <DialogTitle className="bg-green-500 text-white p-4">
+                    <p className="text-white text-xl">Commodity Updated</p>
+                </DialogTitle>
+                <DialogContent className="p-6 mt-2">
+                    <p className="text-gray-700 text-lg">Your commodity has been updated successfully.</p>
+                </DialogContent>
+                <DialogActions className="p-4">
+                    <Button
+                        onClick={handleCloseDialog}
+                        color="primary"
+                        className="hover:bg-gray-400">
+                        OK
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+
+            <Dialog open={errorDialogOpen} onClose={() => setErrorDialogOpen(false)}>
+                <DialogTitle className="bg-red-400 text-white text-2xl">Error</DialogTitle>
                 <DialogContent>
-                    <p>Your commodity has been updated successfully.</p>
+                    <p className="text-xl">{errorMessage}</p>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseDialog} color="primary">OK</Button>
+                    <Button onClick={() => setErrorDialogOpen(false)} color="primary">OK</Button>
                 </DialogActions>
             </Dialog>
         </div>

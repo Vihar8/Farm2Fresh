@@ -76,7 +76,7 @@ const Navbar = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleMenuClose}
               >
-                <div className="bg-greenCustom hover:bg-green-700 text-white font-medium py-1 px-4 rounded block ml-3 w-[90%]">
+                <div className="bg-gray-50 hover:bg-gray-100 text-black font-medium py-1 px-4 rounded block ml-3 w-[90%]">
                   <MenuItem onClick={handleMenuClose}
                     className="flex items-center gap-2"
                     component={Link}
