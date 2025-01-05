@@ -139,7 +139,7 @@ const BuyerCommodities = () => {
                         {item.buyer.user_type || 'Buyer'}
                       </span>
                     </p>
-                    <p className="text-xs text-gray-600">{item.buyer.mobile}</p>
+                    {/* <p className="text-xs text-gray-600">{item.buyer.mobile}</p> */}
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 items-center">

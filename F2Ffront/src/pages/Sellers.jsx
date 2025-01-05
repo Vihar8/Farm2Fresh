@@ -130,7 +130,7 @@ const SellerCommodities = () => {
                           {item.seller.user_type || 'Seller'}
                         </span>
                       </p>
-                      <p className="text-xs text-gray-500">{item.seller.mobile || 'N/A'}</p>
+                      {/* <p className="text-xs text-gray-500">{item.seller.mobile || 'N/A'}</p> */}
                     </div>
                   </div>
                   <div className="flex flex-col gap-2 items-center">
