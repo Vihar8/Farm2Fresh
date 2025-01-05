@@ -82,8 +82,19 @@ const BuyerCommodities = () => {
               {/* Date */}
               <div className="flex items-center px-4 py-2 bg-gray-100 text-sm text-gray-600">
                 <Clock2 className="w-5 h-5 text-gray-600 mr-2" />
-                <span>{new Date(item.createdAt).toLocaleDateString('en-GB')}</span>
+                <span>
+                  {(() => {
+                    const createdAt = new Date(item.createdAt);
+                    const now = new Date();
+                    const diffInTime = now - createdAt;
+                    const diffInDays = Math.floor(diffInTime / (1000 * 60 * 60 * 24));
+                    return diffInDays === 0
+                      ? 'Today'
+                      : `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
+                  })()}
+                </span>
               </div>
+
 
               {/* Image Section */}
               <div onClick={() => openModal(item)}
