@@ -12,9 +12,9 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
-  const [userType, setUserType] = useState("buyer"); // Default user type is "buyer"
-  const [role, setRole] = useState(1); // Default role is set to 1 (User)
-
+  const [userType, setUserType] = useState("buyer");
+  const [role, setRole] = useState(1);
+  
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
@@ -46,7 +46,7 @@ export default function SignUp() {
         .matches(/[!@#$%^&*]/, "Password must contain a special character")
         .required("Password is required"),
       confirmPassword: Yup.string().oneOf([Yup.ref("password"), null], "Passwords must match").required("Confirm Password is required"),
-      role: Yup.number().required("Role is required"),
+      role: Yup.number(),
       otp: Yup.string().length(6, "OTP must be 6 digits"),
       user_type: Yup.string().required("User type is required"),
     }),
@@ -67,6 +67,18 @@ export default function SignUp() {
       }
     },
   });
+
+  const isFormValid = 
+    formik.values.name &&
+    formik.values.email &&
+    formik.values.mobile &&
+    formik.values.password &&
+    formik.values.confirmPassword &&
+    Object.keys(formik.errors).length === 0 &&
+    formik.dirty;
+
+  // Check if OTP is valid (6 digits)
+  const isOtpValid = formik.values.otp.length === 6;
 
   const handleVerifyOtp = async () => {
     const { otp } = formik.values;
@@ -121,108 +133,117 @@ export default function SignUp() {
           {!otpVerified && (
             <form onSubmit={formik.handleSubmit} className="space-y-6">
               {/* Full Name */}
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-black">Full Name</label>
+              <div className="relative">
                 <input
                   type="text"
-                  placeholder="Full Name"
                   id="name"
                   {...formik.getFieldProps("name")}
                   className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.name && formik.errors.name
                     ? "border-red-500"
                     : "border-gray-300"
                     }`}
+                  placeholder=" "
                 />
+                <label htmlFor="name" className={`absolute left-4 top-2 text-gray-500 transition-all duration-200 ${formik.touched.name || formik.values.name ? '-translate-y-7 text-sm text-greenCustom' : ''}`}>
+                  Full Name
+                </label>
                 {formik.touched.name && formik.errors.name && (
                   <p className="mt-1 text-sm text-red-500">{formik.errors.name}</p>
                 )}
               </div>
 
               {/* Email Address */}
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-black">Email Address</label>
+              <div className="relative">
                 <input
                   type="email"
-                  placeholder="Email"
                   id="email"
                   {...formik.getFieldProps("email")}
                   className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.email && formik.errors.email
-                    ? "border-red-500 "
-                    : "border-gray-300 "
+                    ? "border-red-500"
+                    : "border-gray-300"
                     }`}
+                  placeholder=" "
                 />
+                <label
+                  htmlFor="email"
+                  className={`absolute left-4 top-2 text-gray-500 transition-all duration-200 ${formik.touched.email || formik.values.email ? '-translate-y-7 text-sm text-greenCustom' : ''}`}
+                >
+                  Email Address
+                </label>
                 {formik.touched.email && formik.errors.email && (
                   <p className="mt-1 text-sm text-red-500">{formik.errors.email}</p>
                 )}
               </div>
 
               {/* Mobile Number */}
-              <div>
-                <label htmlFor="mobile" className="block text-sm font-medium text-black">Mobile Number</label>
+              <div className="relative">
                 <input
                   type="text"
-                  placeholder="Mobile Number"
                   id="mobile"
                   {...formik.getFieldProps("mobile")}
                   className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.mobile && formik.errors.mobile
-                    ? "border-red-500 "
-                    : "border-gray-300 "
+                    ? "border-red-500"
+                    : "border-gray-300"
                     }`}
+                  placeholder=" "
                 />
+                <label htmlFor="mobile" className={`absolute left-4 top-2 text-gray-500 transition-all duration-200 ${formik.touched.mobile || formik.values.mobile ? '-translate-y-7 text-sm text-greenCustom' : ''}`}>
+                  Mobile Number
+                </label>
                 {formik.touched.mobile && formik.errors.mobile && (
                   <p className="mt-1 text-sm text-red-500">{formik.errors.mobile}</p>
                 )}
               </div>
 
               {/* Password */}
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-black">Password</label>
-                <div className="relative">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Password"
-                    id="password"
-                    {...formik.getFieldProps("password")}
-                    className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.password && formik.errors.password
-                      ? "border-red-500 "
-                      : "border-gray-300"
-                      }`}
-                  />
-                  <button
-                    type="button"
-                    onClick={togglePasswordVisibility}
-                    className="absolute inset-y-0 right-3 flex items-center text-gray-500"
-                  >
-                    {showPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
-                  </button>
-                </div>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  {...formik.getFieldProps("password")}
+                  className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.password && formik.errors.password
+                    ? "border-red-500"
+                    : "border-gray-300"
+                    }`}
+                  placeholder=" "
+                />
+                <label htmlFor="password" className={`absolute left-4 top-2 text-gray-500 transition-all duration-200 ${formik.touched.password || formik.values.password ? '-translate-y-7 text-sm text-greenCustom' : ''}`}>
+                  Password
+                </label>
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+                >
+                  {showPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
+                </button>
                 {formik.touched.password && formik.errors.password && (
                   <p className="mt-1 text-sm text-red-500">{formik.errors.password}</p>
                 )}
               </div>
 
               {/* Confirm Password */}
-              <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-black">Confirm Password</label>
-                <div className="relative">
-                  <input
-                    type={showConfirmPassword ? "text" : "password"}
-                    placeholder="Confirm Password"
-                    id="confirmPassword"
-                    {...formik.getFieldProps("confirmPassword")}
-                    className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.confirmPassword && formik.errors.confirmPassword
-                      ? "border-red-500 "
-                      : "border-gray-300"
-                      }`}
-                  />
-                  <button
-                    type="button"
-                    onClick={toggleConfirmPasswordVisibility}
-                    className="absolute inset-y-0 right-3 flex items-center text-gray-500"
-                  >
-                    {showConfirmPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
-                  </button>
-                </div>
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  {...formik.getFieldProps("confirmPassword")}
+                  className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.confirmPassword && formik.errors.confirmPassword
+                    ? "border-red-500"
+                    : "border-gray-300"
+                    }`}
+                  placeholder=" "
+                />
+                <label htmlFor="confirmPassword" className={`absolute left-4 top-2 text-gray-500 transition-all duration-200 ${formik.touched.confirmPassword || formik.values.confirmPassword ? '-translate-y-7 text-sm text-greenCustom' : ''}`}>
+                  Confirm Password
+                </label>
+                <button
+                  type="button"
+                  onClick={toggleConfirmPasswordVisibility}
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+                >
+                  {showConfirmPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
+                </button>
                 {formik.touched.confirmPassword && formik.errors.confirmPassword && (
                   <p className="mt-1 text-sm text-red-500">{formik.errors.confirmPassword}</p>
                 )}
@@ -244,10 +265,8 @@ export default function SignUp() {
                 </select>
               </div>
 
-
               {/* User Type */}
-              <div>
-                <label htmlFor="user_type" className="block text-sm font-medium text-black">User Type</label>
+              <div className="relative">
                 <select
                   id="user_type"
                   value={userType}
@@ -265,33 +284,56 @@ export default function SignUp() {
               {/* Sign Up Button */}
               <button
                 type="submit"
-                className="w-full px-4 py-3 text-white bg-greenCustom rounded-lg font-semibold shadow-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 focus:outline-none"
+                disabled={!isFormValid}
+                className={`w-full px-4 py-3 text-white rounded-lg font-semibold shadow-lg ${
+                  !isFormValid 
+                    ? "bg-gray-300 cursor-not-allowed"
+                    : "bg-greenCustom hover:bg-green-700 focus:ring-4 focus:ring-green-300"
+                }`}
               >
-                To Sign Up Verify Your Email
+                Sign Up & Verify Your Email
               </button>
 
               {/* OTP Verification Section */}
               <div className="mt-8 space-y-4">
                 <h3 className="text-lg font-semibold text-black">Verify Email</h3>
-                <input
-                  type="text"
-                  placeholder="Enter OTP"
-                  {...formik.getFieldProps("otp")}
-                  className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.user_type && formik.errors.user_type
-                    ? "border-red-500 "
-                    : "border-gray-300"}`}
-                />
-                {formik.touched.otp && formik.errors.otp && (
-                  <p className="mt-1 text-sm text-red-500">{formik.errors.otp}</p>
-                )}
+                <div className="relative">
+                  <input
+                    type="text"
+                    id="otp" // Ensure to give it an id for proper label association
+                    placeholder=" " // Placeholder for the floating label effect
+                    {...formik.getFieldProps("otp")}
+                    className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.otp && formik.errors.otp
+                        ? "border-red-500"
+                        : "border-gray-300"
+                      }`}
+                  />
+                  <label
+                    htmlFor="otp"
+                    className={`absolute left-4 top-2 text-gray-500 transition-all duration-200 ${formik.touched.otp || formik.values.otp ? '-translate-y-7 text-sm text-greenCustom' : ''
+                      }`}
+                  >
+                    Enter OTP
+                  </label>
+
+                  {formik.touched.otp && formik.errors.otp && (
+                    <p className="mt-1 text-sm text-red-500">{formik.errors.otp}</p>
+                  )}
+                </div>
                 <button
                   type="button"
                   onClick={handleVerifyOtp}
-                  className="w-full px-4 py-3 text-white bg-greenCustom rounded-lg font-semibold shadow-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300"
+                  disabled={!isOtpValid}
+                  className={`w-full px-4 py-3 text-white rounded-lg font-semibold shadow-lg ${
+                    !isOtpValid
+                      ? "bg-gray-300 cursor-not-allowed"
+                      : "bg-greenCustom hover:bg-green-700 focus:ring-4 focus:ring-green-300"
+                  }`}
                 >
                   Verify OTP
                 </button>
               </div>
+              
               {/* Sign In Link */}
               <div className="mt-4 text-center text-sm text-black">
                 Already have an account?{" "}

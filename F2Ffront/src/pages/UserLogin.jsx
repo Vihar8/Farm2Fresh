@@ -5,22 +5,20 @@ import * as Yup from "yup";
 import { useContext } from "react";
 import JWTContext from "../context/JWTContext";
 import api from "../api/axios";
-import { LOGIN } from "../context/actions"; // Ensure actions.js is properly structured
+import { LOGIN } from "../context/actions";
 import SnackbarContext from "../context/SnackbarContext";
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 
 const SignInSide = () => {
   const navigate = useNavigate();
-  const { dispatch } = useContext(JWTContext); // Use JWT context to dispatch login action
-  const { showSnackbar } = useContext(SnackbarContext); // Access showSnackbar from context
+  const { dispatch } = useContext(JWTContext);
+  const { showSnackbar } = useContext(SnackbarContext);
   const [showPassword, setShowPassword] = useState(false);
-
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
 
-  // Formik configuration
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -36,17 +34,11 @@ const SignInSide = () => {
     }),
     onSubmit: async (values, { setSubmitting, setFieldError }) => {
       try {
-        const response = await api.post("/auth/login", values); // Adjust API URL as needed
-        const { token, user } = response.data; // Assuming the API returns a JWT token and user info
-
-        // Store token in localStorage
+        const response = await api.post("/auth/login", values);
+        const { token, user } = response.data;
         localStorage.setItem("serviceToken", token);
-
-        // Dispatch login action to update context
         dispatch({ type: LOGIN, payload: { user } });
         showSnackbar("SignIn successfully!", "success");
-
-        // Redirect to home page after successful login
         navigate("/dashboard");
       } catch (error) {
         setFieldError("email", "Invalid email or password");
@@ -58,9 +50,12 @@ const SignInSide = () => {
     },
   });
 
+  const isFormEmpty = !formik.values.email || !formik.values.password;
+  const hasErrors = Object.keys(formik.errors).length > 0;
+  const isFormValid = !isFormEmpty && !hasErrors && formik.dirty;
+
   return (
     <div className="flex h-screen bg-white">
-      {/* Left Side */}
       <div
         className="hidden md:flex w-1/2 bg-cover bg-center"
         style={{
@@ -69,7 +64,6 @@ const SignInSide = () => {
         }}
       ></div>
 
-      {/* Right Side */}
       <div className="flex flex-col justify-center w-full md:w-1/2 p-10 md:p-20 bg-gray-50">
         <div className="max-w-lg mx-auto">
           <div className="flex flex-col items-center mb-10">
@@ -91,66 +85,80 @@ const SignInSide = () => {
             </div>
             <h1 className="mt-5 text-3xl font-bold text-black">Sign In</h1>
           </div>
+          
           <form onSubmit={formik.handleSubmit} className="space-y-8">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-black">
-                Email Address
-              </label>
+            <div className="relative">
               <input
                 type="email"
-                placeholder="Email"
                 id="email"
                 name="email"
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.email && formik.errors.email
-                  ? "border-red-500"
-                  : "border-gray-300"
-                  }`}
-              />
-              {formik.touched.email && formik.errors.email && (
-                <p className="text-sm text-red-500">{formik.errors.email}</p>
-              )}
-            </div>
-            <div className="mb-4">
-              <label htmlFor="password" className="block text-sm font-medium text-black">
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  placeholder="Password"
-                  name="password"
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  className={`block w-full px-4 py-3 mt-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none ${formik.touched.password && formik.errors.password
+                className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none peer ${
+                  formik.touched.email && formik.errors.email
                     ? "border-red-500"
                     : "border-gray-300"
-                    }`}
-                />
-                <button
-                  type="button"
-                  onClick={togglePasswordVisibility}
-                  className="absolute inset-y-0 right-3 flex items-center text-gray-500"
-                >
-                  {showPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
-                </button>
-              </div>
-              {formik.touched.password && formik.errors.password && (
-                <p className="text-sm text-red-500">{formik.errors.password}</p>
+                }`}
+                placeholder=" "
+              />
+              <label
+    htmlFor="email"
+    className={`absolute left-4 top-2 text-gray-500 transition-all duration-200 ${formik.touched.email || formik.values.email ? '-translate-y-7 text-sm text-greenCustom' : ''}`}
+  >
+    Email Address
+  </label>
+              {formik.touched.email && formik.errors.email && (
+                <p className="text-sm text-red-500 mt-1">{formik.errors.email}</p>
               )}
             </div>
+
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-greenCustom focus:outline-none peer ${
+                  formik.touched.password && formik.errors.password
+                    ? "border-red-500"
+                    : "border-gray-300"
+                }`}
+                placeholder=" "
+              />
+              <label
+    htmlFor="password"
+    className={`absolute left-4 top-2 text-gray-500 transition-all duration-200 ${formik.touched.password || formik.values.password ? '-translate-y-7 text-sm text-greenCustom' : ''}`}
+  >
+    Password
+  </label>
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute right-3 top-3 text-gray-500"
+              >
+                {showPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
+              </button>
+              {formik.touched.password && formik.errors.password && (
+                <p className="text-sm text-red-500 mt-1">{formik.errors.password}</p>
+              )}
+            </div>
+
             <button
               type="submit"
-              disabled={formik.isSubmitting}
-              className="w-full px-4 py-3 text-white bg-greenCustom rounded-lg font-semibold shadow-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 focus:outline-none"
+              disabled={!isFormValid}
+              className={`w-full px-4 py-3 text-white rounded-lg font-semibold shadow-lg ${
+                !isFormValid
+                  ? "bg-gray-300 cursor-not-allowed"
+                  : "bg-greenCustom hover:bg-green-700 focus:ring-4 focus:ring-green-300"
+              }`}
             >
               {formik.isSubmitting ? "Signing In..." : "Sign In"}
             </button>
           </form>
+
           <div className="flex justify-between items-center mt-8 text-sm">
             <button
               onClick={() => navigate("/forgot-password")}
@@ -162,10 +170,11 @@ const SignInSide = () => {
               Don&apos;t have an account? Sign Up
             </Link>
           </div>
+          
           <p className="mt-10 text-sm text-center text-black">
             Connect With Us at{" "}
             <a
-              href="https://farm2fresh.vercel.app/"
+              href="https://farm2fresh-omega.vercel.app/"
               className="text-greenCustom font-medium hover:underline"
             >
               Farm2Fresh
@@ -179,5 +188,3 @@ const SignInSide = () => {
 };
 
 export default SignInSide;
-
-
