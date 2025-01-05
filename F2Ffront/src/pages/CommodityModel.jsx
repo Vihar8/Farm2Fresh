@@ -1,5 +1,5 @@
 import { Descriptions } from 'antd';
-import { IndianRupeeIcon, LeafIcon, Mail, MapPin, MessageSquareText, Package, Phone, Sparkles, User, X } from 'lucide-react';
+import { Clock2, IndianRupeeIcon, LeafIcon, Mail, MapPin, MessageSquareText, Package, Phone, Sparkles, User, X } from 'lucide-react';
 import { memo } from 'react';
 
 const CommodityModalSel = memo(({ isOpen, onClose, commodity }) => {
