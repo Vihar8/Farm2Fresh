@@ -90,7 +90,14 @@ const CommodityForm = () => {
     district: Yup.string().required('District is required'),
     description: Yup.string()
       .required('Description is required')
-      .min(10, 'Description must be at least 10 characters long'), // Example length requirement
+      .min(10, 'Description must be at least 10 characters long')
+      .test('word-count', 'Description must not exceed 25 words', value => {
+        if (value) {
+          const words = value.trim().split(/\s+/);
+          return words.length <= 25; // Ensure the word count does not exceed 25
+        }
+        return true; // Pass for empty value if required is not violated
+      }),
     images: Yup.array()
       .min(1, 'At least one image is required')
       .max(2, 'Maximum 2 images allowed')
@@ -697,7 +704,7 @@ const CommodityForm = () => {
               <div>
                 <textarea
                   name="description"
-                  placeholder="Description"
+                  placeholder="Description (max 25 words)"
                   value={values.description}
                   onChange={handleChange}
                   rows="4"

@@ -218,6 +218,9 @@ const totalInUnits = [
     { value: 'ton', label: 'Ton' }
 ];
 
+const countWords = (text) => {
+    return text.trim().split(/\s+/).filter(word => word).length; // Count words
+};
 const UpdateCommodity = () => {
     const location = useLocation();
     const { commodityId } = useParams();
@@ -270,6 +273,10 @@ const UpdateCommodity = () => {
         if ((name === 'totalIn' || name === 'price' || name === 'quantity') && (isNaN(value) || value < 0)) {
             console.log(`Invalid value for ${name}. It cannot be negative.`);
             return; // Prevent setting negative or invalid numeric value
+        }
+        if (name === 'description' && countWords(value) > 25) {
+            console.log('Description exceeds 25 words'); // Log for debugging
+            return; // Ignore further updates if already exceeds 25 words
         }
         if (name === 'state') {
             console.log('State changed:', value);
@@ -326,6 +333,10 @@ const UpdateCommodity = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (countWords(commodity.description) > 25) {
+            setError("Description must not exceed 25 words.");
+            return;
+        }
         if (!commodity.commodity || !commodity.price || !commodity.quantity || !commodity.state || !commodity.district) {
             setError("Please fill all necessary fields.");
             return;
@@ -548,7 +559,7 @@ const UpdateCommodity = () => {
                         <div>
                             <textarea
                                 name="description"
-                                placeholder="Description"
+                                placeholder="Description (max 25 words)"
                                 value={commodity.description}
                                 onChange={handleChange}
                                 rows="4"
