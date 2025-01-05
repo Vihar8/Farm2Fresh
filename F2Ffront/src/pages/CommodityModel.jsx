@@ -57,14 +57,14 @@ const CommodityModalSel = memo(({ isOpen, onClose, commodity }) => {
                         <div className="flex items-center gap-3">
                             <IndianRupeeIcon className="w-5 h-5 text-gray-500" />
                             <div className="text-sm">
-                                <span className="font-semibold">Selling Price: </span>
+                                <span className="font-semibold">Buying Price: </span>
                                 <span>₹{commodity.price} / {commodity.totalIn}</span>
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
                             <Package className="w-5 h-5 text-gray-500" />
                             <div className="text-sm">
-                                <span className="font-semibold">Stock Volume: </span>
+                                <span className="font-semibold">Stock Nedded: </span>
                                 <span>{commodity.quantity} {commodity.totalIn}</span>
                             </div>
                         </div>
