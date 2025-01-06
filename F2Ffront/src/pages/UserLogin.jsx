@@ -39,7 +39,14 @@ const SignInSide = () => {
         localStorage.setItem("serviceToken", token);
         dispatch({ type: LOGIN, payload: { user } });
         showSnackbar("SignIn successfully!", "success");
-        navigate("/dashboard");
+        if (user?.role === 1) {
+          navigate("/home");
+        } else if (user?.role === 2) {
+          navigate("/dashboard");
+        } else {
+          // Handle unknown user types if necessary
+          showSnackbar("Unknown user type", "warning");
+        }
       } catch (error) {
         setFieldError("email", "Invalid email or password");
         setFieldError("password", "Invalid email or password");
