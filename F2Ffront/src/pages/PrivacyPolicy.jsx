@@ -38,8 +38,6 @@ const PrivacyPolicy = () => {
           <li>Full name.</li>
           <li>Email address.</li>
           <li>Phone number.</li>
-          <li>Billing and shipping address.</li>
-          <li>Payment information (such as credit card details).</li>
           <li>Preferences related to our products or services.</li>
         </ul>
       </section>
@@ -51,7 +49,6 @@ const PrivacyPolicy = () => {
         </p>
         <ul className="list-disc list-inside">
           <li>Provide, improve, and personalize our services.</li>
-          <li>Process transactions and deliver products.</li>
           <li>Respond to your inquiries and provide customer support.</li>
           <li>Send promotional emails, newsletters, and updates (only if you opt-in).</li>
           <li>Conduct surveys and collect feedback to enhance user experience.</li>
@@ -65,8 +62,6 @@ const PrivacyPolicy = () => {
           We do not sell, trade, or rent your personal information to third parties. However, we may share your information with trusted partners who help us operate our website, conduct business, or provide services to you. Examples include:
         </p>
         <ul className="list-disc list-inside">
-          <li>Payment processors for secure transactions.</li>
-          <li>Shipping providers for product delivery.</li>
           <li>Analytics providers to improve our website and services.</li>
         </ul>
         <p>
