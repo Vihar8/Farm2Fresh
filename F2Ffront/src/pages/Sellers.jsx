@@ -71,7 +71,7 @@ const SellerCommodities = () => {
         </div>
 
         {filteredCommodities.length === 0 ? (
-          <p className="text-gray-500 text-center">No commodities found matching your search.</p>
+          <p className="text-gray-500 text-center">No Seller commodities found.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {filteredCommodities.map((item) => (
