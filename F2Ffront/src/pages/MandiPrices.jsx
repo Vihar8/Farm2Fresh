@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Fuse from "fuse.js";
-import { FaSearch, FaMapMarkerAlt, FaBuilding, FaSeedling, FaRupeeSign, FaExclamationCircle } from 'react-icons/fa';
-import { GiIndianPalace } from 'react-icons/gi';
+import { FaSearch, FaMapMarkerAlt, FaBuilding, FaSeedling, FaRupeeSign, FaExclamationCircle, FaChartLine } from 'react-icons/fa';
 import mandiData from "../data/converted_data.json";
 import FarmingLoaderSun from "../commoncomponents/FarmingLoaderSun";
 
@@ -42,7 +41,7 @@ const MandiPriceFinder = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <h1 className="text-3xl md:text-4xl font-bold text-center text-greenCustom mb-8 flex items-center justify-center gap-2">
-        <GiIndianPalace className="text-4xl" />
+        <FaChartLine className="text-4xl" />
         Mandi Prices
       </h1>
 
