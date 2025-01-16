@@ -60,4 +60,4 @@ Farm2Fresh revolutionizes agricultural trading by creating a digital bridge betw
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/farm2fresh.git
+git clone https://github.com/vihar8/farm2fresh.git
