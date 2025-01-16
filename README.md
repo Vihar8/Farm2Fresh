@@ -4,7 +4,6 @@
 
 ## 📱 Live Demo
 - Frontend: [https://farm2fresh.vercel.app](https://farm2fresh-omega.vercel.app)
-- Backend: [https://farm2fresh-api.render.com](https://farm2fresh-api.render.com)
 
 ## 🎯 Overview
 Farm2Fresh revolutionizes agricultural trading by creating a digital bridge between farmers and buyers. Our platform emphasizes transparency, fair pricing, and seamless communication while maintaining the cultural aspects of traditional agricultural trading.
