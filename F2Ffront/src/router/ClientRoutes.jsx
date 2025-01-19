@@ -18,6 +18,8 @@ const PrivacyPolicy = Loadable(lazy(() => import("../pages/PrivacyPolicy")));
 const TermsAndConditions = Loadable(lazy(() => import("../pages/TermsAndConditions")));
 const Mylisting = Loadable(lazy(() => import("../pages/Mylisting")));
 const AgriUpdates = Loadable(lazy(() => import("../pages/AgriUpdates")));
+const ForgotPassword = Loadable(lazy(() => import("../pages/ForgotPassword")));
+const ResetPassword = Loadable(lazy(() => import("../pages/ResetPassword")));
 const UpdateCommodity = Loadable(lazy(() => import("../pages/UpdateCommodity.jsx"))); // Import the new component
 const MyProfile = Loadable(lazy(() => import("../components/Myprofile/profile.jsx"))); // Import the new component
 
@@ -27,6 +29,15 @@ const ClientRoutes = {
     {
       path: "/",
       element: <Start />, // This will be the starting point (root)
+    },
+    // routing for vendor forgot password
+    {
+      path: "/forgotpassword",
+      element: <ForgotPassword />,
+    },
+    {
+      path: "/resetpassword/:token",
+      element: <ResetPassword />,
     },
     {
       path: "/home",

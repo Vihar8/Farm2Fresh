@@ -1,4 +1,5 @@
-const sendVerificationCode = require("../middlewares/email");
+const {sendVerificationCode} = require("../middlewares/email");
+const {sendcode} = require("../middlewares/email")
 const userModel = require("../models/user");
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -235,11 +236,86 @@ const deleteUser = async (req, res) => {
     }
 };
 
+const forgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        // Check if email is provided
+        if (!email) {
+            return res.status(400).json({ success: false, message: "Email is required" });
+        }
+
+        // Find user by email
+        const user = await userModel.findOne({ email });
+
+        // Check if user exists
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        // Generate a password reset token
+        const resetToken = jwt.sign(
+            { id: user._id, email: user.email },
+            JWT_SECRET,
+            { expiresIn: '10m' } // Token expires in 15 minutes
+        );
+
+        // Send the reset token via email
+        const resetLink = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
+        await sendcode(email, `Click here to reset your password: ${resetLink}`);
+
+        return res.status(200).json({ success: true, message: "Password reset link sent to email." });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+// Reset Password Controller
+const resetPassword = async (req, res) => {
+    try {
+        const { token, newPassword } = req.body;
+
+        // Check if both token and new password are provided
+        if (!token || !newPassword) {
+            return res.status(400).json({ success: false, message: "Token and new password are required" });
+        }
+
+        // Verify the token
+        let decoded;
+        try {
+            decoded = jwt.verify(token, JWT_SECRET);
+        } catch (err) {
+            return res.status(400).json({ success: false, message: "Invalid or expired token" });
+        }
+
+        // Find the user by ID
+        const user = await userModel.findById(decoded.id);
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        // Hash the new password
+        const hashedPassword = bcryptjs.hashSync(newPassword, 10);
+
+        // Update the user's password
+        user.password = hashedPassword;
+        await user.save();
+
+        return res.status(200).json({ success: true, message: "Password reset successfully" });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
 module.exports = {
     signup,
     verifyEmail,
     login,
     getProfile,
     getUserCounts,
-    deleteUser
+    deleteUser,
+    forgotPassword,
+    resetPassword,
 };

@@ -167,12 +167,12 @@ const SignInSide = () => {
           </form>
 
           <div className="flex justify-between items-center mt-8 text-sm">
-            <button
-              onClick={() => navigate("/forgot-password")}
+            <Link
+              to="/forgotpassword"
               className="text-greenCustom font-medium hover:underline"
             >
               Forgot password?
-            </button>
+            </Link>
             <Link to="/usersignup" className="text-greenCustom font-medium hover:underline">
               Don&apos;t have an account? Sign Up
             </Link>
