@@ -45,10 +45,10 @@ const ForgotPassword = () => {
             >
               <ArrowLeft className="h-5 w-5" />
             </Link>
-            <h1 className="text-2xl font-bold text-gray-800">forgot Password</h1>
+            <h1 className="text-2xl font-bold text-gray-800">Forgot Password</h1>
           </div>
           <p className="text-gray-600 text-center">
-            Enter your email address and we'll send you a link to reset your password. Get back to connecting with local farmers and fresh produce!
+            Enter your email address and we'll send you a link to reset your password.
           </p>
         </div>
         
