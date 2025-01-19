@@ -109,7 +109,7 @@ const sendcode = async (email, resetLink) => {
                         <p class="link-text">${resetLink}</p>
 
                         <div class="warning">
-                            ⚠️ This link will expire in 15 minutes for security reasons.
+                            ⚠️ This link will expire in 10 minutes for security reasons.
                             If you didn't request this password reset, please ignore this email or contact support if you have concerns.
                         </div>
 
