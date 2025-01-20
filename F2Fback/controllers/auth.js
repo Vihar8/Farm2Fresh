@@ -262,7 +262,7 @@ const forgotPassword = async (req, res) => {
 
         // Send the reset token via email
         const resetLink = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
-        await sendcode(email, `Click here to reset your password: ${resetLink}`);
+        await sendcode(email, resetLink);
 
         return res.status(200).json({ success: true, message: "Password reset link sent to email." });
     } catch (err) {
