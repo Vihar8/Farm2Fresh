@@ -4,7 +4,8 @@ import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import JWTContext from '../context/JWTContext';
 import { FaBars, FaTimes, FaUser, FaWhmcs } from 'react-icons/fa';
-import { FiLogIn, FiLogOut, FiShoppingCart, FiList, FiUsers, FiShoppingBag, FiDollarSign, FiUser } from 'react-icons/fi'; // Added new icons
+import { FiLogIn, FiLogOut, FiShoppingCart, FiList, FiUsers, FiShoppingBag, FiUser } from 'react-icons/fi'; // Added new icons
+import { IndianRupee } from 'lucide-react';
 
 const Navbar = () => {
   const { state, logout } = useContext(JWTContext);
@@ -29,7 +30,7 @@ const Navbar = () => {
       <Toolbar className="flex justify-between items-center px-4">
         {/* Logo */}
         <Link to="/home" className="flex-shrink-0">
-          <div className="flex items-center -space-x-2">
+          <div className="flex items-center -space-x-3">
             <img className="w-[87px] md:w-32" src="/f2f.jpg" alt="logo" />
             <h1 className="text-lg font-bold text-greenCustom mt-2">
               Farm<span className="text-black">2</span><span className="text-greenCustom">Fresh</span>
@@ -38,7 +39,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex space-x-4">
+        <div className="hidden md:flex space-x-4 pl-3">
           <Link to="/my-listing" className="text-black hover:text-greenCustom font-medium flex items-center gap-2">
             <FiList className="text-lg" /> My Listing
           </Link>
@@ -49,7 +50,7 @@ const Navbar = () => {
             <FiShoppingBag className="text-lg" /> Buyers
           </Link>
           <Link to="/mandi-prices" className="text-black hover:text-greenCustom font-medium flex items-center gap-2">
-            <FiDollarSign className="text-lg" /> Mandi Prices
+            <IndianRupee className="text-lg" /> Mandi Prices
           </Link>
         </div>
 
@@ -170,7 +171,7 @@ const Navbar = () => {
                 <ListItemText primary="Buyers" className="group-hover:text-green-500" />
               </ListItem>
               <ListItem button component={Link} to="/mandi-prices" onClick={handleDrawerToggle} className="group">
-                <FiDollarSign className="group-hover:text-green-500 text-lg mr-2" />
+                <IndianRupee className="group-hover:text-green-500 text-lg mr-2" />
                 <ListItemText primary="Mandi Prices" className="group-hover:text-green-500" />
               </ListItem>
               <Divider />
