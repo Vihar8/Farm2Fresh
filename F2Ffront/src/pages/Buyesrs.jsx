@@ -123,7 +123,7 @@ const BuyerCommodities = () => {
               {/* Commodity Details */}
               <div className="p-4" onClick={() => openModal(item)}>
                 <h3 className="text-lg font-semibold text-gray-800 capitalize mb-1">
-                  {item.commodity} for sale in {item.district}
+                  {item.commodity} Needed in {item.district}
                 </h3>
                 <p className="text-sm text-gray-500 flex items-center gap-1 mb-2">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#28a745" width="32px" height="32px">
