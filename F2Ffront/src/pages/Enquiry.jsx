@@ -233,6 +233,7 @@ const DepartmentListing = () => {
 
   return (
       <>
+       <div className="p-6 mt-24">
           <Grid container spacing={2} className="headingSeparate">
               <Grid item xs={12} sm={12}>
                   <TableContainer component={Paper} className="tableShadow">
@@ -278,6 +279,7 @@ const DepartmentListing = () => {
                   </TableContainer>
               </Grid>
           </Grid>
+          </div>
       </>
   );
 };
