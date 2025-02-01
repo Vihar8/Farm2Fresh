@@ -180,7 +180,6 @@ import {
   Tooltip,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import TablePagination from "../../commoncomponents/TablePagination/TablePagination";
 import api from "../api/axios";
 
 const DepartmentListing = () => {
