@@ -3,7 +3,7 @@
 > Connecting farmers and buyers directly through a modern agricultural marketplace
 
 ## 📱 Live Demo
-- Frontend: [https://farm2fresh.vercel.app](https://farm2fresh.vercel.app)
+- Frontend: [https://farm2fresh.vercel.app](https://farm2fresh-omega.vercel.app)
 
 ## 🎯 Overview
 Farm2Fresh revolutionizes agricultural trading by creating a digital bridge between farmers and buyers. Our platform emphasizes transparency, fair pricing, and seamless communication while maintaining the cultural aspects of traditional agricultural trading.
@@ -40,8 +40,7 @@ Farm2Fresh revolutionizes agricultural trading by creating a digital bridge betw
 
 ### Frontend
 - **Core**: React.js 18+
-- **State Management**: Redux Toolkit
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS, SCSS
 - **UI Components**: Material-UI v5
 - **Charts**: Recharts
 
@@ -53,8 +52,7 @@ Farm2Fresh revolutionizes agricultural trading by creating a digital bridge betw
 
 ### DevOps
 - **CI/CD**: GitHub Actions
-- **Hosting**: Vercel (Frontend), Render (Backend)
-- **Monitoring**: Sentry
+- **Hosting**: Vercel (Frontend), Render (Backend), MongoDB ATLAS(Database)
 
 ## 📦 Installation
 
