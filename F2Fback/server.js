@@ -5,7 +5,7 @@ const app = express(); // Create an instance of Express
 const db = require('./db');
 require('dotenv').config();
 const path = require('path');
-const allowedOrigins = ["http://localhost:5173", "https://farm2fresh-omega.vercel.app"];
+const allowedOrigins = ["http://localhost:5173", "https://farm2fresh.vercel.app"];
 
 
 const commodityRoutes = require('./routes/commodityRoutes');

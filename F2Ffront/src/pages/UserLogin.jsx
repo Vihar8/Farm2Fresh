@@ -181,7 +181,7 @@ const SignInSide = () => {
           <p className="mt-10 text-sm text-center text-black">
             Connect With Us at{" "}
             <a
-              href="https://farm2fresh-omega.vercel.app/"
+              href="https://farm2fresh.vercel.app/"
               className="text-greenCustom font-medium hover:underline"
             >
               Farm2Fresh
