@@ -61,5 +61,4 @@ F2Ffront/
 ## 📖 Full Documentation
 For full-stack setup, backend API documentation, data models, and contribution guidelines, see the main [Farm2Fresh README](../README.md).
 
----
 
